@@ -12,6 +12,7 @@
 
     <modules>
         <module>projects-management</module>
+        <module>structure-management</module>
     </modules>
 
     <dependencies>
