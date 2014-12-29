@@ -32,11 +32,9 @@ public class TeamMemberRecruitment extends AbstractAnnotatedEntity {
         return TeamMemberRecruitmentStatus.OPEN.equals(teamMemberRecruitmentStatus);
     }
 
-    public boolean isRecruitmentClosed() {
-        return TeamMemberRecruitmentStatus.CLOSED.equals(teamMemberRecruitmentStatus);
-    }
-
     public boolean acceptMember(Member member) {
+
+        // TODO : it should be implemented
         return true;
     }
 }

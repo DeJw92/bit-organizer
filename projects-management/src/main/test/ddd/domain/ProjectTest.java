@@ -1,24 +1,30 @@
 package ddd.domain;
 
 import ddd.domain.aggregate_roots.Project;
+import ddd.domain.commands.AddTeamMemberCommand;
 import ddd.domain.commands.CloseTeamMembersRecruitmentCommand;
 import ddd.domain.commands.CreateProjectCommand;
 import ddd.domain.commands.OpenTeamMembersRecruitmentCommand;
+import ddd.domain.entities.Member;
 import ddd.domain.entities.TeamMemberRecruitment;
-import ddd.domain.events.ProjectCreatedEvent;
-import ddd.domain.events.TeamMembersRecruitmentCloseEvent;
-import ddd.domain.events.TeamMembersRecruitmentOpenEvent;
+import ddd.domain.events.*;
 import ddd.domain.handlers.ProjectCommandHandler;
 import ddd.domain.value_objects.ProjectID;
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Dawid Pawlak.
  */
+
+@RunWith(MockitoJUnitRunner.class)
 public class ProjectTest {
 
     private FixtureConfiguration<Project> fixture;
@@ -27,9 +33,8 @@ public class ProjectTest {
 
     @Mock
     private TeamMemberRecruitment teamMemberRecruitment;
-//
-//    @Mock
-//    private Member member;
+    @Mock
+    private Member member;
 
     @Before
     public void setUp() {
@@ -61,6 +66,40 @@ public class ProjectTest {
                 .expectEvents(new TeamMembersRecruitmentCloseEvent(projectID));
     }
 
+    @Test
+    public void addTeamMemberCommandShouldCauseTeamMemberAddedEvent() {
+        when(teamMemberRecruitment.acceptMember(member)).thenReturn(true);
+        when(teamMemberRecruitment.isRecruitmentOpen()).thenReturn(true);
+        fixture.given(
+                    new ProjectCreatedEvent(projectID, teamMemberRecruitment),
+                    new TeamMembersRecruitmentOpenEvent(projectID)
+        )
+                .when(new AddTeamMemberCommand(projectID, member))
+                .expectEvents(new TeamMemberAddedEvent(projectID, member));
+    }
 
+    @Test
+    public void addTeamMemberCommandWhenRecruitmentClosedShouldCaseRecruitmentClosedEvent() {
+        when(teamMemberRecruitment.acceptMember(member)).thenReturn(true);
+        when(teamMemberRecruitment.isRecruitmentOpen()).thenReturn(false);
+        fixture.given(
+                new ProjectCreatedEvent(projectID, teamMemberRecruitment),
+                new TeamMembersRecruitmentOpenEvent(projectID)
+        )
+                .when(new AddTeamMemberCommand(projectID, member))
+                .expectEvents(new RecruitmentClosedEvent(projectID));
+    }
+
+    @Test
+    public void addTeamMemberCommandWhenMemberRejectedShouldCaseMemberRejectedEvent() {
+        when(teamMemberRecruitment.acceptMember(member)).thenReturn(false);
+        when(teamMemberRecruitment.isRecruitmentOpen()).thenReturn(true);
+        fixture.given(
+                new ProjectCreatedEvent(projectID, teamMemberRecruitment),
+                new TeamMembersRecruitmentOpenEvent(projectID)
+        )
+                .when(new AddTeamMemberCommand(projectID, member))
+                .expectEvents(new MemberRejectedEvent(projectID, member));
+    }
 
 }

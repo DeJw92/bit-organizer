@@ -33,12 +33,6 @@ public class Project extends AbstractAnnotatedAggregateRoot {
     }
 
 
-    @EventHandler
-    public void onProjectCreated(ProjectCreatedEvent projectCreatedEvent) {
-        this.projectID = projectCreatedEvent.getProjectID();
-        this.teamMemberRecruitment = projectCreatedEvent.getTeamMemberRecruitment();
-    }
-
     public void openTeamMemberRecruitment() {
         apply(new TeamMembersRecruitmentOpenEvent(projectID));
     }
@@ -48,7 +42,7 @@ public class Project extends AbstractAnnotatedAggregateRoot {
     }
 
     public void addMember(Member member) {
-        if(teamMemberRecruitment.isRecruitmentClosed()) {
+        if(!teamMemberRecruitment.isRecruitmentOpen()) {
             apply(new RecruitmentClosedEvent(projectID));
             return;
         }
@@ -58,6 +52,12 @@ public class Project extends AbstractAnnotatedAggregateRoot {
         }
 
         apply(new TeamMemberAddedEvent(projectID, member));
+    }
+
+    @EventHandler
+    public void onProjectCreated(ProjectCreatedEvent projectCreatedEvent) {
+        this.projectID = projectCreatedEvent.getProjectID();
+        this.teamMemberRecruitment = projectCreatedEvent.getTeamMemberRecruitment();
     }
 
     @EventHandler
