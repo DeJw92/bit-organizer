@@ -1,10 +1,13 @@
 package pl.edu.knbit.organizer;
 
+import java.util.Objects;
+import java.util.UUID;
+
 public class TeamRecruitmentId {
 
-    private final long id;
+    private final String id;
 
-    public TeamRecruitmentId(long id) {
+    public TeamRecruitmentId(String id) {
         this.id = id;
     }
 
@@ -15,16 +18,16 @@ public class TeamRecruitmentId {
 
         TeamRecruitmentId that = (TeamRecruitmentId) o;
 
-        return id == that.id;
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        return id != null ? id.hashCode() : 0;
     }
 
-    @Override
-    public String toString() {
-        return Long.toString(id);
+    public static TeamRecruitmentId randomId() {
+        final String uuid = UUID.randomUUID().toString();
+        return new TeamRecruitmentId(uuid);
     }
 }
