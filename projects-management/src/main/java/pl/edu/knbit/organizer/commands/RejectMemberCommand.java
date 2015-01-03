@@ -1,15 +1,17 @@
-package pl.edu.knbit.organizer.events;
+package pl.edu.knbit.organizer.commands;
 
+import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import pl.edu.knbit.organizer.MemberId;
 import pl.edu.knbit.organizer.TeamRecruitmentId;
 
-public class MeetingAppointedEvent {
+public class RejectMemberCommand {
 
+    @TargetAggregateIdentifier
     private final TeamRecruitmentId teamRecruitmentId;
 
     private final MemberId memberId;
 
-    public MeetingAppointedEvent(TeamRecruitmentId teamRecruitmentId, MemberId memberId) {
+    public RejectMemberCommand(TeamRecruitmentId teamRecruitmentId, MemberId memberId) {
         this.teamRecruitmentId = teamRecruitmentId;
         this.memberId = memberId;
     }
@@ -21,4 +23,5 @@ public class MeetingAppointedEvent {
     public MemberId getMemberId() {
         return memberId;
     }
+
 }

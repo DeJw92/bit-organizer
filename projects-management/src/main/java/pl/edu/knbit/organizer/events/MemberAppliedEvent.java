@@ -3,13 +3,13 @@ package pl.edu.knbit.organizer.events;
 import pl.edu.knbit.organizer.MemberId;
 import pl.edu.knbit.organizer.TeamRecruitmentId;
 
-public class MeetingAppointedEvent {
+public class MemberAppliedEvent {
 
     private final TeamRecruitmentId teamRecruitmentId;
 
     private final MemberId memberId;
 
-    public MeetingAppointedEvent(TeamRecruitmentId teamRecruitmentId, MemberId memberId) {
+    public MemberAppliedEvent(TeamRecruitmentId teamRecruitmentId, MemberId memberId) {
         this.teamRecruitmentId = teamRecruitmentId;
         this.memberId = memberId;
     }
@@ -21,4 +21,5 @@ public class MeetingAppointedEvent {
     public MemberId getMemberId() {
         return memberId;
     }
+
 }
