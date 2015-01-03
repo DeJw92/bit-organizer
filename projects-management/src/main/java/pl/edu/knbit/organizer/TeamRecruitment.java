@@ -3,6 +3,7 @@ package pl.edu.knbit.organizer;
 import com.google.common.base.Preconditions;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
+import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import pl.edu.knbit.organizer.events.*;
 
 import java.util.ArrayList;
@@ -13,16 +14,13 @@ public class TeamRecruitment extends AbstractAnnotatedAggregateRoot {
     @AggregateIdentifier
     private TeamRecruitmentId id;
     private List<MemberId> appliedMembers = new ArrayList<>();
-    private TeamRecruitmentStatus status;
+    private TeamRecruitmentStatus status = TeamRecruitmentStatus.OPEN;
 
     private TeamRecruitment() {
     }
 
-    public TeamRecruitment(TeamRecruitmentId id, List<MemberId> appliedMembers, TeamRecruitmentStatus status) {
-        // TODO Apply event instead?
-        this.id = id;
-        this.appliedMembers = appliedMembers;
-        this.status = status;
+    public TeamRecruitment(TeamRecruitmentId id) {
+        apply(new TeamRecruitmentOpenedEvent(id));
     }
 
     public void appointMeeting(MemberId memberId) {
@@ -34,7 +32,6 @@ public class TeamRecruitment extends AbstractAnnotatedAggregateRoot {
     public void applyForProject(MemberId memberId) {
         Preconditions.checkState(status == TeamRecruitmentStatus.OPEN);
 
-        appliedMembers.add(memberId);
         apply(new MemberAppliedEvent(id, memberId));
     }
 
@@ -43,7 +40,7 @@ public class TeamRecruitment extends AbstractAnnotatedAggregateRoot {
         Preconditions.checkArgument(appliedMembers.contains(memberId));
         Preconditions.checkState(status != TeamRecruitmentStatus.FINISHED);
 
-        appliedMembers.remove(memberId);
+        // TODO send command to Project AR
         apply(new MemberAcceptedEvent(id, memberId));
     }
 
@@ -52,15 +49,12 @@ public class TeamRecruitment extends AbstractAnnotatedAggregateRoot {
         Preconditions.checkArgument(appliedMembers.contains(memberId));
         Preconditions.checkState(status != TeamRecruitmentStatus.FINISHED);
 
-        appliedMembers.remove(memberId);
         apply(new MemberRejectedEvent(id, memberId));
     }
 
     public void closeRecruitment() {
         Preconditions.checkState(status == TeamRecruitmentStatus.OPEN);
 
-        status = TeamRecruitmentStatus.CLOSED;
-        // TODO Do we want to send this event?
         apply(new TeamRecruitmentClosedEvent(id));
     }
 
@@ -68,7 +62,37 @@ public class TeamRecruitment extends AbstractAnnotatedAggregateRoot {
         // TODO Can we finish recruitment that wasn't closed?
         Preconditions.checkState(status != TeamRecruitmentStatus.FINISHED);
 
-        status = TeamRecruitmentStatus.FINISHED;
         apply(new TeamRecruitmentFinishedEvent(id));
     }
+
+    @EventSourcingHandler
+    public void onTeamRecruitmentOpened(TeamRecruitmentOpenedEvent event) {
+        id = event.getTeamRecruitmentId();
+    }
+
+    @EventSourcingHandler
+    public void onMemberApplied(MemberAppliedEvent event) {
+        appliedMembers.add(event.getMemberId());
+    }
+
+    @EventSourcingHandler
+    public void onMemberAccepted(MemberAcceptedEvent event) {
+        appliedMembers.remove(event.getMemberId());
+    }
+
+    @EventSourcingHandler
+    public void onMemberRejected(MemberRejectedEvent event) {
+        appliedMembers.remove(event.getMemberId());
+    }
+
+    @EventSourcingHandler
+    public void onCloseRecruitment(TeamRecruitmentClosedEvent event) {
+        status = TeamRecruitmentStatus.CLOSED;
+    }
+
+    @EventSourcingHandler
+    public void onFinishRecruitment(TeamRecruitmentFinishedEvent event) {
+        status = TeamRecruitmentStatus.FINISHED;
+    }
+
 }
