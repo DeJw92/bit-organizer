@@ -26,6 +26,11 @@ public class TeamRecruitmentId {
         return id != null ? id.hashCode() : 0;
     }
 
+    @Override
+    public String toString() {
+        return id;
+    }
+
     public static TeamRecruitmentId randomId() {
         final String uuid = UUID.randomUUID().toString();
         return new TeamRecruitmentId(uuid);

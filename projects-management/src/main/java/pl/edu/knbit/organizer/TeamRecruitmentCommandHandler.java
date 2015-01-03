@@ -46,4 +46,8 @@ public class TeamRecruitmentCommandHandler {
         teamRecruitment.finishRecruitment();
     }
 
+    public void setRepository(Repository<TeamRecruitment> repository) {
+        this.repository = repository;
+    }
+
 }
