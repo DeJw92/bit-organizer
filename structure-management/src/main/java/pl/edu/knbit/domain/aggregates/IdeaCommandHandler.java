@@ -1,9 +1,9 @@
-package bit.agh.domain.aggregates;
+package pl.edu.knbit.domain.aggregates;
 
-import bit.agh.domain.commands.CreateIdeaCommand;
-import bit.agh.domain.commands.SelectParentGroupCommand;
-import bit.agh.domain.valueobjects.GroupId;
-import bit.agh.domain.valueobjects.IdeaId;
+import pl.edu.knbit.domain.commands.CreateIdeaCommand;
+import pl.edu.knbit.domain.commands.SelectParentGroupCommand;
+import pl.edu.knbit.domain.valueobjects.GroupId;
+import pl.edu.knbit.domain.valueobjects.IdeaId;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;

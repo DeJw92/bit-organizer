@@ -1,9 +1,9 @@
-package bit.agh.domain.aggregates;
+package pl.edu.knbit.domain.aggregates;
 
-import bit.agh.domain.events.IdeaCreatedEvent;
-import bit.agh.domain.events.ParentGroupSelectedEvent;
-import bit.agh.domain.valueobjects.GroupId;
-import bit.agh.domain.valueobjects.IdeaId;
+import pl.edu.knbit.domain.events.IdeaCreatedEvent;
+import pl.edu.knbit.domain.events.ParentGroupSelectedEvent;
+import pl.edu.knbit.domain.valueobjects.GroupId;
+import pl.edu.knbit.domain.valueobjects.IdeaId;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;

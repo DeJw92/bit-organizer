@@ -1,6 +1,6 @@
-package bit.agh.domain.aggregates;
+package pl.edu.knbit.domain.aggregates;
 
-import bit.agh.domain.valueobjects.IdeaId;
+import pl.edu.knbit.domain.valueobjects.IdeaId;
 
 public class IdeaFactory {
     public static Idea create(IdeaId ideaId, String title, String description) {

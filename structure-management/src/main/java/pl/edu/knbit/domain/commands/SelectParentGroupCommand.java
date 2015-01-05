@@ -1,7 +1,7 @@
-package bit.agh.domain.commands;
+package pl.edu.knbit.domain.commands;
 
-import bit.agh.domain.valueobjects.GroupId;
-import bit.agh.domain.valueobjects.IdeaId;
+import pl.edu.knbit.domain.valueobjects.GroupId;
+import pl.edu.knbit.domain.valueobjects.IdeaId;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 public class SelectParentGroupCommand {

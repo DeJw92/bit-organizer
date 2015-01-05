@@ -1,13 +1,15 @@
-package bit.agh.domain.events;
+package pl.edu.knbit.domain.commands;
 
-import bit.agh.domain.valueobjects.IdeaId;
+import pl.edu.knbit.domain.valueobjects.IdeaId;
+import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
-public class IdeaCreatedEvent {
+public class CreateIdeaCommand {
+    @TargetAggregateIdentifier
     private final IdeaId ideaId;
     private final String title;
     private final String description;
 
-    public IdeaCreatedEvent(IdeaId ideaId, String title, String description) {
+    public CreateIdeaCommand(IdeaId ideaId, String title, String description) {
         this.ideaId = ideaId;
         this.title = title;
         this.description = description;

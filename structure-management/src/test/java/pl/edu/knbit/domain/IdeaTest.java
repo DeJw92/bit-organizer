@@ -1,13 +1,13 @@
-package bit.agh.domain;
+package pl.edu.knbit.domain;
 
-import bit.agh.domain.aggregates.Idea;
-import bit.agh.domain.aggregates.IdeaCommandHandler;
-import bit.agh.domain.commands.CreateIdeaCommand;
-import bit.agh.domain.commands.SelectParentGroupCommand;
-import bit.agh.domain.events.IdeaCreatedEvent;
-import bit.agh.domain.events.ParentGroupSelectedEvent;
-import bit.agh.domain.valueobjects.GroupId;
-import bit.agh.domain.valueobjects.IdeaId;
+import pl.edu.knbit.domain.aggregates.Idea;
+import pl.edu.knbit.domain.aggregates.IdeaCommandHandler;
+import pl.edu.knbit.domain.commands.CreateIdeaCommand;
+import pl.edu.knbit.domain.commands.SelectParentGroupCommand;
+import pl.edu.knbit.domain.events.IdeaCreatedEvent;
+import pl.edu.knbit.domain.events.ParentGroupSelectedEvent;
+import pl.edu.knbit.domain.valueobjects.GroupId;
+import pl.edu.knbit.domain.valueobjects.IdeaId;
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;

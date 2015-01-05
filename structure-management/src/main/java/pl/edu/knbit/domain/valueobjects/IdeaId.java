@@ -1,9 +1,11 @@
-package bit.agh.domain.valueobjects;
+package pl.edu.knbit.domain.valueobjects;
 
-public class GroupId {
-    private final String id;
+import java.util.UUID;
 
-    public GroupId(String id) {
+public class IdeaId {
+    private final UUID id;
+
+    public IdeaId(UUID id) {
         this.id = id;
     }
 
@@ -12,9 +14,9 @@ public class GroupId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        GroupId groupId = (GroupId) o;
+        IdeaId ideaId = (IdeaId) o;
 
-        if (!id.equals(groupId.id)) return false;
+        if (!id.equals(ideaId.id)) return false;
 
         return true;
     }
@@ -26,8 +28,8 @@ public class GroupId {
 
     @Override
     public String toString() {
-        return "GroupId{" +
-                "id='" + id + '\'' +
+        return "IdeaId{" +
+                "id=" + id +
                 '}';
     }
 }
