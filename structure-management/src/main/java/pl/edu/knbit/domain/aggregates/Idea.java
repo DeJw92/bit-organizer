@@ -23,8 +23,7 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     }
 
     public void selectParentGroup(GroupId groupId) {
-        this.parentGroupId = groupId;
-        apply(new ParentGroupSelectedEvent(this.id, this.parentGroupId));
+        apply(new ParentGroupSelectedEvent(this.id, groupId));
     }
 
     @EventSourcingHandler
