@@ -33,6 +33,11 @@ public class Enrollment extends AbstractAnnotatedAggregateRoot {
             return;
         }
 
+        if (membershipRequests.contains(membershipRequest)) {
+            apply(new EnrollmentAlreadyContainsMembershipRequestEvent(id, membershipRequest));
+            return;
+        }
+
         if (!isRequestsCountLimitSatisfied()) {
             apply(new EnrollmentIsFullEvent(id));
             return;

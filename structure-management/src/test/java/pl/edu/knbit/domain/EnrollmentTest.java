@@ -113,4 +113,15 @@ public class EnrollmentTest {
                 .when(new AddMembershipRequestCommand(enrollmentId, membershipRequest))
                 .expectEvents(new EnrollmentIsNotOpenedEvent(enrollmentId, EnrollmentStatus.CANCELED));
     }
+
+    @Test
+    public void testEnrollmentAddMembershipRequestTwice() {
+        fixtureConfiguration
+                .given(
+                        new EnrollmentCreatedEvent(enrollmentId, title, description, configuration),
+                        new MembershipRequestAddedEvent(enrollmentId, membershipRequest)
+                )
+                .when(new AddMembershipRequestCommand(enrollmentId, membershipRequest))
+                .expectEvents(new EnrollmentAlreadyContainsMembershipRequestEvent(enrollmentId, membershipRequest));
+    }
 }
