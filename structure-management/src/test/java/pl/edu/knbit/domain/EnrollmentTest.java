@@ -6,10 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import pl.edu.knbit.domain.aggregates.Enrollment;
 import pl.edu.knbit.domain.aggregates.MembershipRequest;
-import pl.edu.knbit.domain.commands.AddMembershipRequestCommand;
-import pl.edu.knbit.domain.commands.CancelEnrollmentCommand;
-import pl.edu.knbit.domain.commands.CloseEnrollmentCommand;
-import pl.edu.knbit.domain.commands.CreateEnrollmentCommand;
+import pl.edu.knbit.domain.commands.*;
 import pl.edu.knbit.domain.commands.handlers.EnrollmentCommandsHandler;
 import pl.edu.knbit.domain.events.*;
 import pl.edu.knbit.domain.valueobjects.EnrollmentConfiguration;
@@ -65,17 +62,28 @@ public class EnrollmentTest {
     }
 
     @Test
-    public void testEnrollmentClose() {
+    public void testEnrollmentStart() {
         fixtureConfiguration
                 .given(new EnrollmentCreatedEvent(enrollmentId, title, description, configuration))
-                .when(new CloseEnrollmentCommand(enrollmentId))
-                .expectEvents(new EnrollmentClosedEvent(enrollmentId));
+                .when(new StartEnrollmentCommand(enrollmentId))
+                .expectEvents(new EnrollmentStartedEvent(enrollmentId));
+    }
+
+    @Test
+    public void testEnrollmentEnd() {
+        fixtureConfiguration
+                .given(new EnrollmentCreatedEvent(enrollmentId, title, description, configuration))
+                .when(new EndEnrollmentCommand(enrollmentId))
+                .expectEvents(new EnrollmentEndedEvent(enrollmentId));
     }
 
     @Test
     public void testEnrollmentAddMembershipRequest() {
         fixtureConfiguration
-                .given(new EnrollmentCreatedEvent(enrollmentId, title, description, configuration))
+                .given(
+                        new EnrollmentCreatedEvent(enrollmentId, title, description, configuration),
+                        new EnrollmentStartedEvent(enrollmentId)
+                )
                 .when(new AddMembershipRequestCommand(enrollmentId, membershipRequest))
                 .expectEvents(new MembershipRequestAddedEvent(enrollmentId, membershipRequest));
     }
@@ -85,6 +93,7 @@ public class EnrollmentTest {
         fixtureConfiguration
                 .given(
                         new EnrollmentCreatedEvent(enrollmentId, title, description, configuration),
+                        new EnrollmentStartedEvent(enrollmentId),
                         new MembershipRequestAddedEvent(enrollmentId, membershipRequest2),
                         new MembershipRequestAddedEvent(enrollmentId, membershipRequest3)
                 )
@@ -93,14 +102,14 @@ public class EnrollmentTest {
     }
 
     @Test
-    public void testEnrollmentAddMembershipRequestWhenClosed() {
+    public void testEnrollmentAddMembershipRequestWhenEnded() {
         fixtureConfiguration
                 .given(
                         new EnrollmentCreatedEvent(enrollmentId, title, description, configuration),
-                        new EnrollmentClosedEvent(enrollmentId)
+                        new EnrollmentEndedEvent(enrollmentId)
                 )
                 .when(new AddMembershipRequestCommand(enrollmentId, membershipRequest))
-                .expectEvents(new EnrollmentIsNotOpenedEvent(enrollmentId, EnrollmentStatus.CLOSED));
+                .expectEvents(new EnrollmentIsNotStartedEvent(enrollmentId, EnrollmentStatus.ENDED));
     }
 
     @Test
@@ -111,7 +120,7 @@ public class EnrollmentTest {
                         new EnrollmentCanceledEvent(enrollmentId)
                 )
                 .when(new AddMembershipRequestCommand(enrollmentId, membershipRequest))
-                .expectEvents(new EnrollmentIsNotOpenedEvent(enrollmentId, EnrollmentStatus.CANCELED));
+                .expectEvents(new EnrollmentIsNotStartedEvent(enrollmentId, EnrollmentStatus.CANCELED));
     }
 
     @Test
@@ -119,6 +128,7 @@ public class EnrollmentTest {
         fixtureConfiguration
                 .given(
                         new EnrollmentCreatedEvent(enrollmentId, title, description, configuration),
+                        new EnrollmentStartedEvent(enrollmentId),
                         new MembershipRequestAddedEvent(enrollmentId, membershipRequest)
                 )
                 .when(new AddMembershipRequestCommand(enrollmentId, membershipRequest))

@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import pl.edu.knbit.domain.aggregates.Enrollment;
 import pl.edu.knbit.domain.aggregates.EnrollmentFactory;
-import pl.edu.knbit.domain.commands.AddMembershipRequestCommand;
-import pl.edu.knbit.domain.commands.CancelEnrollmentCommand;
-import pl.edu.knbit.domain.commands.CloseEnrollmentCommand;
-import pl.edu.knbit.domain.commands.CreateEnrollmentCommand;
+import pl.edu.knbit.domain.commands.*;
 
 public class EnrollmentCommandsHandler {
 
@@ -23,15 +20,21 @@ public class EnrollmentCommandsHandler {
     }
 
     @CommandHandler
+    public void handleStartEnrollmentCommand(StartEnrollmentCommand command) {
+        Enrollment enrollment = enrollmentRepository.load(command.getEnrollmentId());
+        enrollment.startEnrollment();
+    }
+
+    @CommandHandler
     public void handleCancelEnrollmentCommand(CancelEnrollmentCommand command) {
         Enrollment enrollment = enrollmentRepository.load(command.getEnrollmentId());
         enrollment.cancelEnrollment();
     }
 
     @CommandHandler
-    public void handleCloseEnrollmentCommand(CloseEnrollmentCommand command) {
+    public void handleEndEnrollmentCommand(EndEnrollmentCommand command) {
         Enrollment enrollment = enrollmentRepository.load(command.getEnrollmentId());
-        enrollment.closeEnrollment();
+        enrollment.endEnrollment();
     }
 
     @CommandHandler

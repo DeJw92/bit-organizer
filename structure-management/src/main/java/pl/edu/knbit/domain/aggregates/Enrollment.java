@@ -28,8 +28,8 @@ public class Enrollment extends AbstractAnnotatedAggregateRoot {
     }
 
     public void addMembershipRequest(MembershipRequest membershipRequest) {
-        if (status != EnrollmentStatus.OPENED) {
-            apply(new EnrollmentIsNotOpenedEvent(id, status));
+        if (status != EnrollmentStatus.STARTED) {
+            apply(new EnrollmentIsNotStartedEvent(id, status));
             return;
         }
 
@@ -46,12 +46,16 @@ public class Enrollment extends AbstractAnnotatedAggregateRoot {
         apply(new MembershipRequestAddedEvent(id, membershipRequest));
     }
 
+    public void startEnrollment() {
+        apply(new EnrollmentStartedEvent(id));
+    }
+
     public void cancelEnrollment() {
         apply(new EnrollmentCanceledEvent(id));
     }
 
-    public void closeEnrollment() {
-        apply(new EnrollmentClosedEvent(id));
+    public void endEnrollment() {
+        apply(new EnrollmentEndedEvent(id));
     }
 
     @EventSourcingHandler
@@ -59,9 +63,14 @@ public class Enrollment extends AbstractAnnotatedAggregateRoot {
         this.id = event.getEnrollmentId();
         this.title = event.getTitle();
         this.description = event.getDescription();
-        this.status = EnrollmentStatus.OPENED;
+        this.status = EnrollmentStatus.CREATED;
         this.configuration = event.getConfiguration();
         this.membershipRequests = new HashSet<>();
+    }
+
+    @EventSourcingHandler
+    public void onEnrollmentStarted(EnrollmentStartedEvent enrollmentStartedEvent) {
+        status = EnrollmentStatus.STARTED;
     }
 
     @EventSourcingHandler
@@ -70,8 +79,8 @@ public class Enrollment extends AbstractAnnotatedAggregateRoot {
     }
 
     @EventSourcingHandler
-    public void onEnrollmentClosed(EnrollmentClosedEvent enrollmentClosedEvent) {
-        status = EnrollmentStatus.CLOSED;
+    public void onEnrollmentEnded(EnrollmentEndedEvent enrollmentEndedEvent) {
+        status = EnrollmentStatus.ENDED;
     }
 
     @EventSourcingHandler
