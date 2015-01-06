@@ -25,16 +25,23 @@ public class ProjectIdea extends AbstractAnnotatedAggregateRoot {
 
     private Member teamLeader;
 
+    private String description;
+
     private ProjectIdea() {}
 
-    public ProjectIdea(ProjectIdeaID projectIdeaID, TeamLeaderRecruitment teamLeaderRecruitment){
-        apply(new ProjectIdeaCreatedEvent(projectIdeaID, teamLeaderRecruitment));
+    public ProjectIdea(ProjectIdeaID projectIdeaID, TeamLeaderRecruitment teamLeaderRecruitment, String description){
+        apply(new ProjectIdeaCreatedEvent(projectIdeaID, teamLeaderRecruitment, description));
     }
 
     @EventHandler
     public void onProjectIdeaCreated(ProjectIdeaCreatedEvent projectIdeaCreatedEvent){
         this.projectIdeaID = projectIdeaCreatedEvent.getProjectIdeaID();
         this.teamLeaderRecruitment = projectIdeaCreatedEvent.getTeamLeaderRecruitment();
+    }
+
+    @EventHandler
+    public void onTeamLeaderAccepted(TeamLeaderAcceptedEvent teamLeaderAcceptedEvent) {
+        this.teamLeader = teamLeaderAcceptedEvent.getLeader();
     }
 
     public void setProjectLeader(Member teamLeader) {

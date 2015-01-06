@@ -10,10 +10,12 @@ public class ProjectIdeaCreatedEvent {
 
     private final ProjectIdeaID projectIdeaID;
     private final TeamLeaderRecruitment teamLeaderRecruitment;
+    private final String description;
 
-    public ProjectIdeaCreatedEvent(ProjectIdeaID projectIdeaID, TeamLeaderRecruitment teamLeaderRecruitment){
+    public ProjectIdeaCreatedEvent(ProjectIdeaID projectIdeaID, TeamLeaderRecruitment teamLeaderRecruitment, String description){
         this.teamLeaderRecruitment = teamLeaderRecruitment;
         this.projectIdeaID = projectIdeaID;
+        this.description = description;
     }
 
     public ProjectIdeaID getProjectIdeaID(){
@@ -23,5 +25,7 @@ public class ProjectIdeaCreatedEvent {
     public TeamLeaderRecruitment getTeamLeaderRecruitment(){
         return teamLeaderRecruitment;
     }
+
+    public String getDescription() { return description; }
 
 }
