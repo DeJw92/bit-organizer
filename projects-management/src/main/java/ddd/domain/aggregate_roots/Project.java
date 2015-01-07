@@ -46,10 +46,6 @@ public class Project extends AbstractAnnotatedAggregateRoot {
             apply(new RecruitmentClosedEvent(projectID));
             return;
         }
-        if(!teamMemberRecruitment.acceptMember(member)) {
-            apply(new MemberRejectedEvent(projectID, member));
-            return;
-        }
 
         apply(new TeamMemberAddedEvent(projectID, member));
     }

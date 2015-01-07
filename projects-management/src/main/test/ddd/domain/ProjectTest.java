@@ -68,7 +68,6 @@ public class ProjectTest {
 
     @Test
     public void addTeamMemberCommandShouldCauseTeamMemberAddedEvent() {
-        when(teamMemberRecruitment.acceptMember(member)).thenReturn(true);
         when(teamMemberRecruitment.isRecruitmentOpen()).thenReturn(true);
         fixture.given(
                     new ProjectCreatedEvent(projectID, teamMemberRecruitment),
@@ -79,8 +78,7 @@ public class ProjectTest {
     }
 
     @Test
-    public void addTeamMemberCommandWhenRecruitmentClosedShouldCaseRecruitmentClosedEvent() {
-        when(teamMemberRecruitment.acceptMember(member)).thenReturn(true);
+    public void addTeamMemberCommandWhenRecruitmentClosedShouldCauseRecruitmentClosedEvent() {
         when(teamMemberRecruitment.isRecruitmentOpen()).thenReturn(false);
         fixture.given(
                 new ProjectCreatedEvent(projectID, teamMemberRecruitment),
@@ -90,16 +88,6 @@ public class ProjectTest {
                 .expectEvents(new RecruitmentClosedEvent(projectID));
     }
 
-    @Test
-    public void addTeamMemberCommandWhenMemberRejectedShouldCaseMemberRejectedEvent() {
-        when(teamMemberRecruitment.acceptMember(member)).thenReturn(false);
-        when(teamMemberRecruitment.isRecruitmentOpen()).thenReturn(true);
-        fixture.given(
-                new ProjectCreatedEvent(projectID, teamMemberRecruitment),
-                new TeamMembersRecruitmentOpenEvent(projectID)
-        )
-                .when(new AddTeamMemberCommand(projectID, member))
-                .expectEvents(new MemberRejectedEvent(projectID, member));
-    }
+
 
 }
