@@ -1,6 +1,6 @@
 package pl.edu.knbit.organizer.aggregate_roots.project_AR;
 
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.Member;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.TeamMember;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.TeamMemberRecruitment;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.events.*;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.value_objects.ProjectID;
@@ -23,7 +23,7 @@ public class Project extends AbstractAnnotatedAggregateRoot {
     @EventSourcedMember
     private TeamMemberRecruitment teamMemberRecruitment;
 
-    private Set<Member> members = new HashSet<Member>();
+    private Set<TeamMember> teamMembers = new HashSet<TeamMember>();
 
 
     private Project() {}
@@ -34,20 +34,20 @@ public class Project extends AbstractAnnotatedAggregateRoot {
 
 
     public void openTeamMemberRecruitment() {
-        apply(new TeamMembersRecruitmentOpenEvent(projectID));
+        apply(new TeamMemberRecruitmentOpenEvent(projectID));
     }
 
     public void closeTeamMemberRecruitment() {
-        apply(new TeamMembersRecruitmentCloseEvent(projectID));
+        apply(new TeamMemberRecruitmentClosedEvent(projectID));
     }
 
-    public void addMember(Member member) {
+    public void addMember(TeamMember teamMember) {
         if(!teamMemberRecruitment.isRecruitmentOpen()) {
             apply(new RecruitmentClosedEvent(projectID));
             return;
         }
 
-        apply(new TeamMemberAddedEvent(projectID, member));
+        apply(new TeamMemberAddedEvent(projectID, teamMember));
     }
 
     @EventHandler
@@ -58,7 +58,7 @@ public class Project extends AbstractAnnotatedAggregateRoot {
 
     @EventHandler
     public void onTeamMemberAddedEvent(TeamMemberAddedEvent teamMemberAddedEvent) {
-        members.add(teamMemberAddedEvent.getMember());
+        teamMembers.add(teamMemberAddedEvent.getTeamMember());
     }
 
 

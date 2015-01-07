@@ -38,7 +38,7 @@ public class ProjectCommandHandler {
     @CommandHandler
     public void handleAddTeamMemberCommand(AddTeamMemberCommand addTeamMemberCommand) {
         Project project = repository.load(addTeamMemberCommand.getProjectID());
-        project.addMember(addTeamMemberCommand.getMember());
+        project.addMember(addTeamMemberCommand.getTeamMember());
     }
 
     public void setRepository(Repository<Project> repository) {

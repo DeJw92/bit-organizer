@@ -5,11 +5,11 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
 /**
  * Created by Dawid Pawlak.
  */
-public class Member extends AbstractAnnotatedEntity {
+public class TeamMember extends AbstractAnnotatedEntity {
     private String name;
     private String lastName;
 
-    public Member(String name, String lastName) {
+    public TeamMember(String name, String lastName) {
         this.name = name;
         this.lastName = lastName;
     }

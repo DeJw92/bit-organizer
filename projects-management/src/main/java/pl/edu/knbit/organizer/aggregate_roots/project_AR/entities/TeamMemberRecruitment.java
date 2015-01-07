@@ -1,7 +1,7 @@
 package pl.edu.knbit.organizer.aggregate_roots.project_AR.entities;
 
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.events.TeamMembersRecruitmentCloseEvent;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.events.TeamMembersRecruitmentOpenEvent;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.events.TeamMemberRecruitmentClosedEvent;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.events.TeamMemberRecruitmentOpenEvent;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.value_objects.TeamMemberRecruitmentStatus;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
@@ -19,12 +19,12 @@ public class TeamMemberRecruitment extends AbstractAnnotatedEntity {
 
 
     @EventHandler
-    public void handleOpenTeamMemberRecruitmentEvent(TeamMembersRecruitmentOpenEvent teamMembersRecruitmentOpenEvent) {
+    public void handleOpenTeamMemberRecruitmentEvent(TeamMemberRecruitmentOpenEvent teamMemberRecruitmentOpenEvent) {
         this.teamMemberRecruitmentStatus = TeamMemberRecruitmentStatus.OPEN;
     }
 
     @EventHandler
-    public void handleCloseTeamMemberRecruitmentEvent(TeamMembersRecruitmentCloseEvent teamMembersRecruitmentCloseEvent) {
+    public void handleCloseTeamMemberRecruitmentEvent(TeamMemberRecruitmentClosedEvent teamMemberRecruitmentClosedEvent) {
         this.teamMemberRecruitmentStatus = TeamMemberRecruitmentStatus.CLOSED;
     }
 

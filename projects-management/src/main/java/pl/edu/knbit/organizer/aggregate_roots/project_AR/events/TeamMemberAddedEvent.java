@@ -1,20 +1,20 @@
 package pl.edu.knbit.organizer.aggregate_roots.project_AR.events;
 
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.Member;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.TeamMember;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.value_objects.ProjectID;
 
 /**
  * Created by Dawid Pawlak.
  */
 public class TeamMemberAddedEvent extends AbstractProjectEvent{
-    private final Member member;
+    private final TeamMember teamMember;
 
-    public TeamMemberAddedEvent(ProjectID projectID, Member member) {
+    public TeamMemberAddedEvent(ProjectID projectID, TeamMember teamMember) {
         super(projectID);
-        this.member = member;
+        this.teamMember = teamMember;
     }
 
-    public Member getMember() {
-        return member;
+    public TeamMember getTeamMember() {
+        return teamMember;
     }
 }

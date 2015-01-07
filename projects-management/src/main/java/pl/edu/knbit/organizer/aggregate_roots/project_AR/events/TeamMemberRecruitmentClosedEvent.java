@@ -5,8 +5,8 @@ import pl.edu.knbit.organizer.aggregate_roots.project_AR.value_objects.ProjectID
 /**
  * Created by Dawid Pawlak.
  */
-public class TeamMembersRecruitmentOpenEvent extends AbstractProjectEvent{
-    public TeamMembersRecruitmentOpenEvent(ProjectID projectID) {
+public class TeamMemberRecruitmentClosedEvent extends AbstractProjectEvent {
+    public TeamMemberRecruitmentClosedEvent(ProjectID projectID) {
         super(projectID);
     }
 }

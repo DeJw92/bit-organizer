@@ -1,11 +1,10 @@
 package pl.edu.knbit.organizer.aggregate_roots.project_AR;
 
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.Project;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.commands.AddTeamMemberCommand;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.commands.CloseTeamMembersRecruitmentCommand;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.commands.CreateProjectCommand;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.commands.OpenTeamMembersRecruitmentCommand;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.Member;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.TeamMember;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.TeamMemberRecruitment;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.events.*;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.handlers.ProjectCommandHandler;
@@ -34,7 +33,7 @@ public class ProjectTest {
     @Mock
     private TeamMemberRecruitment teamMemberRecruitment;
     @Mock
-    private Member member;
+    private TeamMember teamMember;
 
     @Before
     public void setUp() {
@@ -56,14 +55,14 @@ public class ProjectTest {
     public void openTeamMembersRecruitmentCommandShouldCauseTeamMembersRecruitmentOpenEvent() {
         fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment))
                 .when(new OpenTeamMembersRecruitmentCommand(projectID))
-                .expectEvents(new TeamMembersRecruitmentOpenEvent(projectID));
+                .expectEvents(new TeamMemberRecruitmentOpenEvent(projectID));
     }
 
     @Test
     public void closeTeamMembersRecruitmentCommandShouldCauseTeamMembersRecruitmentCloseEvent() {
         fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment))
                 .when(new CloseTeamMembersRecruitmentCommand(projectID))
-                .expectEvents(new TeamMembersRecruitmentCloseEvent(projectID));
+                .expectEvents(new TeamMemberRecruitmentClosedEvent(projectID));
     }
 
     @Test
@@ -71,10 +70,10 @@ public class ProjectTest {
         when(teamMemberRecruitment.isRecruitmentOpen()).thenReturn(true);
         fixture.given(
                     new ProjectCreatedEvent(projectID, teamMemberRecruitment),
-                    new TeamMembersRecruitmentOpenEvent(projectID)
+                    new TeamMemberRecruitmentOpenEvent(projectID)
         )
-                .when(new AddTeamMemberCommand(projectID, member))
-                .expectEvents(new TeamMemberAddedEvent(projectID, member));
+                .when(new AddTeamMemberCommand(projectID, teamMember))
+                .expectEvents(new TeamMemberAddedEvent(projectID, teamMember));
     }
 
     @Test
@@ -82,9 +81,9 @@ public class ProjectTest {
         when(teamMemberRecruitment.isRecruitmentOpen()).thenReturn(false);
         fixture.given(
                 new ProjectCreatedEvent(projectID, teamMemberRecruitment),
-                new TeamMembersRecruitmentOpenEvent(projectID)
+                new TeamMemberRecruitmentOpenEvent(projectID)
         )
-                .when(new AddTeamMemberCommand(projectID, member))
+                .when(new AddTeamMemberCommand(projectID, teamMember))
                 .expectEvents(new RecruitmentClosedEvent(projectID));
     }
 

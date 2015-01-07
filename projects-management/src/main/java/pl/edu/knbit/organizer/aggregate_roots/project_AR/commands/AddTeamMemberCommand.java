@@ -1,6 +1,6 @@
 package pl.edu.knbit.organizer.aggregate_roots.project_AR.commands;
 
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.Member;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.TeamMember;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.value_objects.ProjectID;
 
 /**
@@ -8,14 +8,14 @@ import pl.edu.knbit.organizer.aggregate_roots.project_AR.value_objects.ProjectID
  */
 public class AddTeamMemberCommand extends AbstractProjectCommand{
 
-    private final Member member;
+    private final TeamMember teamMember;
 
-    public AddTeamMemberCommand(ProjectID projectID, Member member) {
+    public AddTeamMemberCommand(ProjectID projectID, TeamMember teamMember) {
         super(projectID);
-        this.member = member;
+        this.teamMember = teamMember;
     }
 
-    public Member getMember() {
-        return member;
+    public TeamMember getTeamMember() {
+        return teamMember;
     }
 }
