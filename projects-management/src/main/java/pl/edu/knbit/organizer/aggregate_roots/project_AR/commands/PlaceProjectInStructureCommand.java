@@ -3,10 +3,10 @@ package pl.edu.knbit.organizer.aggregate_roots.project_AR.commands;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.value_objects.ProjectID;
 
 /**
- * Created by Dawid Pawlak.
+ * @author Pawel Kolodziejczyk
  */
-public class CloseTeamMembersRecruitmentCommand extends AbstractProjectCommand{
-    public CloseTeamMembersRecruitmentCommand(ProjectID projectID) {
+public class PlaceProjectInStructureCommand extends AbstractProjectCommand {
+    public PlaceProjectInStructureCommand(ProjectID projectID) {
         super(projectID);
     }
 }

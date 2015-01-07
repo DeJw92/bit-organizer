@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Dawid Pawlak.
+ * @author Dawid Pawlak, Pawel Kolodziejczyk
  */
 public class Project extends AbstractAnnotatedAggregateRoot {
 
@@ -23,8 +23,7 @@ public class Project extends AbstractAnnotatedAggregateRoot {
     @EventSourcedMember
     private TeamMemberRecruitment teamMemberRecruitment;
 
-    private Set<TeamMember> teamMembers = new HashSet<TeamMember>();
-
+    private final Set<TeamMember> teamMembers = new HashSet<TeamMember>();
 
     private Project() {}
 
@@ -50,6 +49,19 @@ public class Project extends AbstractAnnotatedAggregateRoot {
         apply(new TeamMemberAddedEvent(projectID, teamMember));
     }
 
+    public void removeMember(TeamMember teamMember) {
+        apply(new TeamMemberRemovedEvent(projectID, teamMember));
+    }
+
+    public void resignFromMember(TeamMember teamMember) {
+        apply(new TeamMemberRemovedEvent(projectID, teamMember));
+    }
+
+    public void placeProjectInStructure() {
+        apply(new ProjectPlacedInStructureEvent(projectID));
+    }
+
+
     @EventHandler
     public void onProjectCreated(ProjectCreatedEvent projectCreatedEvent) {
         this.projectID = projectCreatedEvent.getProjectID();
@@ -61,6 +73,8 @@ public class Project extends AbstractAnnotatedAggregateRoot {
         teamMembers.add(teamMemberAddedEvent.getTeamMember());
     }
 
-
-
+    @EventHandler
+    public void onMemberRemovedEvent(TeamMemberRemovedEvent teamMemberRemovedEvent) {
+        teamMembers.remove(teamMemberRemovedEvent.getTeamMember());
+    }
 }

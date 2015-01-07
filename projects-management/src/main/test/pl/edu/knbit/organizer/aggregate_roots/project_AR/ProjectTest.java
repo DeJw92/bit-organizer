@@ -1,14 +1,5 @@
 package pl.edu.knbit.organizer.aggregate_roots.project_AR;
 
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.commands.AddTeamMemberCommand;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.commands.CloseTeamMembersRecruitmentCommand;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.commands.CreateProjectCommand;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.commands.OpenTeamMembersRecruitmentCommand;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.TeamMember;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.TeamMemberRecruitment;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.events.*;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.handlers.ProjectCommandHandler;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.value_objects.ProjectID;
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
@@ -16,11 +7,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.commands.*;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.TeamMember;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.TeamMemberRecruitment;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.events.*;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.handlers.ProjectCommandHandler;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.value_objects.ProjectID;
 
 import static org.mockito.Mockito.when;
 
 /**
- * Created by Dawid Pawlak.
+ * @author Dawid Pawlak, Pawel Kolodziejczyk
  */
 
 @RunWith(MockitoJUnitRunner.class)
@@ -61,7 +58,7 @@ public class ProjectTest {
     @Test
     public void closeTeamMembersRecruitmentCommandShouldCauseTeamMembersRecruitmentCloseEvent() {
         fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment))
-                .when(new CloseTeamMembersRecruitmentCommand(projectID))
+                .when(new CloseTeamMemberRecruitmentCommand(projectID))
                 .expectEvents(new TeamMemberRecruitmentClosedEvent(projectID));
     }
 
@@ -69,8 +66,8 @@ public class ProjectTest {
     public void addTeamMemberCommandShouldCauseTeamMemberAddedEvent() {
         when(teamMemberRecruitment.isRecruitmentOpen()).thenReturn(true);
         fixture.given(
-                    new ProjectCreatedEvent(projectID, teamMemberRecruitment),
-                    new TeamMemberRecruitmentOpenEvent(projectID)
+                new ProjectCreatedEvent(projectID, teamMemberRecruitment),
+                new TeamMemberRecruitmentOpenEvent(projectID)
         )
                 .when(new AddTeamMemberCommand(projectID, teamMember))
                 .expectEvents(new TeamMemberAddedEvent(projectID, teamMember));
@@ -87,6 +84,24 @@ public class ProjectTest {
                 .expectEvents(new RecruitmentClosedEvent(projectID));
     }
 
+    @Test
+    public void removeTeamMemberCommandShouldCauseMemberRemovedEvent() {
+        fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment)).
+                when(new RemoveTeamMemberCommand(projectID, teamMember)).
+                expectEvents(new TeamMemberRemovedEvent(projectID, teamMember));
+    }
 
+    @Test
+    public void resignFromTeamMemberCommandShouldCauseMemberRemovedEvent() {
+        fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment)).
+                when(new ResignFromTeamMemberCommand(projectID, teamMember)).
+                expectEvents(new TeamMemberRemovedEvent(projectID, teamMember));
+    }
 
+    @Test
+    public void placeProjectInStructureCommandShouldCauseProjectPlacedInStructureEvent() {
+        fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment)).
+                when(new PlaceProjectInStructureCommand(projectID)).
+                expectEvents(new ProjectPlacedInStructureEvent(projectID));
+    }
 }

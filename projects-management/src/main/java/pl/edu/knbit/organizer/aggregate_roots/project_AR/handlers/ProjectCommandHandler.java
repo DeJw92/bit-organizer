@@ -1,16 +1,13 @@
 package pl.edu.knbit.organizer.aggregate_roots.project_AR.handlers;
 
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.Project;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.commands.AddTeamMemberCommand;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.commands.CloseTeamMembersRecruitmentCommand;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.commands.CreateProjectCommand;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.commands.OpenTeamMembersRecruitmentCommand;
-import pl.edu.knbit.organizer.aggregate_roots.project_AR.factories.ProjectFactory;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.Project;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.commands.*;
+import pl.edu.knbit.organizer.aggregate_roots.project_AR.factories.ProjectFactory;
 
 /**
- * Created by Dawid Pawlak.
+ * @author Pawel Kolodziejczyk, Dawid Pawlak
  */
 public class ProjectCommandHandler {
 
@@ -18,27 +15,45 @@ public class ProjectCommandHandler {
 
     @CommandHandler
     public void handleProjectCreatedCommand(CreateProjectCommand createProjectCommand) {
-        Project project = ProjectFactory.createProject(createProjectCommand.getProjectID(), createProjectCommand.getTeamMemberRecruitment());
+        final Project project = ProjectFactory.createProject(createProjectCommand.getProjectID(), createProjectCommand.getTeamMemberRecruitment());
         repository.add(project);
 
     }
 
     @CommandHandler
     public void handleOpenTeamMembersRecruitmentCommand(OpenTeamMembersRecruitmentCommand openTeamMembersRecruitmentCommand) {
-        Project project = repository.load(openTeamMembersRecruitmentCommand.getProjectID());
+        final Project project = repository.load(openTeamMembersRecruitmentCommand.getProjectID());
         project.openTeamMemberRecruitment();
     }
 
     @CommandHandler
-    public void handleCloseTeamMembersRecruitmentCommand(CloseTeamMembersRecruitmentCommand closeTeamMembersRecruitmentCommand) {
-        Project project = repository.load(closeTeamMembersRecruitmentCommand.getProjectID());
+    public void handleCloseTeamMembersRecruitmentCommand(CloseTeamMemberRecruitmentCommand closeTeamMemberRecruitmentCommand) {
+        final Project project = repository.load(closeTeamMemberRecruitmentCommand.getProjectID());
         project.closeTeamMemberRecruitment();
     }
 
     @CommandHandler
     public void handleAddTeamMemberCommand(AddTeamMemberCommand addTeamMemberCommand) {
-        Project project = repository.load(addTeamMemberCommand.getProjectID());
+        final Project project = repository.load(addTeamMemberCommand.getProjectID());
         project.addMember(addTeamMemberCommand.getTeamMember());
+    }
+
+    @CommandHandler
+    public void handleResignFromMemberCommand(ResignFromTeamMemberCommand resignFromMemberCommand) {
+        final Project project = repository.load(resignFromMemberCommand.getProjectID());
+        project.resignFromMember(resignFromMemberCommand.getTeamMember());
+    }
+
+    @CommandHandler
+    public void handleRemoveMemberCommand(RemoveTeamMemberCommand removeMemberCommand) {
+        final Project project = repository.load(removeMemberCommand.getProjectID());
+        project.removeMember(removeMemberCommand.getTeamMember());
+    }
+
+    @CommandHandler
+    public void handlePlaceProjectInStructureCommand(PlaceProjectInStructureCommand placeProjectInStructureCommand) {
+        final Project project = repository.load(placeProjectInStructureCommand.getProjectID());
+        project.placeProjectInStructure();
     }
 
     public void setRepository(Repository<Project> repository) {

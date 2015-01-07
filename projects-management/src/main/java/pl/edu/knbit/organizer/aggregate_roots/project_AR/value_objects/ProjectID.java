@@ -1,9 +1,7 @@
 package pl.edu.knbit.organizer.aggregate_roots.project_AR.value_objects;
 
-import java.util.Objects;
-
 /**
- * Created by Dawid Pawlak.
+ * @author Dawid Pawlak, Pawel Kolodziejczyk
  */
 public class ProjectID {
 
@@ -17,14 +15,20 @@ public class ProjectID {
         return new ProjectID(id);
     }
 
+
     @Override
-    public boolean equals(Object object) {
-        return Objects.equals(this, object);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProjectID projectID = (ProjectID) o;
+
+        return id.equals(projectID.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return id.hashCode();
     }
 
     @Override
