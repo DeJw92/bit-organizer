@@ -1,12 +1,15 @@
 package pl.edu.knbit.domain.aggregates;
 
+import pl.edu.knbit.domain.events.GroupSupervisorSelectedEvent;
 import pl.edu.knbit.domain.events.IdeaCreatedEvent;
 import pl.edu.knbit.domain.events.ParentGroupSelectedEvent;
+import pl.edu.knbit.domain.exceptions.ParentGroupNotSelectedException;
 import pl.edu.knbit.domain.valueobjects.GroupId;
 import pl.edu.knbit.domain.valueobjects.IdeaId;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
+import pl.edu.knbit.domain.valueobjects.UserId;
 
 public class Idea extends AbstractAnnotatedAggregateRoot {
     @AggregateIdentifier
@@ -14,6 +17,7 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     private String title;
     private String description;
     private GroupId parentGroupId;
+    private UserId groupSupervisorId;
 
     private Idea() {
     }
@@ -23,7 +27,16 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     }
 
     public void selectParentGroup(GroupId groupId) {
+        //check whether group exists
         apply(new ParentGroupSelectedEvent(this.id, groupId));
+    }
+
+    public void selectGroupSupervisor(UserId groupSupervisorId) throws ParentGroupNotSelectedException {
+        //check whether groupSupervisorId is member of parentGroup
+        if(parentGroupId == null) {
+            throw new ParentGroupNotSelectedException(this.id);
+        }
+        apply(new GroupSupervisorSelectedEvent(this.id, this.parentGroupId, groupSupervisorId));
     }
 
     @EventSourcingHandler
@@ -36,5 +49,9 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     @EventSourcingHandler
     public void onParentGroupSelected(ParentGroupSelectedEvent parentGroupSelectedEvent) {
         this.parentGroupId = parentGroupSelectedEvent.getParentGroupId();
+    }
+    @EventSourcingHandler
+    public void onGroupSupervisorSelected(GroupSupervisorSelectedEvent groupSupervisorSelectedEvent) {
+        this.groupSupervisorId = groupSupervisorSelectedEvent.getGroupSupervisorId();
     }
 }
