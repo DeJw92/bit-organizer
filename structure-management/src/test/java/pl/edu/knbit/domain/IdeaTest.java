@@ -3,12 +3,12 @@ package pl.edu.knbit.domain;
 import pl.edu.knbit.domain.aggregates.Idea;
 import pl.edu.knbit.domain.aggregates.IdeaCommandHandler;
 import pl.edu.knbit.domain.commands.AcceptIdeaCommand;
-import pl.edu.knbit.domain.commands.CreateIdeaCommand;
+import pl.edu.knbit.domain.commands.SubmitIdeaCommand;
 import pl.edu.knbit.domain.commands.SelectGroupSupervisorCommand;
 import pl.edu.knbit.domain.commands.SelectParentGroupCommand;
 import pl.edu.knbit.domain.events.IdeaAcceptedEvent;
 import pl.edu.knbit.domain.events.GroupSupervisorSelectedEvent;
-import pl.edu.knbit.domain.events.IdeaCreatedEvent;
+import pl.edu.knbit.domain.events.IdeaSubmittedEvent;
 import pl.edu.knbit.domain.events.ParentGroupSelectedEvent;
 import pl.edu.knbit.domain.exceptions.IdeaAlreadyAcceptedException;
 import pl.edu.knbit.domain.exceptions.ParentGroupNotSelectedException;
@@ -46,29 +46,29 @@ public class IdeaTest {
     }
 
     @Test
-    public void testCreateIdea() throws Exception {
+    public void testSubmitIdea() throws Exception {
         fixtureConfiguration.given()
-                .when(new CreateIdeaCommand(ideaId, title, description))
-                .expectEvents(new IdeaCreatedEvent(ideaId, title, description));
+                .when(new SubmitIdeaCommand(ideaId, title, description))
+                .expectEvents(new IdeaSubmittedEvent(ideaId, title, description));
     }
 
     @Test
     public void testSelectParentGroup() throws Exception {
-        fixtureConfiguration.given(new IdeaCreatedEvent(ideaId, title, description))
+        fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description))
                 .when(new SelectParentGroupCommand(ideaId, groupId))
                 .expectEvents(new ParentGroupSelectedEvent(ideaId, groupId));
     }
 
     @Test
     public void testSelectGroupSupervisor() {
-        fixtureConfiguration.given(new IdeaCreatedEvent(ideaId, title, description), new ParentGroupSelectedEvent(ideaId, groupId))
+        fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description), new ParentGroupSelectedEvent(ideaId, groupId))
                 .when(new SelectGroupSupervisorCommand(ideaId, groupId, userId))
                 .expectEvents(new GroupSupervisorSelectedEvent(ideaId, groupId, userId));
     }
 
     @Test
     public void shouldThrowExceptionWhenSelectingGroupSupervisorForIdeaWithoutParentGroup() throws Exception {
-        fixtureConfiguration.given(new IdeaCreatedEvent(ideaId, title, description))
+        fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description))
                 .when(new SelectGroupSupervisorCommand(ideaId, groupId, userId))
                 .expectException(ParentGroupNotSelectedException.class);
 
@@ -76,14 +76,14 @@ public class IdeaTest {
 
     @Test
     public void testAcceptIdea() throws Exception {
-        fixtureConfiguration.given(new IdeaCreatedEvent(ideaId, title, description))
+        fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description))
                 .when(new AcceptIdeaCommand(ideaId))
                 .expectEvents(new IdeaAcceptedEvent(ideaId));
     }
 
     @Test
     public void shouldThrowExceptionWhenIdeaAcceptedMoreThanOnce() throws Exception {
-        fixtureConfiguration.given(new IdeaCreatedEvent(ideaId, title, description), new IdeaAcceptedEvent(ideaId))
+        fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description), new IdeaAcceptedEvent(ideaId))
                 .when(new AcceptIdeaCommand(ideaId))
                 .expectException(IdeaAlreadyAcceptedException.class);
 

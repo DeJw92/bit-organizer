@@ -2,7 +2,7 @@ package pl.edu.knbit.domain.aggregates;
 
 import pl.edu.knbit.domain.events.IdeaAcceptedEvent;
 import pl.edu.knbit.domain.events.GroupSupervisorSelectedEvent;
-import pl.edu.knbit.domain.events.IdeaCreatedEvent;
+import pl.edu.knbit.domain.events.IdeaSubmittedEvent;
 import pl.edu.knbit.domain.events.ParentGroupSelectedEvent;
 import pl.edu.knbit.domain.exceptions.IdeaAlreadyAcceptedException;
 import pl.edu.knbit.domain.exceptions.ParentGroupNotSelectedException;
@@ -26,7 +26,7 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     }
 
     public Idea(IdeaId id, String title, String description) {
-        apply(new IdeaCreatedEvent(id, title, description));
+        apply(new IdeaSubmittedEvent(id, title, description));
     }
 
     public void selectParentGroup(GroupId groupId) {
@@ -52,10 +52,10 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     }
 
     @EventSourcingHandler
-    public void onIdeaCreated(IdeaCreatedEvent ideaCreatedEvent) {
-        this.id = ideaCreatedEvent.getIdeaId();
-        this.title = ideaCreatedEvent.getTitle();
-        this.description = ideaCreatedEvent.getDescription();
+    public void onIdeaSubmitted(IdeaSubmittedEvent ideaSubmittedEvent) {
+        this.id = ideaSubmittedEvent.getIdeaId();
+        this.title = ideaSubmittedEvent.getTitle();
+        this.description = ideaSubmittedEvent.getDescription();
     }
 
     @EventSourcingHandler

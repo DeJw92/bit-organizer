@@ -1,7 +1,7 @@
 package pl.edu.knbit.domain.aggregates;
 
 import pl.edu.knbit.domain.commands.AcceptIdeaCommand;
-import pl.edu.knbit.domain.commands.CreateIdeaCommand;
+import pl.edu.knbit.domain.commands.SubmitIdeaCommand;
 import pl.edu.knbit.domain.commands.SelectGroupSupervisorCommand;
 import pl.edu.knbit.domain.commands.SelectParentGroupCommand;
 import pl.edu.knbit.domain.exceptions.IdeaAlreadyAcceptedException;
@@ -20,8 +20,8 @@ public class IdeaCommandHandler {
     private Repository<Idea> ideaRepository;
 
     @CommandHandler
-    public void handleCreateIdeaCommand(CreateIdeaCommand createIdeaCommand) {
-        Idea idea = IdeaFactory.create(createIdeaCommand.getIdeaId(), createIdeaCommand.getTitle(), createIdeaCommand.getDescription());
+    public void handleSubmitIdeaCommand(SubmitIdeaCommand submitIdeaCommand) {
+        Idea idea = IdeaFactory.create(submitIdeaCommand.getIdeaId(), submitIdeaCommand.getTitle(), submitIdeaCommand.getDescription());
         ideaRepository.add(idea);
     }
     @CommandHandler

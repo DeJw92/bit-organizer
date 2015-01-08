@@ -2,12 +2,12 @@ package pl.edu.knbit.domain.events;
 
 import pl.edu.knbit.domain.valueobjects.IdeaId;
 
-public class IdeaCreatedEvent {
+public class IdeaSubmittedEvent {
     private final IdeaId ideaId;
     private final String title;
     private final String description;
 
-    public IdeaCreatedEvent(IdeaId ideaId, String title, String description) {
+    public IdeaSubmittedEvent(IdeaId ideaId, String title, String description) {
         this.ideaId = ideaId;
         this.title = title;
         this.description = description;
