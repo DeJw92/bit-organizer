@@ -60,4 +60,8 @@ public class TeamLeaderRecruitment extends AbstractAnnotatedAggregateRoot {
         candidates.remove(event.getTeamLeader());
         status = TeamLeaderRecruitmentStatus.CLOSED;
     }
+
+    public List<Member> getCandidates() {
+        return candidates;
+    }
 }
