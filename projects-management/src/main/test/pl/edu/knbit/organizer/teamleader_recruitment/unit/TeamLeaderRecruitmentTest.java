@@ -23,7 +23,7 @@ public class TeamLeaderRecruitmentTest {
     private Member candidate;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         recruitment = new TeamLeaderRecruitment(new TeamLeaderRecruitmentId(1));
     }
 
