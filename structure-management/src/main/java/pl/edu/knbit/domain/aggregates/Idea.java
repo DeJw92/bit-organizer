@@ -1,8 +1,10 @@
 package pl.edu.knbit.domain.aggregates;
 
+import pl.edu.knbit.domain.events.IdeaAcceptedEvent;
 import pl.edu.knbit.domain.events.GroupSupervisorSelectedEvent;
 import pl.edu.knbit.domain.events.IdeaCreatedEvent;
 import pl.edu.knbit.domain.events.ParentGroupSelectedEvent;
+import pl.edu.knbit.domain.exceptions.IdeaAlreadyAcceptedException;
 import pl.edu.knbit.domain.exceptions.ParentGroupNotSelectedException;
 import pl.edu.knbit.domain.valueobjects.GroupId;
 import pl.edu.knbit.domain.valueobjects.IdeaId;
@@ -17,6 +19,7 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     private String title;
     private String description;
     private GroupId parentGroupId;
+    private boolean accepted = false;
     private UserId groupSupervisorId;
 
     private Idea() {
@@ -29,6 +32,15 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     public void selectParentGroup(GroupId groupId) {
         //check whether group exists
         apply(new ParentGroupSelectedEvent(this.id, groupId));
+    }
+
+    public void accept() throws IdeaAlreadyAcceptedException {
+        if(this.accepted){
+            throw new IdeaAlreadyAcceptedException(this.id);
+        }
+        else{
+            apply(new IdeaAcceptedEvent(this.id));
+        }
     }
 
     public void selectGroupSupervisor(UserId groupSupervisorId) throws ParentGroupNotSelectedException {
@@ -53,5 +65,10 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     @EventSourcingHandler
     public void onGroupSupervisorSelected(GroupSupervisorSelectedEvent groupSupervisorSelectedEvent) {
         this.groupSupervisorId = groupSupervisorSelectedEvent.getGroupSupervisorId();
+    }
+
+    @EventSourcingHandler
+    public void onIdeaAccepted(IdeaAcceptedEvent ideaAcceptedEvent) {
+        this.accepted = true;
     }
 }

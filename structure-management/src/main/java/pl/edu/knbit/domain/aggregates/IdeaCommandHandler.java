@@ -1,8 +1,10 @@
 package pl.edu.knbit.domain.aggregates;
 
+import pl.edu.knbit.domain.commands.AcceptIdeaCommand;
 import pl.edu.knbit.domain.commands.CreateIdeaCommand;
 import pl.edu.knbit.domain.commands.SelectGroupSupervisorCommand;
 import pl.edu.knbit.domain.commands.SelectParentGroupCommand;
+import pl.edu.knbit.domain.exceptions.IdeaAlreadyAcceptedException;
 import pl.edu.knbit.domain.exceptions.ParentGroupNotSelectedException;
 import pl.edu.knbit.domain.valueobjects.GroupId;
 import pl.edu.knbit.domain.valueobjects.IdeaId;
@@ -37,6 +39,13 @@ public class IdeaCommandHandler {
         UserId groupSupervisorId = selectGroupSupervisorCommand.getGroupSupervisorId();
         Idea idea = ideaRepository.load(ideaId);
         idea.selectGroupSupervisor(groupSupervisorId);
+    }
+
+    @CommandHandler
+    public void handleAcceptIdeaCommand(AcceptIdeaCommand acceptIdeaCommand) throws IdeaAlreadyAcceptedException {
+        IdeaId ideaId = acceptIdeaCommand.getIdeaId();
+        Idea idea = ideaRepository.load(ideaId);
+        idea.accept();
     }
 
     @Autowired

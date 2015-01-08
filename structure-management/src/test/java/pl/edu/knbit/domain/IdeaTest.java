@@ -2,12 +2,15 @@ package pl.edu.knbit.domain;
 
 import pl.edu.knbit.domain.aggregates.Idea;
 import pl.edu.knbit.domain.aggregates.IdeaCommandHandler;
+import pl.edu.knbit.domain.commands.AcceptIdeaCommand;
 import pl.edu.knbit.domain.commands.CreateIdeaCommand;
 import pl.edu.knbit.domain.commands.SelectGroupSupervisorCommand;
 import pl.edu.knbit.domain.commands.SelectParentGroupCommand;
+import pl.edu.knbit.domain.events.IdeaAcceptedEvent;
 import pl.edu.knbit.domain.events.GroupSupervisorSelectedEvent;
 import pl.edu.knbit.domain.events.IdeaCreatedEvent;
 import pl.edu.knbit.domain.events.ParentGroupSelectedEvent;
+import pl.edu.knbit.domain.exceptions.IdeaAlreadyAcceptedException;
 import pl.edu.knbit.domain.exceptions.ParentGroupNotSelectedException;
 import pl.edu.knbit.domain.valueobjects.GroupId;
 import pl.edu.knbit.domain.valueobjects.IdeaId;
@@ -68,6 +71,21 @@ public class IdeaTest {
         fixtureConfiguration.given(new IdeaCreatedEvent(ideaId, title, description))
                 .when(new SelectGroupSupervisorCommand(ideaId, groupId, userId))
                 .expectException(ParentGroupNotSelectedException.class);
+
+    }
+
+    @Test
+    public void testAcceptIdea() throws Exception {
+        fixtureConfiguration.given(new IdeaCreatedEvent(ideaId, title, description))
+                .when(new AcceptIdeaCommand(ideaId))
+                .expectEvents(new IdeaAcceptedEvent(ideaId));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenIdeaAcceptedMoreThanOnce() throws Exception {
+        fixtureConfiguration.given(new IdeaCreatedEvent(ideaId, title, description), new IdeaAcceptedEvent(ideaId))
+                .when(new AcceptIdeaCommand(ideaId))
+                .expectException(IdeaAlreadyAcceptedException.class);
 
     }
 }
