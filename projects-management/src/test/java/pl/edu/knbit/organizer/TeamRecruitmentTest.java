@@ -11,6 +11,7 @@ import pl.edu.knbit.organizer.teamrecruitment.TeamRecruitmentId;
 import pl.edu.knbit.organizer.teamrecruitment.commands.AcceptMemberCommand;
 import pl.edu.knbit.organizer.teamrecruitment.commands.ApplyForProjectCommand;
 import pl.edu.knbit.organizer.teamrecruitment.commands.CloseTeamRecruitmentCommand;
+import pl.edu.knbit.organizer.teamrecruitment.commands.RejectMemberCommand;
 import pl.edu.knbit.organizer.teamrecruitment.events.*;
 
 public class TeamRecruitmentTest {
@@ -130,6 +131,36 @@ public class TeamRecruitmentTest {
                         new TeamRecruitmentFinishedEvent(teamRecruitmentId)
                 ).
                 when(new CloseTeamRecruitmentCommand(teamRecruitmentId)).
+                expectException(IllegalStateException.class);
+    }
+
+    @Test
+    public void shouldRejectMembersThatDidApply() {
+        fixture.
+                given(
+                        new TeamRecruitmentOpenedEvent(teamRecruitmentId),
+                        new MemberAppliedEvent(teamRecruitmentId, memberId)
+                ).
+                when(new RejectMemberCommand(teamRecruitmentId, memberId)).
+                expectEvents(new MemberRejectedEvent(teamRecruitmentId, memberId));
+    }
+
+    @Test
+    public void shouldNotAllowToRejectMembersThatDidNotApply() {
+        fixture.given(new TeamRecruitmentOpenedEvent(teamRecruitmentId)).
+                when(new RejectMemberCommand(teamRecruitmentId, memberId)).
+                expectException(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void shouldNotAllowToRejectMembersWhenRecruitmentFinished() {
+        fixture.
+                given(
+                        new TeamRecruitmentOpenedEvent(teamRecruitmentId),
+                        new MemberAppliedEvent(teamRecruitmentId, memberId),
+                        new TeamRecruitmentFinishedEvent(teamRecruitmentId)
+                ).
+                when(new RejectMemberCommand(teamRecruitmentId, memberId)).
                 expectException(IllegalStateException.class);
     }
 
