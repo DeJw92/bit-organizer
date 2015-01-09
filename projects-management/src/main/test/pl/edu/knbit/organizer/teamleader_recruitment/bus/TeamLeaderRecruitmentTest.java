@@ -1,12 +1,9 @@
-package pl.edu.knbit.organizer.teamleader_recruitment.command;
+package pl.edu.knbit.organizer.teamleader_recruitment.bus;
 
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
