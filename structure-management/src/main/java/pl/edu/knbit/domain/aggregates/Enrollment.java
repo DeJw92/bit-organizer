@@ -7,6 +7,7 @@ import pl.edu.knbit.domain.events.*;
 import pl.edu.knbit.domain.valueobjects.EnrollmentConfiguration;
 import pl.edu.knbit.domain.valueobjects.EnrollmentId;
 import pl.edu.knbit.domain.valueobjects.EnrollmentStatus;
+import pl.edu.knbit.domain.valueobjects.MembershipRequestId;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +20,7 @@ public class Enrollment extends AbstractAnnotatedAggregateRoot {
     private String description;
     private EnrollmentStatus status;
     private EnrollmentConfiguration configuration;
-    private Set<MembershipRequest> membershipRequests;
+    private Set<MembershipRequestId> membershipRequestIds;
 
     private Enrollment() {}
 
@@ -27,14 +28,14 @@ public class Enrollment extends AbstractAnnotatedAggregateRoot {
         apply(new EnrollmentCreatedEvent(id, title, description, configuration));
     }
 
-    public void addMembershipRequest(MembershipRequest membershipRequest) {
+    public void addMembershipRequest(MembershipRequestId membershipRequestId) {
         if (status != EnrollmentStatus.STARTED) {
             apply(new EnrollmentIsNotStartedEvent(id, status));
             return;
         }
 
-        if (membershipRequests.contains(membershipRequest)) {
-            apply(new EnrollmentAlreadyContainsMembershipRequestEvent(id, membershipRequest));
+        if (membershipRequestIds.contains(membershipRequestId)) {
+            apply(new EnrollmentAlreadyContainsMembershipRequestEvent(id, membershipRequestId));
             return;
         }
 
@@ -43,7 +44,7 @@ public class Enrollment extends AbstractAnnotatedAggregateRoot {
             return;
         }
 
-        apply(new MembershipRequestAddedEvent(id, membershipRequest));
+        apply(new MembershipRequestAddedEvent(id, membershipRequestId));
     }
 
     public void startEnrollment() {
@@ -65,7 +66,7 @@ public class Enrollment extends AbstractAnnotatedAggregateRoot {
         this.description = event.getDescription();
         this.status = EnrollmentStatus.CREATED;
         this.configuration = event.getConfiguration();
-        this.membershipRequests = new HashSet<>();
+        this.membershipRequestIds = new HashSet<>();
     }
 
     @EventSourcingHandler
@@ -85,10 +86,10 @@ public class Enrollment extends AbstractAnnotatedAggregateRoot {
 
     @EventSourcingHandler
     public void onMembershipRequestAdded(MembershipRequestAddedEvent membershipRequestAddedEvent) {
-        membershipRequests.add(membershipRequestAddedEvent.getMembershipRequest());
+        membershipRequestIds.add(membershipRequestAddedEvent.getMembershipRequestId());
     }
 
     private boolean isRequestsCountLimitSatisfied() {
-        return membershipRequests.size() < configuration.getRequestsLimit();
+        return membershipRequestIds.size() < configuration.getRequestsLimit();
     }
 }

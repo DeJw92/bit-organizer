@@ -2,17 +2,18 @@ package pl.edu.knbit.domain.commands;
 
 import pl.edu.knbit.domain.aggregates.MembershipRequest;
 import pl.edu.knbit.domain.valueobjects.EnrollmentId;
+import pl.edu.knbit.domain.valueobjects.MembershipRequestId;
 
 public class AddMembershipRequestCommand extends EnrollmentManagementCommand {
 
-    private final MembershipRequest membershipRequest;
+    private final MembershipRequestId membershipRequestId;
 
-    public AddMembershipRequestCommand(EnrollmentId enrollmentId, MembershipRequest membershipRequest) {
+    public AddMembershipRequestCommand(EnrollmentId enrollmentId, MembershipRequestId membershipRequestId) {
         super(enrollmentId);
-        this.membershipRequest = membershipRequest;
+        this.membershipRequestId = membershipRequestId;
     }
 
-    public MembershipRequest getMembershipRequest() {
-        return membershipRequest;
+    public MembershipRequestId getMembershipRequestId() {
+        return membershipRequestId;
     }
 }

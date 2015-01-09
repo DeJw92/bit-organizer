@@ -2,17 +2,18 @@ package pl.edu.knbit.domain.events;
 
 import pl.edu.knbit.domain.aggregates.MembershipRequest;
 import pl.edu.knbit.domain.valueobjects.EnrollmentId;
+import pl.edu.knbit.domain.valueobjects.MembershipRequestId;
 
 public class MembershipRequestAddedEvent extends EnrollmentManagementEvent {
 
-    private final MembershipRequest membershipRequest;
+    private final MembershipRequestId membershipRequestId;
 
-    public MembershipRequestAddedEvent(EnrollmentId enrollmentId, MembershipRequest membershipRequest) {
+    public MembershipRequestAddedEvent(EnrollmentId enrollmentId, MembershipRequestId membershipRequestId) {
         super(enrollmentId);
-        this.membershipRequest = membershipRequest;
+        this.membershipRequestId = membershipRequestId;
     }
 
-    public MembershipRequest getMembershipRequest() {
-        return membershipRequest;
+    public MembershipRequestId getMembershipRequestId() {
+        return membershipRequestId;
     }
 }

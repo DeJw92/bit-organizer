@@ -40,7 +40,7 @@ public class EnrollmentCommandsHandler {
     @CommandHandler
     public void handleAddMembershipRequestCommand(AddMembershipRequestCommand command) {
         Enrollment enrollment = enrollmentRepository.load(command.getEnrollmentId());
-        enrollment.addMembershipRequest(command.getMembershipRequest());
+        enrollment.addMembershipRequest(command.getMembershipRequestId());
     }
 
     @Autowired
