@@ -1,13 +1,13 @@
 package pl.edu.knbit.organizer.aggregate_roots.project_AR;
 
+import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
+import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
+import org.axonframework.eventsourcing.annotation.EventSourcedMember;
+import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.TeamMember;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.TeamMemberRecruitment;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.events.*;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.value_objects.ProjectID;
-import org.axonframework.eventhandling.annotation.EventHandler;
-import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
-import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
-import org.axonframework.eventsourcing.annotation.EventSourcedMember;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -61,19 +61,18 @@ public class Project extends AbstractAnnotatedAggregateRoot {
         apply(new ProjectPlacedInStructureEvent(projectID));
     }
 
-
-    @EventHandler
+    @EventSourcingHandler
     public void onProjectCreated(ProjectCreatedEvent projectCreatedEvent) {
         this.projectID = projectCreatedEvent.getProjectID();
         this.teamMemberRecruitment = projectCreatedEvent.getTeamMemberRecruitment();
     }
 
-    @EventHandler
+    @EventSourcingHandler
     public void onTeamMemberAddedEvent(TeamMemberAddedEvent teamMemberAddedEvent) {
         teamMembers.add(teamMemberAddedEvent.getTeamMember());
     }
 
-    @EventHandler
+    @EventSourcingHandler
     public void onMemberRemovedEvent(TeamMemberRemovedEvent teamMemberRemovedEvent) {
         teamMembers.remove(teamMemberRemovedEvent.getTeamMember());
     }
