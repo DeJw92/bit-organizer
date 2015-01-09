@@ -40,7 +40,6 @@ public class TeamRecruitment extends AbstractAnnotatedAggregateRoot {
         Preconditions.checkArgument(appliedMembers.contains(memberId));
         Preconditions.checkState(status != TeamRecruitmentStatus.FINISHED);
 
-        // TODO send command to Project AR
         apply(new MemberAcceptedEvent(id, memberId));
     }
 
