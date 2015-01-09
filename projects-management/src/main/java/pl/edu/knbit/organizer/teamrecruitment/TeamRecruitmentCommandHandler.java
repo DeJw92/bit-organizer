@@ -1,8 +1,8 @@
-package pl.edu.knbit.organizer;
+package pl.edu.knbit.organizer.teamrecruitment;
 
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
-import pl.edu.knbit.organizer.commands.*;
+import pl.edu.knbit.organizer.teamrecruitment.commands.*;
 
 public class TeamRecruitmentCommandHandler {
 

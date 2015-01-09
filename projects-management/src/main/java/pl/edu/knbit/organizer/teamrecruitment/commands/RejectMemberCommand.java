@@ -1,17 +1,17 @@
-package pl.edu.knbit.organizer.commands;
+package pl.edu.knbit.organizer.teamrecruitment.commands;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import pl.edu.knbit.organizer.MemberId;
-import pl.edu.knbit.organizer.TeamRecruitmentId;
+import pl.edu.knbit.organizer.teamrecruitment.MemberId;
+import pl.edu.knbit.organizer.teamrecruitment.TeamRecruitmentId;
 
-public class AcceptMemberCommand {
+public class RejectMemberCommand {
 
     @TargetAggregateIdentifier
     private final TeamRecruitmentId teamRecruitmentId;
 
     private final MemberId memberId;
 
-    public AcceptMemberCommand(TeamRecruitmentId teamRecruitmentId, MemberId memberId) {
+    public RejectMemberCommand(TeamRecruitmentId teamRecruitmentId, MemberId memberId) {
         this.teamRecruitmentId = teamRecruitmentId;
         this.memberId = memberId;
     }

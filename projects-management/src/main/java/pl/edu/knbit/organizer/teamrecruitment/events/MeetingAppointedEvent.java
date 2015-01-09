@@ -1,15 +1,15 @@
-package pl.edu.knbit.organizer.events;
+package pl.edu.knbit.organizer.teamrecruitment.events;
 
-import pl.edu.knbit.organizer.MemberId;
-import pl.edu.knbit.organizer.TeamRecruitmentId;
+import pl.edu.knbit.organizer.teamrecruitment.MemberId;
+import pl.edu.knbit.organizer.teamrecruitment.TeamRecruitmentId;
 
-public class MemberAcceptedEvent {
+public class MeetingAppointedEvent {
 
     private final TeamRecruitmentId teamRecruitmentId;
 
     private final MemberId memberId;
 
-    public MemberAcceptedEvent(TeamRecruitmentId teamRecruitmentId, MemberId memberId) {
+    public MeetingAppointedEvent(TeamRecruitmentId teamRecruitmentId, MemberId memberId) {
         this.teamRecruitmentId = teamRecruitmentId;
         this.memberId = memberId;
     }
@@ -21,5 +21,4 @@ public class MemberAcceptedEvent {
     public MemberId getMemberId() {
         return memberId;
     }
-
 }

@@ -1,17 +1,17 @@
-package pl.edu.knbit.organizer.commands;
+package pl.edu.knbit.organizer.teamrecruitment.commands;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import pl.edu.knbit.organizer.MemberId;
-import pl.edu.knbit.organizer.TeamRecruitmentId;
+import pl.edu.knbit.organizer.teamrecruitment.MemberId;
+import pl.edu.knbit.organizer.teamrecruitment.TeamRecruitmentId;
 
-public class ApplyForProjectCommand {
+public class AppointMeetingCommand {
 
     @TargetAggregateIdentifier
     private final TeamRecruitmentId teamRecruitmentId;
-
     private final MemberId memberId;
+    //TODO: Date
 
-    public ApplyForProjectCommand(TeamRecruitmentId teamRecruitmentId, MemberId memberId) {
+    public AppointMeetingCommand(TeamRecruitmentId teamRecruitmentId, MemberId memberId) {
         this.teamRecruitmentId = teamRecruitmentId;
         this.memberId = memberId;
     }
@@ -23,5 +23,4 @@ public class ApplyForProjectCommand {
     public MemberId getMemberId() {
         return memberId;
     }
-
 }

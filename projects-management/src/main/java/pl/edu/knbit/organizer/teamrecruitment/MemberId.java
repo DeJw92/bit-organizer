@@ -1,4 +1,4 @@
-package pl.edu.knbit.organizer;
+package pl.edu.knbit.organizer.teamrecruitment;
 
 public class MemberId {
 
