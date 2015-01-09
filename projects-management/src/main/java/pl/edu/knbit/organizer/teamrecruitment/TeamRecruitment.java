@@ -6,14 +6,14 @@ import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import pl.edu.knbit.organizer.teamrecruitment.events.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TeamRecruitment extends AbstractAnnotatedAggregateRoot {
 
     @AggregateIdentifier
     private TeamRecruitmentId id;
-    private List<MemberId> appliedMembers = new ArrayList<>();
+    private Set<MemberId> appliedMembers = new HashSet<>();
     private TeamRecruitmentStatus status = TeamRecruitmentStatus.OPEN;
 
     private TeamRecruitment() {
@@ -31,6 +31,7 @@ public class TeamRecruitment extends AbstractAnnotatedAggregateRoot {
 
     public void applyForProject(MemberId memberId) {
         Preconditions.checkState(status == TeamRecruitmentStatus.OPEN);
+        Preconditions.checkArgument(!appliedMembers.contains(memberId));
 
         apply(new MemberAppliedEvent(id, memberId));
     }
