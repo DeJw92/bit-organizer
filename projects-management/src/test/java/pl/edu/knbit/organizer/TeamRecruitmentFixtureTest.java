@@ -11,7 +11,7 @@ import pl.edu.knbit.organizer.teamrecruitment.TeamRecruitmentId;
 import pl.edu.knbit.organizer.teamrecruitment.commands.*;
 import pl.edu.knbit.organizer.teamrecruitment.events.*;
 
-public class TeamRecruitmentTest {
+public class TeamRecruitmentFixtureTest {
 
     private FixtureConfiguration<TeamRecruitment> fixture;
 
