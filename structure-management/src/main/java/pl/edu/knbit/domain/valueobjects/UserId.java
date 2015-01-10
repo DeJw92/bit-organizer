@@ -5,8 +5,8 @@ import java.util.UUID;
 public class UserId {
     private final UUID id;
 
-    public UserId(UUID id) {
-        this.id = id;
+    public UserId(UUID uuid) {
+        this.id = uuid;
     }
 
     @Override
@@ -24,5 +24,9 @@ public class UserId {
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    public static UserId nextId() {
+        return new UserId(UUID.randomUUID());
     }
 }

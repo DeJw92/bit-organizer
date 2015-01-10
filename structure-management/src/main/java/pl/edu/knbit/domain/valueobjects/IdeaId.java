@@ -5,8 +5,8 @@ import java.util.UUID;
 public class IdeaId {
     private final UUID id;
 
-    public IdeaId(UUID id) {
-        this.id = id;
+    private IdeaId(UUID uuid) {
+        this.id = uuid;
     }
 
     @Override
@@ -31,5 +31,9 @@ public class IdeaId {
         return "IdeaId{" +
                 "id=" + id +
                 '}';
+    }
+
+    public static IdeaId nextId() {
+        return new IdeaId(UUID.randomUUID());
     }
 }

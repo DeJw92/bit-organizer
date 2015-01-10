@@ -14,6 +14,9 @@ import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import pl.edu.knbit.domain.valueobjects.UserId;
 
 public class Idea extends AbstractAnnotatedAggregateRoot {
+//    TODO
+//    private static enum Status { SUBMITTED, ACCEPTED, REJECTED, ABANDONED }
+
     @AggregateIdentifier
     private IdeaId id;
     private String title;
@@ -27,6 +30,10 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
 
     public Idea(IdeaId id, String title, String description) {
         apply(new IdeaSubmittedEvent(id, title, description));
+    }
+
+    public GroupId getParentGroupId() {
+        return parentGroupId;
     }
 
     public void selectParentGroup(GroupId groupId) {
@@ -44,10 +51,6 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     }
 
     public void selectGroupSupervisor(UserId groupSupervisorId) throws ParentGroupNotSelectedException {
-        //check whether groupSupervisorId is member of parentGroup
-        if(parentGroupId == null) {
-            throw new ParentGroupNotSelectedException(this.id);
-        }
         apply(new GroupSupervisorSelectedEvent(this.id, this.parentGroupId, groupSupervisorId));
     }
 

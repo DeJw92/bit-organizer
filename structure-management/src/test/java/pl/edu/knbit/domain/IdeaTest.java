@@ -20,8 +20,6 @@ import org.junit.Before;
 import org.junit.Test;
 import pl.edu.knbit.domain.valueobjects.UserId;
 
-import java.util.UUID;
-
 public class IdeaTest {
     private FixtureConfiguration fixtureConfiguration;
     private IdeaId ideaId;
@@ -34,11 +32,11 @@ public class IdeaTest {
     public void setUp() throws Exception {
         fixtureConfiguration = Fixtures.newGivenWhenThenFixture(Idea.class);
 
-        ideaId = new IdeaId(UUID.randomUUID());
+        ideaId = IdeaId.nextId();
         groupId = new GroupId("parent group");
         title = "Great idea!";
         description = "Description of great idea";
-        userId = new UserId(UUID.randomUUID());
+        userId = UserId.nextId();
 
         IdeaCommandHandler ideaCommandHandler = new IdeaCommandHandler();
         ideaCommandHandler.setIdeaRepository(fixtureConfiguration.getRepository());
