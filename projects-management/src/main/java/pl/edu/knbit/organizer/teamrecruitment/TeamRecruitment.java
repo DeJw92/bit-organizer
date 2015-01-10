@@ -59,10 +59,22 @@ public class TeamRecruitment extends AbstractAnnotatedAggregateRoot {
     }
 
     public void finishRecruitment() {
-        // TODO Can we finish recruitment that wasn't closed?
         Preconditions.checkState(status != TeamRecruitmentStatus.FINISHED);
+        Preconditions.checkState(appliedMembers.isEmpty());
 
         apply(new TeamRecruitmentFinishedEvent(id));
+    }
+
+    public TeamRecruitmentId getId() {
+        return id;
+    }
+
+    public Set<MemberId> getAppliedMembers() {
+        return new HashSet<>(appliedMembers);
+    }
+
+    public TeamRecruitmentStatus getStatus() {
+        return status;
     }
 
     @EventSourcingHandler

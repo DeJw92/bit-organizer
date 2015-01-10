@@ -8,18 +8,16 @@ import pl.edu.knbit.organizer.teamrecruitment.MemberId;
 import pl.edu.knbit.organizer.teamrecruitment.TeamRecruitment;
 import pl.edu.knbit.organizer.teamrecruitment.TeamRecruitmentCommandHandler;
 import pl.edu.knbit.organizer.teamrecruitment.TeamRecruitmentId;
-import pl.edu.knbit.organizer.teamrecruitment.commands.AcceptMemberCommand;
-import pl.edu.knbit.organizer.teamrecruitment.commands.ApplyForProjectCommand;
-import pl.edu.knbit.organizer.teamrecruitment.commands.CloseTeamRecruitmentCommand;
-import pl.edu.knbit.organizer.teamrecruitment.commands.RejectMemberCommand;
+import pl.edu.knbit.organizer.teamrecruitment.commands.*;
 import pl.edu.knbit.organizer.teamrecruitment.events.*;
 
 public class TeamRecruitmentTest {
 
     private FixtureConfiguration<TeamRecruitment> fixture;
 
-    public TeamRecruitmentId teamRecruitmentId;
-    public final MemberId memberId = new MemberId(1);
+    private final TeamRecruitmentId teamRecruitmentId = TeamRecruitmentId.randomId();
+    private final MemberId memberId = new MemberId(1);
+    private final MemberId secondMemberId = new MemberId(2);
 
     @Before
     public void setUp() throws Exception {
@@ -28,8 +26,6 @@ public class TeamRecruitmentTest {
         final TeamRecruitmentCommandHandler commandHandler = new TeamRecruitmentCommandHandler();
         commandHandler.setRepository(fixture.getRepository());
         fixture.registerAnnotatedCommandHandler(commandHandler);
-
-        teamRecruitmentId = TeamRecruitmentId.randomId();
     }
 
     @Test
@@ -135,6 +131,7 @@ public class TeamRecruitmentTest {
     }
 
     @Test
+
     public void shouldRejectMembersThatDidApply() {
         fixture.
                 given(
@@ -161,6 +158,53 @@ public class TeamRecruitmentTest {
                         new TeamRecruitmentFinishedEvent(teamRecruitmentId)
                 ).
                 when(new RejectMemberCommand(teamRecruitmentId, memberId)).
+                expectException(IllegalStateException.class);
+    }
+
+    @Test
+    public void shouldAllowToFinishOpenRecruitment() {
+        fixture.given(new TeamRecruitmentOpenedEvent(teamRecruitmentId))
+                .when(new FinishTeamRecruitmentCommand(teamRecruitmentId))
+                .expectEvents(new TeamRecruitmentFinishedEvent(teamRecruitmentId));
+    }
+
+    @Test
+    public void shouldAllowToFinishClosedRecruitment() {
+        fixture.
+                given(
+                        new TeamRecruitmentOpenedEvent(teamRecruitmentId),
+                        new TeamRecruitmentClosedEvent(teamRecruitmentId)
+                ).
+                when(new FinishTeamRecruitmentCommand(teamRecruitmentId)).
+                expectEvents(new TeamRecruitmentFinishedEvent(teamRecruitmentId));
+    }
+
+    @Test
+    public void shouldAllowToFinishRecruitmentWhenAllMembersAreTakenCareOf() {
+        fixture.
+                given(
+                        new TeamRecruitmentOpenedEvent(teamRecruitmentId),
+                        new MemberAppliedEvent(teamRecruitmentId, memberId),
+                        new MemberAppliedEvent(teamRecruitmentId, secondMemberId),
+                        new TeamRecruitmentClosedEvent(teamRecruitmentId),
+                        new MemberAcceptedEvent(teamRecruitmentId, memberId),
+                        new MemberAcceptedEvent(teamRecruitmentId, secondMemberId)
+                ).
+                when(new FinishTeamRecruitmentCommand(teamRecruitmentId)).
+                expectEvents(new TeamRecruitmentFinishedEvent(teamRecruitmentId));
+    }
+
+    @Test
+    public void shouldNotAllowToFinishRecruitmentUntilAllMembersAreTakenCareOf() {
+        fixture.
+                given(
+                        new TeamRecruitmentOpenedEvent(teamRecruitmentId),
+                        new MemberAppliedEvent(teamRecruitmentId, memberId),
+                        new MemberAppliedEvent(teamRecruitmentId, secondMemberId),
+                        new TeamRecruitmentClosedEvent(teamRecruitmentId),
+                        new MemberAcceptedEvent(teamRecruitmentId, secondMemberId)
+                ).
+                when(new FinishTeamRecruitmentCommand(teamRecruitmentId)).
                 expectException(IllegalStateException.class);
     }
 
