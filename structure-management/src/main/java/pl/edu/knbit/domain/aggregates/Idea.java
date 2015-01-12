@@ -1,10 +1,6 @@
 package pl.edu.knbit.domain.aggregates;
 
-import pl.edu.knbit.domain.events.IdeaAcceptedEvent;
-import pl.edu.knbit.domain.events.GroupSupervisorSelectedEvent;
-import pl.edu.knbit.domain.events.IdeaSubmittedEvent;
-import pl.edu.knbit.domain.events.ParentGroupSelectedEvent;
-import pl.edu.knbit.domain.exceptions.IdeaAlreadyAcceptedException;
+import pl.edu.knbit.domain.events.*;
 import pl.edu.knbit.domain.exceptions.ParentGroupNotSelectedException;
 import pl.edu.knbit.domain.valueobjects.GroupId;
 import pl.edu.knbit.domain.valueobjects.IdeaId;
@@ -14,15 +10,14 @@ import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import pl.edu.knbit.domain.valueobjects.UserId;
 
 public class Idea extends AbstractAnnotatedAggregateRoot {
-//    TODO
-//    private static enum Status { SUBMITTED, ACCEPTED, REJECTED, ABANDONED }
+    private static enum Status { SUBMITTED, ACCEPTED, INACTIVE }
 
     @AggregateIdentifier
     private IdeaId id;
     private String title;
     private String description;
     private GroupId parentGroupId;
-    private boolean accepted = false;
+    private Status status;
     private UserId groupSupervisorId;
 
     private Idea() {
@@ -37,21 +32,35 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     }
 
     public void selectParentGroup(GroupId groupId) {
-        //check whether group exists
         apply(new ParentGroupSelectedEvent(this.id, groupId));
     }
 
-    public void accept() throws IdeaAlreadyAcceptedException {
-        if(this.accepted){
-            throw new IdeaAlreadyAcceptedException(this.id);
+    public void accept() throws IllegalStateException {
+        if(this.status != Status.SUBMITTED){
+//            IllegalStateException or rename IdeaAlreadyAcceptedException
+            throw new IllegalStateException(String.format("Cannot accept idea in state %s", this.status));
         }
-        else{
-            apply(new IdeaAcceptedEvent(this.id));
-        }
+        apply(new IdeaAcceptedEvent(this.id));
     }
 
     public void selectGroupSupervisor(UserId groupSupervisorId) throws ParentGroupNotSelectedException {
         apply(new GroupSupervisorSelectedEvent(this.id, this.parentGroupId, groupSupervisorId));
+    }
+
+    public void reject() {
+//            IllegalStateException or create custom exception
+        if(this.status != Status.SUBMITTED){
+            throw new IllegalStateException(String.format("Cannot reject idea in state %s", this.status));
+        }
+        apply(new IdeaRejectedEvent(this.id));
+    }
+
+    public void abandon() {
+        if(this.status != Status.ACCEPTED){
+//            IllegalStateException or create custom exception
+            throw new IllegalStateException(String.format("Cannot abandon idea in state %s", this.status));
+        }
+        apply(new IdeaAbandonedEvent(this.id));
     }
 
     @EventSourcingHandler
@@ -59,6 +68,7 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
         this.id = ideaSubmittedEvent.getIdeaId();
         this.title = ideaSubmittedEvent.getTitle();
         this.description = ideaSubmittedEvent.getDescription();
+        this.status = Status.SUBMITTED;
     }
 
     @EventSourcingHandler
@@ -71,7 +81,12 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     }
 
     @EventSourcingHandler
-    public void onIdeaAccepted(IdeaAcceptedEvent ideaAcceptedEvent) {
-        this.accepted = true;
+     public void onIdeaAccepted(IdeaAcceptedEvent ideaAcceptedEvent) {
+        this.status = Status.ACCEPTED;
+    }
+
+    @EventSourcingHandler
+    public void onIdeaRejected(IdeaRejectedEvent ideaRejectedEvent) {
+        this.status = Status.INACTIVE;
     }
 }

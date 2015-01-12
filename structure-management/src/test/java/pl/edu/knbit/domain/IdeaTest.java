@@ -2,15 +2,8 @@ package pl.edu.knbit.domain;
 
 import pl.edu.knbit.domain.aggregates.Idea;
 import pl.edu.knbit.domain.aggregates.IdeaCommandHandler;
-import pl.edu.knbit.domain.commands.AcceptIdeaCommand;
-import pl.edu.knbit.domain.commands.SubmitIdeaCommand;
-import pl.edu.knbit.domain.commands.SelectGroupSupervisorCommand;
-import pl.edu.knbit.domain.commands.SelectParentGroupCommand;
-import pl.edu.knbit.domain.events.IdeaAcceptedEvent;
-import pl.edu.knbit.domain.events.GroupSupervisorSelectedEvent;
-import pl.edu.knbit.domain.events.IdeaSubmittedEvent;
-import pl.edu.knbit.domain.events.ParentGroupSelectedEvent;
-import pl.edu.knbit.domain.exceptions.IdeaAlreadyAcceptedException;
+import pl.edu.knbit.domain.commands.*;
+import pl.edu.knbit.domain.events.*;
 import pl.edu.knbit.domain.exceptions.ParentGroupNotSelectedException;
 import pl.edu.knbit.domain.valueobjects.GroupId;
 import pl.edu.knbit.domain.valueobjects.IdeaId;
@@ -80,10 +73,37 @@ public class IdeaTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenIdeaAcceptedMoreThanOnce() throws Exception {
+    public void shouldThrowExceptionWhenIdeaAcceptedInWrongState() throws Exception {
         fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description), new IdeaAcceptedEvent(ideaId))
                 .when(new AcceptIdeaCommand(ideaId))
-                .expectException(IdeaAlreadyAcceptedException.class);
+                .expectException(IllegalStateException.class);
+    }
 
+    @Test
+    public void testRejectIdea() throws Exception {
+        fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description))
+                .when(new RejectIdeaCommand(ideaId))
+                .expectEvents(new IdeaRejectedEvent(ideaId));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenIdeaRejectedInWrongState() throws Exception {
+        fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description), new IdeaAcceptedEvent(ideaId))
+                .when(new RejectIdeaCommand(ideaId))
+                .expectException(IllegalStateException.class);
+    }
+
+    @Test
+    public void testAbandonIdea() throws Exception {
+        fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description), new IdeaAcceptedEvent(ideaId))
+                .when(new AbandonIdeaCommand(ideaId))
+                .expectEvents(new IdeaAbandonedEvent(ideaId));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenIdeaAbandonedInWrongState() throws Exception {
+        fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description))
+                .when(new AbandonIdeaCommand(ideaId))
+                .expectException(IllegalStateException.class);
     }
 }

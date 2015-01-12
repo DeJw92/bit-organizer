@@ -1,10 +1,6 @@
 package pl.edu.knbit.domain.aggregates;
 
-import pl.edu.knbit.domain.commands.AcceptIdeaCommand;
-import pl.edu.knbit.domain.commands.SubmitIdeaCommand;
-import pl.edu.knbit.domain.commands.SelectGroupSupervisorCommand;
-import pl.edu.knbit.domain.commands.SelectParentGroupCommand;
-import pl.edu.knbit.domain.exceptions.IdeaAlreadyAcceptedException;
+import pl.edu.knbit.domain.commands.*;
 import pl.edu.knbit.domain.exceptions.ParentGroupNotSelectedException;
 import pl.edu.knbit.domain.valueobjects.GroupId;
 import pl.edu.knbit.domain.valueobjects.IdeaId;
@@ -52,11 +48,27 @@ public class IdeaCommandHandler {
     }
 
     @CommandHandler
-    public void handleAcceptIdeaCommand(AcceptIdeaCommand acceptIdeaCommand) throws IdeaAlreadyAcceptedException {
+    public void handleAcceptIdeaCommand(AcceptIdeaCommand acceptIdeaCommand) throws IllegalStateException {
         IdeaId ideaId = acceptIdeaCommand.getIdeaId();
         //TODO check if exists?
         Idea idea = ideaRepository.load(ideaId);
         idea.accept();
+    }
+
+    @CommandHandler
+    public void handleRejectIdeaCommand(RejectIdeaCommand rejectIdeaCommand) throws IllegalStateException {
+        IdeaId ideaId = rejectIdeaCommand.getIdeaId();
+        //TODO check if exists?
+        Idea idea = ideaRepository.load(ideaId);
+        idea.reject();
+    }
+
+    @CommandHandler
+    public void handleAbandonIdeaCommand(AbandonIdeaCommand abandonIdeaCommand) throws IllegalStateException {
+        IdeaId ideaId = abandonIdeaCommand.getIdeaId();
+        //TODO check if exists?
+        Idea idea = ideaRepository.load(ideaId);
+        idea.abandon();
     }
 
     @Autowired
