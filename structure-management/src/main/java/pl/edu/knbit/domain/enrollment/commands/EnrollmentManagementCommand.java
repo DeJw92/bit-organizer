@@ -1,14 +1,14 @@
-package pl.edu.knbit.domain.events;
+package pl.edu.knbit.domain.enrollment.commands;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import pl.edu.knbit.domain.valueobjects.EnrollmentId;
+import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentId;
 
-public abstract class EnrollmentManagementEvent {
+abstract class EnrollmentManagementCommand {
 
     @TargetAggregateIdentifier
     private final EnrollmentId enrollmentId;
 
-    public EnrollmentManagementEvent(EnrollmentId enrollmentId) {
+    public EnrollmentManagementCommand(EnrollmentId enrollmentId) {
         this.enrollmentId = enrollmentId;
     }
 

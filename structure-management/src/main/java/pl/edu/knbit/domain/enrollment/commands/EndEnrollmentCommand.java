@@ -1,6 +1,6 @@
-package pl.edu.knbit.domain.commands;
+package pl.edu.knbit.domain.enrollment.commands;
 
-import pl.edu.knbit.domain.valueobjects.EnrollmentId;
+import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentId;
 
 public class EndEnrollmentCommand extends EnrollmentManagementCommand {
 

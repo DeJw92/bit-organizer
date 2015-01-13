@@ -4,14 +4,14 @@ import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Test;
-import pl.edu.knbit.domain.aggregates.Enrollment;
-import pl.edu.knbit.domain.commands.*;
-import pl.edu.knbit.domain.commands.handlers.EnrollmentCommandsHandler;
-import pl.edu.knbit.domain.events.*;
-import pl.edu.knbit.domain.valueobjects.EnrollmentConfiguration;
-import pl.edu.knbit.domain.valueobjects.EnrollmentId;
-import pl.edu.knbit.domain.valueobjects.EnrollmentStatus;
-import pl.edu.knbit.domain.valueobjects.MembershipRequestId;
+import pl.edu.knbit.domain.enrollment.aggregates.Enrollment;
+import pl.edu.knbit.domain.enrollment.commands.*;
+import pl.edu.knbit.domain.enrollment.commands.handlers.EnrollmentCommandsHandler;
+import pl.edu.knbit.domain.enrollment.events.*;
+import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentConfiguration;
+import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentId;
+import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentStatus;
+import pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId;
 
 import java.util.UUID;
 
@@ -35,9 +35,9 @@ public class EnrollmentTest {
         description = "Desc";
         configuration = new EnrollmentConfiguration(2);
 
-        membershipRequestId = new pl.edu.knbit.domain.valueobjects.MembershipRequestId(UUID.randomUUID());
-        membershipRequestId2 = new pl.edu.knbit.domain.valueobjects.MembershipRequestId(UUID.randomUUID());
-        membershipRequestId3 = new pl.edu.knbit.domain.valueobjects.MembershipRequestId(UUID.randomUUID());
+        membershipRequestId = new pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId(UUID.randomUUID());
+        membershipRequestId2 = new pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId(UUID.randomUUID());
+        membershipRequestId3 = new pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId(UUID.randomUUID());
 
         EnrollmentCommandsHandler enrollmentCommandsHandler = new EnrollmentCommandsHandler();
         enrollmentCommandsHandler.setEnrollmentRepository(fixtureConfiguration.getRepository());

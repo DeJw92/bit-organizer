@@ -1,12 +1,12 @@
-package pl.edu.knbit.domain.commands.handlers;
+package pl.edu.knbit.domain.enrollment.commands.handlers;
 
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import pl.edu.knbit.domain.aggregates.Enrollment;
-import pl.edu.knbit.domain.aggregates.EnrollmentFactory;
-import pl.edu.knbit.domain.commands.*;
+import pl.edu.knbit.domain.enrollment.aggregates.Enrollment;
+import pl.edu.knbit.domain.enrollment.aggregates.EnrollmentFactory;
+import pl.edu.knbit.domain.enrollment.commands.*;
 
 public class EnrollmentCommandsHandler {
 
