@@ -1,7 +1,7 @@
-package pl.edu.knbit.domain.commands;
+package pl.edu.knbit.domain.group.commands;
 
-import pl.edu.knbit.domain.valueobjects.GroupId;
-import pl.edu.knbit.domain.valueobjects.UserId;
+import pl.edu.knbit.domain.group.valueobjects.GroupId;
+import pl.edu.knbit.domain.group.valueobjects.UserId;
 
 
 /**

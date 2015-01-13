@@ -1,11 +1,14 @@
-package pl.edu.knbit.domain.valueobjects;
+package pl.edu.knbit.domain.group.valueobjects;
 
 import java.util.UUID;
 
-public class EnrollmentId {
+/**
+ * Created by mwrona.
+ */
+public class GroupId {
     private final UUID id;
 
-    public EnrollmentId(UUID id) {
+    public GroupId(UUID id) {
         this.id = id;
     }
 
@@ -14,9 +17,11 @@ public class EnrollmentId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        EnrollmentId enrollmentId = (EnrollmentId) o;
+        GroupId groupId = (GroupId) o;
 
-        return id.equals(enrollmentId.id);
+        if (!id.equals(groupId.id)) return false;
+
+        return true;
     }
 
     @Override
@@ -26,6 +31,8 @@ public class EnrollmentId {
 
     @Override
     public String toString() {
-        return String.format("EnrollmentId(id=%s)", id);
+        return "GroupId{" +
+                "id=" + id +
+                '}';
     }
 }

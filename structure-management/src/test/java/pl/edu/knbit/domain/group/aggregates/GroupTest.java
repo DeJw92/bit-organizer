@@ -1,18 +1,18 @@
-package pl.edu.knbit.domain.aggregates;
+package pl.edu.knbit.domain.group.aggregates;
 
 import org.axonframework.test.Fixtures;
 import org.axonframework.test.FixtureConfiguration;
 import org.junit.Before;
 import org.junit.Test;
-import pl.edu.knbit.domain.commands.AddMemberCommand;
-import pl.edu.knbit.domain.commands.CreateGroupCommand;
-import pl.edu.knbit.domain.commands.StartEnrollmentCommand;
-import pl.edu.knbit.domain.commands.handlers.GroupCommandHandler;
-import pl.edu.knbit.domain.events.EnrollmentStartedEvent;
-import pl.edu.knbit.domain.events.GroupCreatedEvent;
-import pl.edu.knbit.domain.events.MemberAddedEvent;
-import pl.edu.knbit.domain.valueobjects.GroupId;
-import pl.edu.knbit.domain.valueobjects.UserId;
+import pl.edu.knbit.domain.group.commands.AddMemberCommand;
+import pl.edu.knbit.domain.group.commands.CreateGroupCommand;
+import pl.edu.knbit.domain.group.commands.StartEnrollmentCommand;
+import pl.edu.knbit.domain.group.commands.handlers.GroupCommandHandler;
+import pl.edu.knbit.domain.group.events.EnrollmentStartedEvent;
+import pl.edu.knbit.domain.group.events.GroupCreatedEvent;
+import pl.edu.knbit.domain.group.events.MemberAddedEvent;
+import pl.edu.knbit.domain.group.valueobjects.GroupId;
+import pl.edu.knbit.domain.group.valueobjects.UserId;
 
 
 import java.util.UUID;
