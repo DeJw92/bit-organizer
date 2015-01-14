@@ -14,8 +14,6 @@ import pl.edu.knbit.organizer.aggregate_roots.project_AR.events.*;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.handlers.ProjectCommandHandler;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.value_objects.ProjectID;
 
-import static org.mockito.Mockito.when;
-
 /**
  * @author Dawid Pawlak, Pawel Kolodziejczyk
  */
@@ -27,13 +25,14 @@ public class ProjectTest {
     private ProjectID projectID;
     private ProjectCommandHandler commandHandler;
 
-    @Mock
     private TeamMemberRecruitment teamMemberRecruitment;
+
     @Mock
     private TeamMember teamMember;
 
     @Before
     public void setUp() {
+        teamMemberRecruitment = new TeamMemberRecruitment();
         commandHandler = new ProjectCommandHandler();
         fixture = Fixtures.newGivenWhenThenFixture(Project.class);
         fixture.registerAnnotatedCommandHandler(commandHandler);
@@ -57,14 +56,14 @@ public class ProjectTest {
 
     @Test
     public void closeTeamMembersRecruitmentCommandShouldCauseTeamMembersRecruitmentCloseEvent() {
-        fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment))
+        fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment),
+                      new TeamMemberRecruitmentOpenEvent(projectID))
                 .when(new CloseTeamMemberRecruitmentCommand(projectID))
                 .expectEvents(new TeamMemberRecruitmentClosedEvent(projectID));
     }
 
     @Test
     public void addTeamMemberCommandShouldCauseTeamMemberAddedEvent() {
-        when(teamMemberRecruitment.isRecruitmentOpen()).thenReturn(true);
         fixture.given(
                 new ProjectCreatedEvent(projectID, teamMemberRecruitment),
                 new TeamMemberRecruitmentOpenEvent(projectID)
@@ -75,10 +74,8 @@ public class ProjectTest {
 
     @Test
     public void addTeamMemberCommandWhenRecruitmentClosedShouldCauseRecruitmentClosedEvent() {
-        when(teamMemberRecruitment.isRecruitmentOpen()).thenReturn(false);
         fixture.given(
-                new ProjectCreatedEvent(projectID, teamMemberRecruitment),
-                new TeamMemberRecruitmentOpenEvent(projectID)
+                new ProjectCreatedEvent(projectID, teamMemberRecruitment)
         )
                 .when(new AddTeamMemberCommand(projectID, teamMember))
                 .expectEvents(new RecruitmentClosedEvent(projectID));
@@ -86,14 +83,18 @@ public class ProjectTest {
 
     @Test
     public void removeTeamMemberCommandShouldCauseMemberRemovedEvent() {
-        fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment)).
+        fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment),
+                      new TeamMemberRecruitmentOpenEvent(projectID),
+                      new TeamMemberAddedEvent(projectID, teamMember)).
                 when(new RemoveTeamMemberCommand(projectID, teamMember)).
                 expectEvents(new TeamMemberRemovedEvent(projectID, teamMember));
     }
 
     @Test
     public void resignFromTeamMemberCommandShouldCauseMemberRemovedEvent() {
-        fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment)).
+        fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment),
+                      new TeamMemberRecruitmentOpenEvent(projectID),
+                      new TeamMemberAddedEvent(projectID, teamMember)).
                 when(new ResignFromTeamMemberCommand(projectID, teamMember)).
                 expectEvents(new TeamMemberRemovedEvent(projectID, teamMember));
     }
@@ -103,5 +104,22 @@ public class ProjectTest {
         fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment)).
                 when(new PlaceProjectInStructureCommand(projectID)).
                 expectEvents(new ProjectPlacedInStructureEvent(projectID));
+    }
+
+    @Test
+    public void addDuplicatedTeamMemberShouldNotCauseTeamMemberAddedEvent() {
+        fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment),
+                      new TeamMemberRecruitmentOpenEvent(projectID),
+                      new TeamMemberAddedEvent(projectID, teamMember)).
+                when(new AddTeamMemberCommand(projectID, teamMember)).
+                expectEvents();
+    }
+
+    @Test
+    public void removeNotAddesTeamMemberShouldNotCauseTeamMemberRemovedEvent() {
+        fixture.given(new ProjectCreatedEvent(projectID, teamMemberRecruitment),
+                new TeamMemberRecruitmentOpenEvent(projectID)).
+                when(new RemoveTeamMemberCommand(projectID, teamMember)).
+                expectEvents();
     }
 }

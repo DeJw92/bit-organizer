@@ -1,5 +1,6 @@
 package pl.edu.knbit.organizer.aggregate_roots.project_AR;
 
+import com.google.common.base.Preconditions;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.TeamMember;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.entities.TeamMemberRecruitment;
 import pl.edu.knbit.organizer.aggregate_roots.project_AR.events.*;
@@ -33,28 +34,43 @@ public class Project extends AbstractAnnotatedAggregateRoot {
 
 
     public void openTeamMemberRecruitment() {
-        apply(new TeamMemberRecruitmentOpenEvent(projectID));
+        if(!teamMemberRecruitment.isRecruitmentOpen()) {
+            apply(new TeamMemberRecruitmentOpenEvent(projectID));
+        }
     }
 
     public void closeTeamMemberRecruitment() {
-        apply(new TeamMemberRecruitmentClosedEvent(projectID));
+        if(teamMemberRecruitment.isRecruitmentOpen()) {
+            apply(new TeamMemberRecruitmentClosedEvent(projectID));
+        }
     }
 
     public void addMember(TeamMember teamMember) {
+        Preconditions.checkNotNull(teamMember);
+
         if(!teamMemberRecruitment.isRecruitmentOpen()) {
             apply(new RecruitmentClosedEvent(projectID));
             return;
         }
-
-        apply(new TeamMemberAddedEvent(projectID, teamMember));
+        if(!teamMembers.contains(teamMember)) {
+            apply(new TeamMemberAddedEvent(projectID, teamMember));
+        }
     }
 
     public void removeMember(TeamMember teamMember) {
-        apply(new TeamMemberRemovedEvent(projectID, teamMember));
+        Preconditions.checkNotNull(teamMember);
+
+        if(teamMembers.contains(teamMember)) {
+            apply(new TeamMemberRemovedEvent(projectID, teamMember));
+        }
     }
 
     public void resignFromMember(TeamMember teamMember) {
-        apply(new TeamMemberRemovedEvent(projectID, teamMember));
+        Preconditions.checkNotNull(teamMember);
+
+        if(teamMembers.contains(teamMember)) {
+            apply(new TeamMemberRemovedEvent(projectID, teamMember));
+        }
     }
 
     public void placeProjectInStructure() {

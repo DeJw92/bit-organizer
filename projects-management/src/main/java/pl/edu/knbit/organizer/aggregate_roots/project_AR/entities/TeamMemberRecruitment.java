@@ -11,10 +11,9 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
  */
 public class TeamMemberRecruitment extends AbstractAnnotatedEntity {
 
-    private TeamMemberRecruitmentStatus teamMemberRecruitmentStatus;
+    private TeamMemberRecruitmentStatus teamMemberRecruitmentStatus = TeamMemberRecruitmentStatus.CLOSED;
 
-    public TeamMemberRecruitment(TeamMemberRecruitmentStatus teamMemberRecruitmentStatus) {
-        this.teamMemberRecruitmentStatus = teamMemberRecruitmentStatus;
+    public TeamMemberRecruitment() {
     }
 
 
