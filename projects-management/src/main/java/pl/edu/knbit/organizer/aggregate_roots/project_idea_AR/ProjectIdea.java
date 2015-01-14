@@ -33,11 +33,13 @@ public class ProjectIdea extends AbstractAnnotatedAggregateRoot {
     @EventHandler
     public void onProjectIdeaCreated(ProjectIdeaCreatedEvent event){
         this.projectIdeaID = event.getProjectIdeaID();
+        this.status = TeamLeaderRecruitmentStatus.CLOSED;
     }
 
     @EventHandler
     public void onTeamLeaderAccepted(TeamLeaderAcceptedEvent event) {
         this.teamLeader = event.getLeader();
+        this.status = TeamLeaderRecruitmentStatus.CLOSED;
     }
 
     @EventHandler

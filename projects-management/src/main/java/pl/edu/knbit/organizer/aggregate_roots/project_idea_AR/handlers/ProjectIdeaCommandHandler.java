@@ -40,4 +40,8 @@ public class ProjectIdeaCommandHandler{
 
     }
 
+    public void setProjectIdeaRepository(Repository<ProjectIdea> repository) {
+        this.repository = repository;
+    }
+
 }
