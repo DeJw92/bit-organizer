@@ -5,10 +5,10 @@ import java.util.UUID;
 /**
  * Created by mwrona.
  */
-public class UserId {
+public class MemberId {
     private final UUID id;
 
-    public UserId(UUID id) {
+    public MemberId(UUID id) {
         this.id = id;
     }
 
@@ -17,9 +17,9 @@ public class UserId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserId userId = (UserId) o;
+        MemberId memberId = (MemberId) o;
 
-        if (!id.equals(userId.id)) return false;
+        if (!id.equals(memberId.id)) return false;
 
         return true;
     }
@@ -31,7 +31,7 @@ public class UserId {
 
     @Override
     public String toString() {
-        return "UserId{" +
+        return "MemberId{" +
                 "id=" + id +
                 '}';
     }

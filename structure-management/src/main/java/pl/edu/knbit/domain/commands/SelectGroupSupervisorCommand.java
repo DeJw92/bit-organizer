@@ -6,20 +6,20 @@ import pl.edu.knbit.domain.valueobjects.MemberId;
 /**
  * Created by mwrona.
  */
-public class AddMemberCommand {
+public class SelectGroupSupervisorCommand {
     private final GroupId groupId;
-    private final MemberId member;
+    private final MemberId groupSupervisor;
 
-    public AddMemberCommand(GroupId groupId, MemberId member) {
+    public SelectGroupSupervisorCommand(GroupId groupId, MemberId groupSupervisor) {
         this.groupId = groupId;
-        this.member = member;
+        this.groupSupervisor = groupSupervisor;
     }
 
     public GroupId getGroupId() {
         return groupId;
     }
 
-    public MemberId getMember() {
-        return member;
+    public MemberId getGroupSupervisor() {
+        return groupSupervisor;
     }
 }

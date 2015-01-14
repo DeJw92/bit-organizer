@@ -1,33 +1,26 @@
 package pl.edu.knbit.domain.events;
 
+import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import pl.edu.knbit.domain.valueobjects.GroupId;
-import pl.edu.knbit.domain.valueobjects.UserId;
 
 /**
  * Created by mwrona.
  */
 public class GroupCreatedEvent{
+    @TargetAggregateIdentifier
     private final GroupId groupId;
-    private final GroupId parentGroup;
     private final String name;
     private final String description;
-    private final UserId groupSupervisor;
 
 
-    public GroupCreatedEvent(GroupId groupId, GroupId parentGroup, String name, String description, UserId groupSupervisor) {
+    public GroupCreatedEvent(GroupId groupId, String name, String description) {
         this.groupId = groupId;
-        this.parentGroup = parentGroup;
         this.name = name;
         this.description = description;
-        this.groupSupervisor = groupSupervisor;
     }
 
     public GroupId getGroupId() {
         return groupId;
-    }
-
-    public GroupId getParentGroup() {
-        return parentGroup;
     }
 
     public String getName() {
@@ -38,7 +31,4 @@ public class GroupCreatedEvent{
         return description;
     }
 
-    public UserId getGroupSupervisor() {
-        return groupSupervisor;
-    }
 }

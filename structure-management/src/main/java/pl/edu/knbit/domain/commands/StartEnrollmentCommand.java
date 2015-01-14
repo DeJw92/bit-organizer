@@ -6,13 +6,13 @@ import pl.edu.knbit.domain.valueobjects.GroupId;
  * Created by mwrona.
  */
 public class StartEnrollmentCommand {
-    private GroupId group;
+    private final GroupId group;
 
     public StartEnrollmentCommand(GroupId group) {
         this.group = group;
     }
 
-    public GroupId getGroup() {
+    public GroupId getGroupId() {
         return group;
     }
 }

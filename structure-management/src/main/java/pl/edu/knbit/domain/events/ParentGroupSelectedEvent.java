@@ -6,15 +6,21 @@ import pl.edu.knbit.domain.valueobjects.GroupId;
 /**
  * Created by mwrona.
  */
-public class EnrollmentStartedEvent {
+public class ParentGroupSelectedEvent {
     @TargetAggregateIdentifier
     private final GroupId groupId;
+    private final GroupId parentGroup;
 
-    public EnrollmentStartedEvent(GroupId groupId) {
+    public ParentGroupSelectedEvent(GroupId groupId, GroupId parentGroup) {
         this.groupId = groupId;
+        this.parentGroup = parentGroup;
     }
 
     public GroupId getGroupId() {
         return groupId;
+    }
+
+    public GroupId getParentGroup() {
+        return parentGroup;
     }
 }

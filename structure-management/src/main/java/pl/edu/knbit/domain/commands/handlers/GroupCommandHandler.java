@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import pl.edu.knbit.domain.aggregates.Group;
 import pl.edu.knbit.domain.aggregates.GroupFactory;
-import pl.edu.knbit.domain.commands.AddMemberCommand;
-import pl.edu.knbit.domain.commands.CreateGroupCommand;
-import pl.edu.knbit.domain.commands.StartEnrollmentCommand;
+import pl.edu.knbit.domain.commands.*;
 
 /**
 * Created by mwrona.
@@ -19,21 +17,33 @@ public class GroupCommandHandler {
 
     @CommandHandler
     public void handleCreateGroup(CreateGroupCommand createGroupCommand){
-        Group group = GroupFactory.create(createGroupCommand.getGroupId(), createGroupCommand.getParentGroup(),
-                createGroupCommand.getName(), createGroupCommand.getDescription(), createGroupCommand.getGroupSupervisor());
+        Group group = GroupFactory.create(createGroupCommand.getGroupId(), createGroupCommand.getName(),
+                createGroupCommand.getDescription());
         groupRepository.add(group);
     }
 
     @CommandHandler
     public void handleAddMember(AddMemberCommand addMemberCommand){
-        Group group = groupRepository.load(addMemberCommand.getGroup());
-        group.addMember(addMemberCommand.getUser());
+        Group group = groupRepository.load(addMemberCommand.getGroupId());
+        group.addMember(addMemberCommand.getMember());
     }
 
     @CommandHandler
     public void handleStartEnrollment(StartEnrollmentCommand startEnrollmentCommand){
-        Group group = groupRepository.load(startEnrollmentCommand.getGroup());
+        Group group = groupRepository.load(startEnrollmentCommand.getGroupId());
         group.startEnrollment();
+    }
+
+    @CommandHandler
+    public void handleSelectParentGroup(SelectParentGroupCommand selectParentGroupCommand){
+        Group group = groupRepository.load(selectParentGroupCommand.getGroupId());
+        group.selectParentGroup(selectParentGroupCommand.getParentGroup());
+    }
+
+    @CommandHandler
+    public void handleSelcetGroupSupervisor(SelectGroupSupervisorCommand selectGroupSupervisorCommand){
+        Group group = groupRepository.load(selectGroupSupervisorCommand.getGroupId());
+        group.selectGroupSupervisor(selectGroupSupervisorCommand.getGroupSupervisor());
     }
 
     @Autowired

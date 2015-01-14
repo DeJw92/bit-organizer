@@ -4,15 +4,11 @@ import org.axonframework.test.Fixtures;
 import org.axonframework.test.FixtureConfiguration;
 import org.junit.Before;
 import org.junit.Test;
-import pl.edu.knbit.domain.commands.AddMemberCommand;
-import pl.edu.knbit.domain.commands.CreateGroupCommand;
-import pl.edu.knbit.domain.commands.StartEnrollmentCommand;
+import pl.edu.knbit.domain.commands.*;
 import pl.edu.knbit.domain.commands.handlers.GroupCommandHandler;
-import pl.edu.knbit.domain.events.EnrollmentStartedEvent;
-import pl.edu.knbit.domain.events.GroupCreatedEvent;
-import pl.edu.knbit.domain.events.MemberAddedEvent;
+import pl.edu.knbit.domain.events.*;
 import pl.edu.knbit.domain.valueobjects.GroupId;
-import pl.edu.knbit.domain.valueobjects.UserId;
+import pl.edu.knbit.domain.valueobjects.MemberId;
 
 
 import java.util.UUID;
@@ -24,9 +20,7 @@ public class GroupTest {
     private GroupId parentGroup;
     private String name;
     private String description;
-    private UserId groupSupervisor;
-    private UserId parentGroupSupervisor;
-    private UserId member;
+    private MemberId member;
 
     @Before
     public void setUp() throws Exception {
@@ -40,9 +34,7 @@ public class GroupTest {
         name = "name";
         description = "description";
         parentGroup = new GroupId(UUID.randomUUID());
-        parentGroupSupervisor = new UserId(UUID.randomUUID());
-        groupSupervisor = new UserId(UUID.randomUUID());
-        member = new UserId(UUID.randomUUID());
+        member = new MemberId(UUID.randomUUID());
     }
 
     @Test
@@ -50,35 +42,62 @@ public class GroupTest {
         fixture
                 .given()
                 .when(
-                        new CreateGroupCommand(groupId, null, name, description, groupSupervisor)
+                        new CreateGroupCommand(groupId, name, description)
                 )
                 .expectEvents(
-                        new GroupCreatedEvent(groupId, null, name, description, groupSupervisor),
-                        new MemberAddedEvent(groupId, groupSupervisor)
+                        new GroupCreatedEvent(groupId, name, description)
                 );
     }
 
-//    @Test
-//    public void testGroupOnCreateAddGroupSupervisorToParentGroup(){
-//        fixture
-//                .given(
-//                        new GroupCreatedEvent(parentGroup, null, "aaa", description, parentGroupSupervisor)
-//                )
-//                .when(
-//                        new CreateGroupCommand(groupId, parentGroup, "bbb", description, groupSupervisor)
-//                )
-//                .expectEvents(
-//                        new GroupCreatedEvent(groupId, parentGroup, name, description, groupSupervisor),
-//                        new MemberAddedEvent(groupId, groupSupervisor),
-//                        new MemberAddedEvent(parentGroup, groupSupervisor)
-//                );
-//    }
+    @Test
+    public void shouldGroupCreationFailWhenGroupIdIsNull() {
+        fixture
+                .given()
+                .when(
+                        new CreateGroupCommand(null, name, description)
+                )
+                .expectEvents(
+                );
+    }
+
+    @Test
+    public void shouldGroupCreationFailWhenNameIsNull() {
+        fixture
+                .given()
+                .when(
+                        new CreateGroupCommand(groupId, null, description)
+                )
+                .expectEvents(
+                );
+    }
+
+    @Test
+    public void shouldGroupCreationFailWhenNameIsEmpty() {
+        fixture
+                .given()
+                .when(
+                        new CreateGroupCommand(groupId, "", description)
+                )
+                .expectEvents(
+                );
+    }
+
+    @Test
+    public void shouldGroupCreationFailWhenDescriptionIsNull() {
+        fixture
+                .given()
+                .when(
+                        new CreateGroupCommand(groupId, name, null)
+                )
+                .expectEvents(
+                );
+    }
 
     @Test
     public void testGroupAddMember() {
         fixture
                 .given(
-                        new GroupCreatedEvent(groupId, null, name, description, groupSupervisor)
+                        new GroupCreatedEvent(groupId, name, description)
                 )
                 .when(
                         new AddMemberCommand(groupId, member)
@@ -88,34 +107,105 @@ public class GroupTest {
                 );
 
     }
-//
-//    @Test
-//    public void testGroupOnAddMemberAddAlsoToparentGroup() {
-//        fixture
-//                .given(
-//                        new GroupCreatedEvent(parentGroup, null, name, description, parentGroupSupervisor),
-//                        new GroupCreatedEvent(groupId, parentGroup, name, description, groupSupervisor)
-//                )
-//                .when(
-//                        new AddMemberCommand(groupId, member)
-//                )
-//                .expectEvents(
-//                        new MemberAddedEvent(groupId, member),
-//                        new MemberAddedEvent(parentGroup, member)
-//                );
-//
-//    }
 
     @Test
-    public void testGroupStartEnrollment(){
+    public void shouldAddMemberFailWhenMemberIsNull() {
         fixture
                 .given(
-                        new GroupCreatedEvent(groupId, parentGroup, name, description, groupSupervisor)
+                        new GroupCreatedEvent(groupId, name, description)
+                )
+                .when(
+                        new AddMemberCommand(groupId, null)
+                )
+                .expectEvents(
+                );
+
+    }
+
+    @Test
+    public void testGroupOnAddMemberShouldAddAlsoToParentGroup() {
+        fixture
+                .given(
+                        new GroupCreatedEvent(groupId, name, description),
+                        new ParentGroupSelectedEvent(groupId, parentGroup)
+                )
+                .when(
+                        new AddMemberCommand(groupId, member)
+                )
+                .expectEvents(
+                        new MemberAddedEvent(groupId, member),
+                        new MemberAddedEvent(parentGroup, member)
+                );
+
+    }
+
+    @Test
+    public void testGroupStartEnrollment() {
+        fixture
+                .given(
+                        new GroupCreatedEvent(groupId, name, description)
                 )
                 .when(
                         new StartEnrollmentCommand(groupId)
                 ).expectEvents(
                         new EnrollmentStartedEvent(groupId)
+                );
+    }
+
+    @Test
+    public void testGroupSelectParentGroup() {
+        fixture
+                .given(
+                        new GroupCreatedEvent(groupId, name, description)
+                )
+                .when(
+                        new SelectParentGroupCommand(groupId, parentGroup)
+                )
+                .expectEvents(
+                        new ParentGroupSelectedEvent(groupId, parentGroup),
+                        new SubgroupAddedEvent(parentGroup, groupId)
+                );
+
+    }
+
+    @Test
+    public void shouldSelectParentGroupFailWhenParentGroupIsNull() {
+        fixture
+                .given(
+                        new GroupCreatedEvent(groupId, name, description)
+                )
+                .when(
+                        new SelectParentGroupCommand(groupId, null)
+                )
+                .expectEvents(
+                );
+
+    }
+
+    @Test
+    public void testGroupSelectGroupSupervisor(){
+        fixture
+                .given(
+                        new GroupCreatedEvent(groupId, name, description)
+                )
+                .when(
+                        new SelectGroupSupervisorCommand(groupId, member)
+                )
+                .expectEvents(
+                        new GroupSupervisorSelectedEvent(groupId, member)
+                );
+    }
+
+    @Test
+    public void shouldSelectGroupSupervisorFailWhenGroupSupervisorIsNull(){
+        fixture
+                .given(
+                        new GroupCreatedEvent(groupId, name, description)
+                )
+                .when(
+                        new SelectGroupSupervisorCommand(groupId, null)
+                )
+                .expectEvents(
                 );
     }
 

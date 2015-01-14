@@ -1,25 +1,27 @@
 package pl.edu.knbit.domain.events;
 
+import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import pl.edu.knbit.domain.valueobjects.GroupId;
-import pl.edu.knbit.domain.valueobjects.UserId;
+import pl.edu.knbit.domain.valueobjects.MemberId;
 
 /**
  * Created by mwrona.
  */
 public class MemberAddedEvent {
-    private final GroupId group;
-    private final UserId user;
+    @TargetAggregateIdentifier
+    private final GroupId groupId;
+    private final MemberId member;
 
-    public MemberAddedEvent(GroupId group, UserId user) {
-        this.group = group;
-        this.user = user;
+    public MemberAddedEvent(GroupId groupId, MemberId member) {
+        this.groupId = groupId;
+        this.member = member;
     }
 
-    public GroupId getGroup() {
-        return group;
+    public GroupId getGroupId() {
+        return groupId;
     }
 
-    public UserId getUser() {
-        return user;
+    public MemberId getMember() {
+        return member;
     }
 }
