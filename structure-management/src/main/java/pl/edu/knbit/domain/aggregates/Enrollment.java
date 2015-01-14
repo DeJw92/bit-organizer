@@ -92,4 +92,24 @@ public class Enrollment extends AbstractAnnotatedAggregateRoot {
     private boolean isRequestsCountLimitSatisfied() {
         return membershipRequestIds.size() < configuration.getRequestsLimit();
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public EnrollmentStatus getStatus() {
+        return status;
+    }
+
+    public EnrollmentConfiguration getConfiguration() {
+        return configuration;
+    }
+
+    public Set<MembershipRequestId> getMembershipRequestIds() {
+        return membershipRequestIds;
+    }
 }

@@ -30,7 +30,7 @@ public class EnrollmentTest {
     public void setUp() {
         fixtureConfiguration = Fixtures.newGivenWhenThenFixture(Enrollment.class);
 
-        enrollmentId = new EnrollmentId(UUID.randomUUID());
+        enrollmentId = new EnrollmentId();
         title = "Title";
         description = "Desc";
         configuration = new EnrollmentConfiguration(2);

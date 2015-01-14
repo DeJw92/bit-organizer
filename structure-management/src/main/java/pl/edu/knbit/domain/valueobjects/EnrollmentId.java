@@ -5,6 +5,10 @@ import java.util.UUID;
 public class EnrollmentId {
     private final UUID id;
 
+    public EnrollmentId() {
+        this.id = UUID.randomUUID();
+    }
+
     public EnrollmentId(UUID id) {
         this.id = id;
     }
