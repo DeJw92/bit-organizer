@@ -4,9 +4,10 @@ import org.axonframework.test.Fixtures;
 import org.axonframework.test.FixtureConfiguration;
 import org.junit.Before;
 import org.junit.Test;
-import pl.edu.knbit.domain.commands.*;
+import pl.edu.knbit.domain.aggregates.group.Group;
+import pl.edu.knbit.domain.commands.group.*;
 import pl.edu.knbit.domain.commands.handlers.GroupCommandHandler;
-import pl.edu.knbit.domain.events.*;
+import pl.edu.knbit.domain.events.group.*;
 import pl.edu.knbit.domain.valueobjects.GroupId;
 import pl.edu.knbit.domain.valueobjects.MemberId;
 

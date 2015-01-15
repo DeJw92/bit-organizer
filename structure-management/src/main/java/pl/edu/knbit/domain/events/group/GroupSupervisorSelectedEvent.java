@@ -1,16 +1,18 @@
-package pl.edu.knbit.domain.commands;
+package pl.edu.knbit.domain.events.group;
 
+import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import pl.edu.knbit.domain.valueobjects.GroupId;
 import pl.edu.knbit.domain.valueobjects.MemberId;
 
 /**
  * Created by mwrona.
  */
-public class SelectGroupSupervisorCommand {
+public class GroupSupervisorSelectedEvent {
+    @TargetAggregateIdentifier
     private final GroupId groupId;
     private final MemberId groupSupervisor;
 
-    public SelectGroupSupervisorCommand(GroupId groupId, MemberId groupSupervisor) {
+    public GroupSupervisorSelectedEvent(GroupId groupId, MemberId groupSupervisor) {
         this.groupId = groupId;
         this.groupSupervisor = groupSupervisor;
     }

@@ -1,4 +1,4 @@
-package pl.edu.knbit.domain.commands;
+package pl.edu.knbit.domain.commands.group;
 
 import pl.edu.knbit.domain.valueobjects.GroupId;
 

@@ -4,9 +4,9 @@ import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import pl.edu.knbit.domain.aggregates.Group;
-import pl.edu.knbit.domain.aggregates.GroupFactory;
-import pl.edu.knbit.domain.commands.*;
+import pl.edu.knbit.domain.aggregates.group.Group;
+import pl.edu.knbit.domain.aggregates.group.GroupFactory;
+import pl.edu.knbit.domain.commands.group.*;
 
 /**
 * Created by mwrona.

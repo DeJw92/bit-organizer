@@ -1,4 +1,4 @@
-package pl.edu.knbit.domain;
+package pl.edu.knbit.domain.aggregates;
 
 import pl.edu.knbit.domain.aggregates.idea.Idea;
 import pl.edu.knbit.domain.commands.handlers.IdeaCommandHandler;
@@ -13,6 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 import pl.edu.knbit.domain.valueobjects.UserId;
 
+import java.util.UUID;
+
 public class IdeaTest {
     private FixtureConfiguration fixtureConfiguration;
     private IdeaId ideaId;
@@ -26,7 +28,7 @@ public class IdeaTest {
         fixtureConfiguration = Fixtures.newGivenWhenThenFixture(Idea.class);
 
         ideaId = IdeaId.nextId();
-        groupId = new GroupId("parent group");
+        groupId = new GroupId(UUID.randomUUID());
         title = "Great idea!";
         description = "Description of great idea";
         userId = UserId.nextId();

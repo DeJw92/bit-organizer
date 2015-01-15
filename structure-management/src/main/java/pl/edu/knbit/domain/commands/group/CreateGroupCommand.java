@@ -1,19 +1,17 @@
-package pl.edu.knbit.domain.events;
+package pl.edu.knbit.domain.commands.group;
 
-import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import pl.edu.knbit.domain.valueobjects.GroupId;
+
 
 /**
  * Created by mwrona.
  */
-public class GroupCreatedEvent{
-    @TargetAggregateIdentifier
+public class CreateGroupCommand {
     private final GroupId groupId;
     private final String name;
     private final String description;
 
-
-    public GroupCreatedEvent(GroupId groupId, String name, String description) {
+    public CreateGroupCommand(GroupId groupId, String name, String description) {
         this.groupId = groupId;
         this.name = name;
         this.description = description;
@@ -22,6 +20,7 @@ public class GroupCreatedEvent{
     public GroupId getGroupId() {
         return groupId;
     }
+
 
     public String getName() {
         return name;

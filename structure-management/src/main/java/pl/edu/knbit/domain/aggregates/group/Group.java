@@ -1,10 +1,10 @@
-package pl.edu.knbit.domain.aggregates;
+package pl.edu.knbit.domain.aggregates.group;
 
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
-import pl.edu.knbit.domain.events.*;
-import pl.edu.knbit.domain.valueobjects.EnrollmentId;
+import pl.edu.knbit.domain.events.group.*;
+import pl.edu.knbit.domain.valueobjects.enrollment.EnrollmentId;
 import pl.edu.knbit.domain.valueobjects.GroupId;
 import pl.edu.knbit.domain.valueobjects.MemberId;
 import com.google.common.base.Preconditions;

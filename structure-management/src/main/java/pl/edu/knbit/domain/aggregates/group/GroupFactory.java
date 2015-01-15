@@ -1,4 +1,4 @@
-package pl.edu.knbit.domain.aggregates;
+package pl.edu.knbit.domain.aggregates.group;
 
 import pl.edu.knbit.domain.valueobjects.GroupId;
 
