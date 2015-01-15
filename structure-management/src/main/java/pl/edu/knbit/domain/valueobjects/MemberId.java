@@ -5,10 +5,10 @@ import java.util.UUID;
 /**
  * Created by mwrona.
  */
-public class GroupId {
+public class MemberId {
     private final UUID id;
 
-    public GroupId(UUID id) {
+    public MemberId(UUID id) {
         this.id = id;
     }
 
@@ -17,9 +17,9 @@ public class GroupId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        GroupId groupId = (GroupId) o;
+        MemberId memberId = (MemberId) o;
 
-        if (!id.equals(groupId.id)) return false;
+        if (!id.equals(memberId.id)) return false;
 
         return true;
     }
@@ -31,7 +31,7 @@ public class GroupId {
 
     @Override
     public String toString() {
-        return "GroupId{" +
+        return "MemberId{" +
                 "id=" + id +
                 '}';
     }
