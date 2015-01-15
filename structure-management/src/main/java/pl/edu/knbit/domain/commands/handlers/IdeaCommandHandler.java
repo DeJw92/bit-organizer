@@ -1,5 +1,7 @@
 package pl.edu.knbit.domain.commands.handlers;
 
+import pl.edu.knbit.domain.aggregates.enrollment.Enrollment;
+import pl.edu.knbit.domain.aggregates.enrollment.EnrollmentFactory;
 import pl.edu.knbit.domain.aggregates.group.Group;
 import pl.edu.knbit.domain.aggregates.idea.Idea;
 import pl.edu.knbit.domain.aggregates.idea.IdeaFactory;
@@ -13,11 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import pl.edu.knbit.domain.valueobjects.UserId;
+import pl.edu.knbit.domain.valueobjects.enrollment.EnrollmentConfiguration;
+import pl.edu.knbit.domain.valueobjects.enrollment.EnrollmentId;
+
+import java.util.UUID;
 
 @Component
 public class IdeaCommandHandler {
     private Repository<Idea> ideaRepository;
     private Repository<Group> groupRepository;
+    private Repository<Enrollment> enrollmentRepository;
 
     @CommandHandler
     public void handleSubmitIdeaCommand(SubmitIdeaCommand submitIdeaCommand) {
@@ -73,6 +80,22 @@ public class IdeaCommandHandler {
         IdeaId ideaId = abandonIdeaCommand.getIdeaId();
         Idea idea = ideaRepository.load(ideaId);
         idea.abandon();
+    }
+
+    @CommandHandler
+    public void handleCreateEnrollmentCommand(CreateEnrollmentCommand createEnrollmentCommand) {
+        IdeaId ideaId = createEnrollmentCommand.getIdeaId();
+
+        EnrollmentId enrollmentId = createEnrollmentCommand.getEnrollmentId();
+        String title = createEnrollmentCommand.getTitle();
+        String description = createEnrollmentCommand.getDescription();
+        EnrollmentConfiguration enrollmentConfiguration = createEnrollmentCommand.getEnrollmentConfiguration();
+
+        Enrollment enrollment = EnrollmentFactory.create(enrollmentId, title, description, enrollmentConfiguration);
+        enrollmentRepository.add(enrollment);
+
+        Idea idea = ideaRepository.load(ideaId);
+        idea.setEnrollment(enrollmentId);
     }
 
     @Autowired

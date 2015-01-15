@@ -8,6 +8,7 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import pl.edu.knbit.domain.valueobjects.UserId;
+import pl.edu.knbit.domain.valueobjects.enrollment.EnrollmentId;
 
 public class Idea extends AbstractAnnotatedAggregateRoot {
     private static enum Status { SUBMITTED, ACCEPTED, INACTIVE }
@@ -19,6 +20,7 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     private GroupId parentGroupId;
     private Status status;
     private UserId groupSupervisorId;
+    private EnrollmentId enrollmentId;
 
     private Idea() {
     }
@@ -62,6 +64,12 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
         }
         apply(new IdeaAbandonedEvent(this.id));
     }
+    public void setEnrollment(EnrollmentId enrollmentId) {
+        if(this.status != Status.ACCEPTED) {
+            throw new IllegalStateException(String.format("Cannot create enrollment for idea in state %s", this.status));
+        }
+        apply(new EnrollmentCreatedEvent(this.id, enrollmentId));
+    }
 
     @EventSourcingHandler
     public void onIdeaSubmitted(IdeaSubmittedEvent ideaSubmittedEvent) {
@@ -88,5 +96,10 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     @EventSourcingHandler
     public void onIdeaRejected(IdeaRejectedEvent ideaRejectedEvent) {
         this.status = Status.INACTIVE;
+    }
+
+    @EventSourcingHandler
+    public void onEnrollmentCreated(EnrollmentCreatedEvent enrollmentCreatedEvent) {
+        this.enrollmentId = enrollmentCreatedEvent.getEnrollmentId();
     }
 }
