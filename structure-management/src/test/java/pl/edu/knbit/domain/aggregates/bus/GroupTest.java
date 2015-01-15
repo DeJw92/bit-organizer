@@ -1,9 +1,10 @@
-package pl.edu.knbit.domain.aggregates;
+package pl.edu.knbit.domain.aggregates.bus;
 
 import org.axonframework.test.Fixtures;
 import org.axonframework.test.FixtureConfiguration;
 import org.junit.Before;
 import org.junit.Test;
+import pl.edu.knbit.domain.aggregates.Group;
 import pl.edu.knbit.domain.commands.*;
 import pl.edu.knbit.domain.commands.handlers.GroupCommandHandler;
 import pl.edu.knbit.domain.events.*;
@@ -105,7 +106,6 @@ public class GroupTest {
                 .expectEvents(
                         new MemberAddedEvent(groupId, member)
                 );
-
     }
 
     @Test
@@ -119,11 +119,10 @@ public class GroupTest {
                 )
                 .expectEvents(
                 );
-
     }
 
     @Test
-    public void testGroupOnAddMemberShouldAddAlsoToParentGroup() {
+    public void testGroupAddMemberShouldAlsoAddMemberToParentGroup() {
         fixture
                 .given(
                         new GroupCreatedEvent(groupId, name, description),
@@ -136,7 +135,6 @@ public class GroupTest {
                         new MemberAddedEvent(groupId, member),
                         new MemberAddedEvent(parentGroup, member)
                 );
-
     }
 
     @Test
@@ -146,9 +144,9 @@ public class GroupTest {
                         new GroupCreatedEvent(groupId, name, description)
                 )
                 .when(
-                        new StartEnrollmentCommand(groupId)
+                        new CreateEnrollmentCommand(groupId)
                 ).expectEvents(
-                        new EnrollmentStartedEvent(groupId)
+                        new EnrollmentCreatedEvent(groupId)
                 );
     }
 
@@ -165,7 +163,6 @@ public class GroupTest {
                         new ParentGroupSelectedEvent(groupId, parentGroup),
                         new SubgroupAddedEvent(parentGroup, groupId)
                 );
-
     }
 
     @Test
@@ -179,7 +176,19 @@ public class GroupTest {
                 )
                 .expectEvents(
                 );
+    }
 
+    @Test
+    public void shouldSelectParentGroupFailWhenSettingItselfAsParentGroup(){
+        fixture
+                .given(
+                        new GroupCreatedEvent(groupId, name, description)
+                )
+                .when(
+                        new SelectParentGroupCommand(groupId, groupId)
+                )
+                .expectEvents(
+                );
     }
 
     @Test
@@ -208,5 +217,4 @@ public class GroupTest {
                 .expectEvents(
                 );
     }
-
 }

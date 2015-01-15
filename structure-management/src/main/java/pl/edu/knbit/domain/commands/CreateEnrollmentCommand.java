@@ -5,10 +5,11 @@ import pl.edu.knbit.domain.valueobjects.GroupId;
 /**
  * Created by mwrona.
  */
-public class StartEnrollmentCommand {
+public class CreateEnrollmentCommand {
     private final GroupId group;
 
-    public StartEnrollmentCommand(GroupId group) {
+    // TODO more arguments for Enrollment constructor
+    public CreateEnrollmentCommand(GroupId group) {
         this.group = group;
     }
 
