@@ -8,12 +8,12 @@ import pl.edu.knbit.domain.valueobjects.MemberId;
  */
 public class SelectGroupSupervisorCommand {
     private final GroupId groupId;
-    private final MemberId groupSupervisor;
-
     public SelectGroupSupervisorCommand(GroupId groupId, MemberId groupSupervisor) {
         this.groupId = groupId;
         this.groupSupervisor = groupSupervisor;
     }
+
+    private final MemberId groupSupervisor;
 
     public GroupId getGroupId() {
         return groupId;

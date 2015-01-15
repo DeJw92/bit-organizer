@@ -29,8 +29,9 @@ public class GroupCommandHandler {
     }
 
     @CommandHandler
-    public void handleStartEnrollment(StartEnrollmentCommand startEnrollmentCommand){
-        Group group = groupRepository.load(startEnrollmentCommand.getGroupId());
+    public void handleCreateEnrollment(CreateEnrollmentCommand createEnrollmentCommand){
+        Group group = groupRepository.load(createEnrollmentCommand.getGroupId());
+        // TODO get arguments for Enrollment constructor from Command
         group.startEnrollment();
     }
 

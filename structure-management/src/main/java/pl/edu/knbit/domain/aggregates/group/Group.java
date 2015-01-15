@@ -9,6 +9,7 @@ import pl.edu.knbit.domain.valueobjects.GroupId;
 import pl.edu.knbit.domain.valueobjects.MemberId;
 import com.google.common.base.Preconditions;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,6 +41,34 @@ public class Group extends AbstractAnnotatedAggregateRoot {
         apply(new GroupCreatedEvent(groupId, name, description));
     }
 
+    public GroupId getGroupId() {
+        return groupId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Set<MemberId> getMembers() {
+        return Collections.unmodifiableSet(members);
+    }
+
+    public GroupId getParentGroup() {
+        return parentGroup;
+    }
+
+    public Set<GroupId> getSubgroups() {
+        return Collections.unmodifiableSet(subgroups);
+    }
+
+    public MemberId getGroupSupervisor() {
+        return groupSupervisor;
+    }
+
     public void addMember(MemberId member){
         Preconditions.checkNotNull(member);
 
@@ -49,13 +78,15 @@ public class Group extends AbstractAnnotatedAggregateRoot {
         }
     }
 
+    // TODO arguments for Enrollment constructor
     public void startEnrollment(){
-        //TODO creating enrollment
-        apply(new EnrollmentStartedEvent(groupId));
+        // TODO creating enrollment
+        apply(new EnrollmentCreatedEvent(groupId));
     }
 
     public void selectParentGroup(GroupId parentGroup) {
         Preconditions.checkNotNull(parentGroup);
+        Preconditions.checkArgument(!parentGroup.equals(groupId));
 
         apply(new ParentGroupSelectedEvent(groupId, parentGroup));
         apply(new SubgroupAddedEvent(parentGroup, groupId));
@@ -82,22 +113,22 @@ public class Group extends AbstractAnnotatedAggregateRoot {
     }
 
     @EventSourcingHandler
-    public void onStartEnrollment(EnrollmentStartedEvent enrollmentStartedEvent){
-        //TODO assigning enrollment
+    public void onEnrollmentCreated(EnrollmentCreatedEvent enrollmentCreatedEvent){
+        // TODO assign enrollment
     }
 
     @EventSourcingHandler
-    public void onSelectParentGroup(ParentGroupSelectedEvent parentGroupSelectedEvent){
+    public void onParentGroupSelected(ParentGroupSelectedEvent parentGroupSelectedEvent){
         this.parentGroup = parentGroupSelectedEvent.getParentGroup();
     }
 
     @EventSourcingHandler
-    public void onSelectParentGroup(GroupSupervisorSelectedEvent groupSupervisorSelectedEvent){
+    public void onGroupSupervisorSelected(GroupSupervisorSelectedEvent groupSupervisorSelectedEvent){
         this.groupSupervisor = groupSupervisorSelectedEvent.getGroupSupervisor();
     }
 
     @EventSourcingHandler
-    public void onAddSubgroup(SubgroupAddedEvent subgroupAddedEvent){
+    public void onSubgroupAdded(SubgroupAddedEvent subgroupAddedEvent){
         this.subgroups.add(subgroupAddedEvent.getSubgroup());
     }
 }
