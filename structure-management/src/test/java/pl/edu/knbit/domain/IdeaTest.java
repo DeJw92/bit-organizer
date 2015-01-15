@@ -1,9 +1,9 @@
 package pl.edu.knbit.domain;
 
-import pl.edu.knbit.domain.aggregates.Idea;
-import pl.edu.knbit.domain.aggregates.IdeaCommandHandler;
-import pl.edu.knbit.domain.commands.*;
-import pl.edu.knbit.domain.events.*;
+import pl.edu.knbit.domain.aggregates.idea.Idea;
+import pl.edu.knbit.domain.commands.handlers.IdeaCommandHandler;
+import pl.edu.knbit.domain.commands.idea.*;
+import pl.edu.knbit.domain.events.idea.*;
 import pl.edu.knbit.domain.exceptions.ParentGroupNotSelectedException;
 import pl.edu.knbit.domain.valueobjects.GroupId;
 import pl.edu.knbit.domain.valueobjects.IdeaId;

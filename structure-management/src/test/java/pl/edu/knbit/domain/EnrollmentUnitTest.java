@@ -2,11 +2,11 @@ package pl.edu.knbit.domain;
 
 import org.junit.Before;
 import org.junit.Test;
-import pl.edu.knbit.domain.aggregates.Enrollment;
-import pl.edu.knbit.domain.aggregates.EnrollmentFactory;
-import pl.edu.knbit.domain.valueobjects.EnrollmentConfiguration;
-import pl.edu.knbit.domain.valueobjects.EnrollmentId;
-import pl.edu.knbit.domain.valueobjects.EnrollmentStatus;
+import pl.edu.knbit.domain.aggregates.enrollment.Enrollment;
+import pl.edu.knbit.domain.aggregates.enrollment.EnrollmentFactory;
+import pl.edu.knbit.domain.valueobjects.enrollment.EnrollmentConfiguration;
+import pl.edu.knbit.domain.valueobjects.enrollment.EnrollmentId;
+import pl.edu.knbit.domain.valueobjects.enrollment.EnrollmentStatus;
 import pl.edu.knbit.domain.valueobjects.MembershipRequestId;
 
 import java.util.UUID;
