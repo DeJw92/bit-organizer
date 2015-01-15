@@ -1,5 +1,11 @@
 package pl.edu.knbit.domain.aggregates;
 
+import org.axonframework.repository.AggregateNotFoundException;
+import org.axonframework.repository.Repository;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import pl.edu.knbit.domain.aggregates.group.Group;
 import pl.edu.knbit.domain.aggregates.idea.Idea;
 import pl.edu.knbit.domain.commands.handlers.IdeaCommandHandler;
 import pl.edu.knbit.domain.commands.idea.*;
@@ -15,6 +21,9 @@ import pl.edu.knbit.domain.valueobjects.UserId;
 
 import java.util.UUID;
 
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
 public class IdeaTest {
     private FixtureConfiguration fixtureConfiguration;
     private IdeaId ideaId;
@@ -22,6 +31,11 @@ public class IdeaTest {
     private String title;
     private String description;
     private UserId userId;
+    private String groupTitle;
+    private String groupDescription;
+    @Mock
+    private Repository<Group> groupRepositoryMock;
+    private Group group;
 
     @Before
     public void setUp() throws Exception {
@@ -32,9 +46,13 @@ public class IdeaTest {
         title = "Great idea!";
         description = "Description of great idea";
         userId = UserId.nextId();
+        groupTitle = "Group 1";
+        groupDescription = "Group 1 description";
+        group = new Group(groupId, groupTitle, groupDescription);
 
         IdeaCommandHandler ideaCommandHandler = new IdeaCommandHandler();
         ideaCommandHandler.setIdeaRepository(fixtureConfiguration.getRepository());
+        ideaCommandHandler.setGroupRepository(groupRepositoryMock);
         fixtureConfiguration.registerAnnotatedCommandHandler(ideaCommandHandler);
     }
 
@@ -47,16 +65,34 @@ public class IdeaTest {
 
     @Test
     public void testSelectParentGroup() throws Exception {
+        when(groupRepositoryMock.load(groupId)).thenReturn(group);
         fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description))
                 .when(new SelectParentGroupCommand(ideaId, groupId))
                 .expectEvents(new ParentGroupSelectedEvent(ideaId, groupId));
     }
 
     @Test
+    public void shouldThrowExceptionWhenParentGroupToSelectNonExist() throws Exception {
+        when(groupRepositoryMock.load(groupId)).thenThrow(AggregateNotFoundException.class);
+        fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description))
+                .when(new SelectParentGroupCommand(ideaId, groupId))
+                .expectException(AggregateNotFoundException.class);
+    }
+
+    @Test
     public void testSelectGroupSupervisor() {
+        when(groupRepositoryMock.load(groupId)).thenReturn(group);
         fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description), new ParentGroupSelectedEvent(ideaId, groupId))
                 .when(new SelectGroupSupervisorCommand(ideaId, groupId, userId))
                 .expectEvents(new GroupSupervisorSelectedEvent(ideaId, groupId, userId));
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenGroupSupervisorNonExist() throws Exception {
+        when(groupRepositoryMock.load(groupId)).thenThrow(AggregateNotFoundException.class);
+        fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description), new ParentGroupSelectedEvent(ideaId, groupId))
+                .when(new SelectGroupSupervisorCommand(ideaId, groupId, userId))
+                .expectException(AggregateNotFoundException.class);
     }
 
     @Test
