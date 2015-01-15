@@ -80,6 +80,13 @@ public class IdeaTest {
     }
 
     @Test
+    public void shouldThrowExceptionWhenIdeaNonExist() throws Exception {
+        fixtureConfiguration.given()
+                .when(new SelectParentGroupCommand(ideaId, groupId))
+                .expectException(AggregateNotFoundException.class);
+    }
+
+    @Test
     public void testSelectGroupSupervisor() {
         when(groupRepositoryMock.load(groupId)).thenReturn(group);
         fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description), new ParentGroupSelectedEvent(ideaId, groupId))
@@ -88,11 +95,20 @@ public class IdeaTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenGroupSupervisorNonExist() throws Exception {
+    public void shouldThrowExceptionWhenGroupOfSupervisorNonExist() throws Exception {
         when(groupRepositoryMock.load(groupId)).thenThrow(AggregateNotFoundException.class);
         fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description), new ParentGroupSelectedEvent(ideaId, groupId))
                 .when(new SelectGroupSupervisorCommand(ideaId, groupId, userId))
                 .expectException(AggregateNotFoundException.class);
+    }
+    //TODO shouldThrowExceptionWhenSupervisorNotExist
+    //TODO shouldThrowExceptionWhenSupervisorNotBelongToGroup
+
+    @Test
+    public void testAcceptIdea() throws Exception {
+        fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description))
+                .when(new AcceptIdeaCommand(ideaId))
+                .expectEvents(new IdeaAcceptedEvent(ideaId));
     }
 
     @Test
@@ -100,14 +116,6 @@ public class IdeaTest {
         fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description))
                 .when(new SelectGroupSupervisorCommand(ideaId, groupId, userId))
                 .expectException(ParentGroupNotSelectedException.class);
-
-    }
-
-    @Test
-    public void testAcceptIdea() throws Exception {
-        fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description))
-                .when(new AcceptIdeaCommand(ideaId))
-                .expectEvents(new IdeaAcceptedEvent(ideaId));
     }
 
     @Test
