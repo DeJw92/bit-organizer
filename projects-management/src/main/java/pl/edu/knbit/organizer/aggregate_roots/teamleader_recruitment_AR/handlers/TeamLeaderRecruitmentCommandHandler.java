@@ -1,11 +1,11 @@
-package pl.edu.knbit.organizer.teamleader_recruitment.handlers;
+package pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.handlers;
 
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
-import pl.edu.knbit.organizer.teamleader_recruitment.TeamLeaderRecruitment;
-import pl.edu.knbit.organizer.teamleader_recruitment.commands.ApplyForTeamLeaderCommand;
-import pl.edu.knbit.organizer.teamleader_recruitment.commands.OpenTeamLeaderRecruitmentCommand;
-import pl.edu.knbit.organizer.teamleader_recruitment.commands.SelectTeamLeaderCommand;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.commands.ApplyForTeamLeaderCommand;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.TeamLeaderRecruitment;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.commands.OpenTeamLeaderRecruitmentCommand;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.commands.SelectTeamLeaderCommand;
 
 /**
  * Created by Bartosz Zurkowski on 06.01.15.

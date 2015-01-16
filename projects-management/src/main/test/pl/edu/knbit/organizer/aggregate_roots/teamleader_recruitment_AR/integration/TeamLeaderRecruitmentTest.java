@@ -1,4 +1,4 @@
-package pl.edu.knbit.organizer.teamleader_recruitment.bus;
+package pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.integration;
 
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
@@ -8,16 +8,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import pl.edu.knbit.organizer.teamleader_recruitment.TeamLeaderRecruitment;
-import pl.edu.knbit.organizer.teamleader_recruitment.commands.ApplyForTeamLeaderCommand;
-import pl.edu.knbit.organizer.teamleader_recruitment.commands.OpenTeamLeaderRecruitmentCommand;
-import pl.edu.knbit.organizer.teamleader_recruitment.commands.SelectTeamLeaderCommand;
-import pl.edu.knbit.organizer.teamleader_recruitment.entities.Member;
-import pl.edu.knbit.organizer.teamleader_recruitment.events.CandidateAppliedEvent;
-import pl.edu.knbit.organizer.teamleader_recruitment.events.TeamLeaderRecruitmentOpenedEvent;
-import pl.edu.knbit.organizer.teamleader_recruitment.events.TeamLeaderSelectedEvent;
-import pl.edu.knbit.organizer.teamleader_recruitment.handlers.TeamLeaderRecruitmentCommandHandler;
-import pl.edu.knbit.organizer.teamleader_recruitment.value_objects.TeamLeaderRecruitmentId;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.commands.ApplyForTeamLeaderCommand;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.commands.OpenTeamLeaderRecruitmentCommand;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.events.CandidateAppliedEvent;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.events.TeamLeaderSelectedEvent;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.handlers.TeamLeaderRecruitmentCommandHandler;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.value_objects.TeamLeaderRecruitmentId;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.TeamLeaderRecruitment;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.commands.SelectTeamLeaderCommand;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.entities.Member;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.events.TeamLeaderRecruitmentOpenedEvent;
 
 /**
  * Created by Tomasz Chmielarz, Bartosz Zurkowski on 06.01.15.

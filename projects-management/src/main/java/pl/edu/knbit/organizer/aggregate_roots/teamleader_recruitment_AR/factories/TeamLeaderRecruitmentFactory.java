@@ -1,7 +1,7 @@
-package pl.edu.knbit.organizer.teamleader_recruitment.factories;
+package pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.factories;
 
-import pl.edu.knbit.organizer.teamleader_recruitment.TeamLeaderRecruitment;
-import pl.edu.knbit.organizer.teamleader_recruitment.value_objects.TeamLeaderRecruitmentId;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.TeamLeaderRecruitment;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.value_objects.TeamLeaderRecruitmentId;
 
 /**
  * Created by Tomasz Chmielarz, Bartosz Zurkowski on 08.01.15.

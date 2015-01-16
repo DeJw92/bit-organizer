@@ -1,15 +1,14 @@
-package pl.edu.knbit.organizer.teamleader_recruitment;
+package pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR;
 
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
-import pl.edu.knbit.organizer.teamleader_recruitment.entities.Member;
-import pl.edu.knbit.organizer.teamleader_recruitment.events.CandidateAppliedEvent;
-import pl.edu.knbit.organizer.teamleader_recruitment.events.TeamLeaderRecruitmentOpenedEvent;
-import pl.edu.knbit.organizer.teamleader_recruitment.events.TeamLeaderSelectedEvent;
-import pl.edu.knbit.organizer.teamleader_recruitment.value_objects.MemberId;
-import pl.edu.knbit.organizer.teamleader_recruitment.value_objects.TeamLeaderRecruitmentId;
-import pl.edu.knbit.organizer.teamleader_recruitment.value_objects.TeamLeaderRecruitmentStatus;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.entities.Member;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.events.CandidateAppliedEvent;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.events.TeamLeaderRecruitmentOpenedEvent;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.events.TeamLeaderSelectedEvent;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.value_objects.TeamLeaderRecruitmentId;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.value_objects.TeamLeaderRecruitmentStatus;
 
 import java.util.ArrayList;
 import java.util.List;

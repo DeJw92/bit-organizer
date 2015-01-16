@@ -1,13 +1,13 @@
-package pl.edu.knbit.organizer.teamleader_recruitment.unit;
+package pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.unit;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import pl.edu.knbit.organizer.teamleader_recruitment.TeamLeaderRecruitment;
-import pl.edu.knbit.organizer.teamleader_recruitment.entities.Member;
-import pl.edu.knbit.organizer.teamleader_recruitment.value_objects.TeamLeaderRecruitmentId;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.value_objects.TeamLeaderRecruitmentId;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.TeamLeaderRecruitment;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.entities.Member;
 
 import static org.junit.Assert.*;
 

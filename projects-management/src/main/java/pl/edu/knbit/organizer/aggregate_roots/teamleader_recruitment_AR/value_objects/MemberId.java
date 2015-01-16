@@ -1,13 +1,13 @@
-package pl.edu.knbit.organizer.teamleader_recruitment.value_objects;
+package pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.value_objects;
 
 /**
  * Created by Bartosz Zurkowski on 06.01.15.
  */
-public class TeamLeaderRecruitmentId {
+public class MemberId {
 
     private final long id;
 
-    public TeamLeaderRecruitmentId(long id) {
+    public MemberId(long id) {
         this.id = id;
     }
 
@@ -16,9 +16,9 @@ public class TeamLeaderRecruitmentId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TeamLeaderRecruitmentId that = (TeamLeaderRecruitmentId) o;
+        MemberId memberId = (MemberId) o;
 
-        if (id != that.id) return false;
+        if (id != memberId.id) return false;
 
         return true;
     }

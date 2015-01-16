@@ -1,7 +1,7 @@
-package pl.edu.knbit.organizer.teamleader_recruitment.entities;
+package pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.entities;
 
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedEntity;
-import pl.edu.knbit.organizer.teamleader_recruitment.value_objects.MemberId;
+import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment_AR.value_objects.MemberId;
 
 /**
  * Created by Bartosz Zurkowski on 06.01.15.
