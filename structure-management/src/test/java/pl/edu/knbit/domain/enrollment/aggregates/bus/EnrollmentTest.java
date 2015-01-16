@@ -1,4 +1,4 @@
-package pl.edu.knbit.domain;
+package pl.edu.knbit.domain.enrollment.aggregates.bus;
 
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;

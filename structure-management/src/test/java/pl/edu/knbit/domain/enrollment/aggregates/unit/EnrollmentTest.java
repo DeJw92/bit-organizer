@@ -1,4 +1,4 @@
-package pl.edu.knbit.domain;
+package pl.edu.knbit.domain.enrollment.aggregates.unit;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
-public class EnrollmentUnitTest {
+public class EnrollmentTest {
 
     private final String TITLE = "Title";
     private final String DESC = "Desc";
