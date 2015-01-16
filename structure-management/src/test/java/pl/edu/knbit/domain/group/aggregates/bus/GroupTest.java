@@ -1,15 +1,15 @@
-package pl.edu.knbit.domain.aggregates.bus;
+package pl.edu.knbit.domain.group.aggregates.bus;
 
 import org.axonframework.test.Fixtures;
 import org.axonframework.test.FixtureConfiguration;
 import org.junit.Before;
 import org.junit.Test;
-import pl.edu.knbit.domain.aggregates.Group;
-import pl.edu.knbit.domain.commands.*;
-import pl.edu.knbit.domain.commands.handlers.GroupCommandHandler;
-import pl.edu.knbit.domain.events.*;
-import pl.edu.knbit.domain.valueobjects.GroupId;
-import pl.edu.knbit.domain.valueobjects.MemberId;
+import pl.edu.knbit.domain.group.aggregates.Group;
+import pl.edu.knbit.domain.group.commands.*;
+import pl.edu.knbit.domain.group.commands.handlers.GroupCommandHandler;
+import pl.edu.knbit.domain.group.events.*;
+import pl.edu.knbit.domain.group.valueobjects.GroupId;
+import pl.edu.knbit.domain.group.valueobjects.MemberId;
 
 
 import java.util.UUID;

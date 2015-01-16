@@ -1,6 +1,6 @@
-package pl.edu.knbit.domain.aggregates;
+package pl.edu.knbit.domain.group.aggregates;
 
-import pl.edu.knbit.domain.valueobjects.GroupId;
+import pl.edu.knbit.domain.group.valueobjects.GroupId;
 
 /**
  * Created by mwrona.

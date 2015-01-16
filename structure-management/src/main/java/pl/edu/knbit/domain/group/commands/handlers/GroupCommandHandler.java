@@ -1,12 +1,12 @@
-package pl.edu.knbit.domain.commands.handlers;
+package pl.edu.knbit.domain.group.commands.handlers;
 
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import pl.edu.knbit.domain.aggregates.Group;
-import pl.edu.knbit.domain.aggregates.GroupFactory;
-import pl.edu.knbit.domain.commands.*;
+import pl.edu.knbit.domain.group.aggregates.Group;
+import pl.edu.knbit.domain.group.aggregates.GroupFactory;
+import pl.edu.knbit.domain.group.commands.*;
 
 /**
 * Created by mwrona.

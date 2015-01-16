@@ -1,8 +1,8 @@
-package pl.edu.knbit.domain.events;
+package pl.edu.knbit.domain.group.events;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import pl.edu.knbit.domain.valueobjects.GroupId;
-import pl.edu.knbit.domain.valueobjects.MemberId;
+import pl.edu.knbit.domain.group.valueobjects.GroupId;
+import pl.edu.knbit.domain.group.valueobjects.MemberId;
 
 /**
  * Created by mwrona.
