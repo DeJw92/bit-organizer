@@ -1,10 +1,10 @@
-package pl.edu.knbit.organizer.teamrecruitment;
+package pl.edu.knbit.organizer.aggregate_roots.teamrecruitment;
 
 import com.google.common.base.Preconditions;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
-import pl.edu.knbit.organizer.teamrecruitment.events.*;
+import pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.events.*;
 
 import java.util.HashSet;
 import java.util.Set;

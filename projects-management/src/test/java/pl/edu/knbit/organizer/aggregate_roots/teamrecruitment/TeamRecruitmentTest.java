@@ -1,5 +1,6 @@
-package pl.edu.knbit.organizer.teamrecruitment;
+package pl.edu.knbit.organizer.aggregate_roots.teamrecruitment;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +21,7 @@ public class TeamRecruitmentTest {
         teamRecruitment.closeRecruitment();
 
         // then
-        assertEquals(TeamRecruitmentStatus.CLOSED, teamRecruitment.getStatus());
+        Assert.assertEquals(TeamRecruitmentStatus.CLOSED, teamRecruitment.getStatus());
     }
 
     @Test

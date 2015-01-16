@@ -1,6 +1,6 @@
-package pl.edu.knbit.organizer.teamrecruitment.events;
+package pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.events;
 
-import pl.edu.knbit.organizer.teamrecruitment.TeamRecruitmentId;
+import pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.TeamRecruitmentId;
 
 public class TeamRecruitmentFinishedEvent {
 

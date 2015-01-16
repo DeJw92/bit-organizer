@@ -1,15 +1,11 @@
-package pl.edu.knbit.organizer;
+package pl.edu.knbit.organizer.aggregate_roots.teamrecruitment;
 
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Test;
-import pl.edu.knbit.organizer.teamrecruitment.MemberId;
-import pl.edu.knbit.organizer.teamrecruitment.TeamRecruitment;
-import pl.edu.knbit.organizer.teamrecruitment.TeamRecruitmentCommandHandler;
-import pl.edu.knbit.organizer.teamrecruitment.TeamRecruitmentId;
-import pl.edu.knbit.organizer.teamrecruitment.commands.*;
-import pl.edu.knbit.organizer.teamrecruitment.events.*;
+import pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.commands.*;
+import pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.events.*;
 
 public class TeamRecruitmentFixtureTest {
 
