@@ -1,15 +1,15 @@
-package pl.edu.knbit.domain.aggregates;
+package pl.edu.knbit.domain.idea.aggregates;
 
-import pl.edu.knbit.domain.commands.*;
-import pl.edu.knbit.domain.exceptions.ParentGroupNotSelectedException;
-import pl.edu.knbit.domain.valueobjects.GroupId;
-import pl.edu.knbit.domain.valueobjects.IdeaId;
+import pl.edu.knbit.domain.idea.commands.*;
+import pl.edu.knbit.domain.idea.exceptions.ParentGroupNotSelectedException;
+import pl.edu.knbit.domain.idea.valueobjects.GroupId;
+import pl.edu.knbit.domain.idea.valueobjects.IdeaId;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import pl.edu.knbit.domain.valueobjects.UserId;
+import pl.edu.knbit.domain.idea.valueobjects.MemberId;
 
 @Component
 public class IdeaCommandHandler {
@@ -36,7 +36,7 @@ public class IdeaCommandHandler {
         //TODO check if exists?
         IdeaId ideaId = selectGroupSupervisorCommand.getIdeaId();
         //TODO check if exists?
-        UserId groupSupervisorId = selectGroupSupervisorCommand.getGroupSupervisorId();
+        MemberId groupSupervisorId = selectGroupSupervisorCommand.getGroupSupervisorId();
         //TODO check if exists?
         Idea idea = ideaRepository.load(ideaId);
         GroupId parentGroupId = idea.getParentGroupId();

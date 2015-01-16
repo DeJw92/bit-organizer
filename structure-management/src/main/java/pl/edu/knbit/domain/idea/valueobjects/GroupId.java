@@ -1,4 +1,4 @@
-package pl.edu.knbit.domain.valueobjects;
+package pl.edu.knbit.domain.idea.valueobjects;
 
 public class GroupId {
     private final String id;

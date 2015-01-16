@@ -1,7 +1,7 @@
-package pl.edu.knbit.domain.events;
+package pl.edu.knbit.domain.idea.events;
 
-import pl.edu.knbit.domain.valueobjects.GroupId;
-import pl.edu.knbit.domain.valueobjects.IdeaId;
+import pl.edu.knbit.domain.idea.valueobjects.GroupId;
+import pl.edu.knbit.domain.idea.valueobjects.IdeaId;
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 
 public class ParentGroupSelectedEvent {

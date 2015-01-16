@@ -1,11 +1,11 @@
-package pl.edu.knbit.domain.valueobjects;
+package pl.edu.knbit.domain.idea.valueobjects;
 
 import java.util.UUID;
 
-public class UserId {
+public class MemberId {
     private final UUID id;
 
-    public UserId(UUID uuid) {
+    public MemberId(UUID uuid) {
         this.id = uuid;
     }
 
@@ -14,9 +14,9 @@ public class UserId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserId userId = (UserId) o;
+        MemberId memberId = (MemberId) o;
 
-        if (!id.equals(userId.id)) return false;
+        if (!id.equals(memberId.id)) return false;
 
         return true;
     }
@@ -26,7 +26,7 @@ public class UserId {
         return id.hashCode();
     }
 
-    public static UserId nextId() {
-        return new UserId(UUID.randomUUID());
+    public static MemberId nextId() {
+        return new MemberId(UUID.randomUUID());
     }
 }

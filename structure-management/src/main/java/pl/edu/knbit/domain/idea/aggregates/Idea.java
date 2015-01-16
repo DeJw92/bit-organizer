@@ -1,13 +1,13 @@
-package pl.edu.knbit.domain.aggregates;
+package pl.edu.knbit.domain.idea.aggregates;
 
-import pl.edu.knbit.domain.events.*;
-import pl.edu.knbit.domain.exceptions.ParentGroupNotSelectedException;
-import pl.edu.knbit.domain.valueobjects.GroupId;
-import pl.edu.knbit.domain.valueobjects.IdeaId;
+import pl.edu.knbit.domain.idea.events.*;
+import pl.edu.knbit.domain.idea.exceptions.ParentGroupNotSelectedException;
+import pl.edu.knbit.domain.idea.valueobjects.GroupId;
+import pl.edu.knbit.domain.idea.valueobjects.IdeaId;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
-import pl.edu.knbit.domain.valueobjects.UserId;
+import pl.edu.knbit.domain.idea.valueobjects.MemberId;
 
 public class Idea extends AbstractAnnotatedAggregateRoot {
     private static enum Status { SUBMITTED, ACCEPTED, INACTIVE }
@@ -18,7 +18,7 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     private String description;
     private GroupId parentGroupId;
     private Status status;
-    private UserId groupSupervisorId;
+    private MemberId groupSupervisorId;
 
     private Idea() {
     }
@@ -43,7 +43,7 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
         apply(new IdeaAcceptedEvent(this.id));
     }
 
-    public void selectGroupSupervisor(UserId groupSupervisorId) throws ParentGroupNotSelectedException {
+    public void selectGroupSupervisor(MemberId groupSupervisorId) throws ParentGroupNotSelectedException {
         apply(new GroupSupervisorSelectedEvent(this.id, this.parentGroupId, groupSupervisorId));
     }
 

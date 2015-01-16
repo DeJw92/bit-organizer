@@ -1,6 +1,6 @@
-package pl.edu.knbit.domain.exceptions;
+package pl.edu.knbit.domain.idea.exceptions;
 
-import pl.edu.knbit.domain.valueobjects.IdeaId;
+import pl.edu.knbit.domain.idea.valueobjects.IdeaId;
 
 public class ParentGroupNotSelectedException extends Exception {
     private final IdeaId ideaId;

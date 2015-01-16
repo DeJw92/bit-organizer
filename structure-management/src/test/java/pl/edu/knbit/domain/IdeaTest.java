@@ -1,17 +1,17 @@
 package pl.edu.knbit.domain;
 
-import pl.edu.knbit.domain.aggregates.Idea;
-import pl.edu.knbit.domain.aggregates.IdeaCommandHandler;
-import pl.edu.knbit.domain.commands.*;
-import pl.edu.knbit.domain.events.*;
-import pl.edu.knbit.domain.exceptions.ParentGroupNotSelectedException;
-import pl.edu.knbit.domain.valueobjects.GroupId;
-import pl.edu.knbit.domain.valueobjects.IdeaId;
+import pl.edu.knbit.domain.idea.aggregates.Idea;
+import pl.edu.knbit.domain.idea.aggregates.IdeaCommandHandler;
+import pl.edu.knbit.domain.idea.commands.*;
+import pl.edu.knbit.domain.idea.events.*;
+import pl.edu.knbit.domain.idea.exceptions.ParentGroupNotSelectedException;
+import pl.edu.knbit.domain.idea.valueobjects.GroupId;
+import pl.edu.knbit.domain.idea.valueobjects.IdeaId;
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Test;
-import pl.edu.knbit.domain.valueobjects.UserId;
+import pl.edu.knbit.domain.idea.valueobjects.MemberId;
 
 public class IdeaTest {
     private FixtureConfiguration fixtureConfiguration;
@@ -19,7 +19,7 @@ public class IdeaTest {
     private GroupId groupId;
     private String title;
     private String description;
-    private UserId userId;
+    private MemberId memberId;
 
     @Before
     public void setUp() throws Exception {
@@ -29,7 +29,7 @@ public class IdeaTest {
         groupId = new GroupId("parent group");
         title = "Great idea!";
         description = "Description of great idea";
-        userId = UserId.nextId();
+        memberId = MemberId.nextId();
 
         IdeaCommandHandler ideaCommandHandler = new IdeaCommandHandler();
         ideaCommandHandler.setIdeaRepository(fixtureConfiguration.getRepository());
@@ -53,14 +53,14 @@ public class IdeaTest {
     @Test
     public void testSelectGroupSupervisor() {
         fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description), new ParentGroupSelectedEvent(ideaId, groupId))
-                .when(new SelectGroupSupervisorCommand(ideaId, groupId, userId))
-                .expectEvents(new GroupSupervisorSelectedEvent(ideaId, groupId, userId));
+                .when(new SelectGroupSupervisorCommand(ideaId, groupId, memberId))
+                .expectEvents(new GroupSupervisorSelectedEvent(ideaId, groupId, memberId));
     }
 
     @Test
     public void shouldThrowExceptionWhenSelectingGroupSupervisorForIdeaWithoutParentGroup() throws Exception {
         fixtureConfiguration.given(new IdeaSubmittedEvent(ideaId, title, description))
-                .when(new SelectGroupSupervisorCommand(ideaId, groupId, userId))
+                .when(new SelectGroupSupervisorCommand(ideaId, groupId, memberId))
                 .expectException(ParentGroupNotSelectedException.class);
 
     }

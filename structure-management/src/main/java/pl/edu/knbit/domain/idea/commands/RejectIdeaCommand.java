@@ -1,6 +1,6 @@
-package pl.edu.knbit.domain.commands;
+package pl.edu.knbit.domain.idea.commands;
 
-import pl.edu.knbit.domain.valueobjects.IdeaId;
+import pl.edu.knbit.domain.idea.valueobjects.IdeaId;
 
 public class RejectIdeaCommand {
     private IdeaId ideaId;
