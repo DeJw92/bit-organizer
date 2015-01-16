@@ -59,6 +59,18 @@ public class Enrollment extends AbstractAnnotatedAggregateRoot {
         apply(new EnrollmentEndedEvent(id));
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public EnrollmentStatus getStatus() {
+        return status;
+    }
+
     @EventSourcingHandler
     public void onEnrollmentCreated(EnrollmentCreatedEvent event) {
         this.id = event.getEnrollmentId();

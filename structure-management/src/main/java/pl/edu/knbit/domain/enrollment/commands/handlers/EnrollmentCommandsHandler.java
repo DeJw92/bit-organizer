@@ -4,10 +4,12 @@ import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import pl.edu.knbit.domain.enrollment.aggregates.Enrollment;
 import pl.edu.knbit.domain.enrollment.aggregates.EnrollmentFactory;
 import pl.edu.knbit.domain.enrollment.commands.*;
 
+@Component
 public class EnrollmentCommandsHandler {
 
     private Repository<Enrollment> enrollmentRepository;
