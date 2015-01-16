@@ -3,6 +3,10 @@ package pl.edu.knbit.organizer.aggregate_roots.teamrecruitment;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.MemberId;
+import pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.TeamRecruitment;
+import pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.TeamRecruitmentId;
+import pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.TeamRecruitmentStatus;
 
 import static org.junit.Assert.*;
 

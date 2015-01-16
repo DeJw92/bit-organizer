@@ -4,6 +4,10 @@ import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Test;
+import pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.MemberId;
+import pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.TeamRecruitment;
+import pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.TeamRecruitmentCommandHandler;
+import pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.TeamRecruitmentId;
 import pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.commands.*;
 import pl.edu.knbit.organizer.aggregate_roots.teamrecruitment.events.*;
 
