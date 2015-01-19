@@ -1,6 +1,4 @@
-package agh.ddd.memebershiprequest.domain;
-
-import agh.ddd.memebershiprequest.domain.valueobjects.MembershipRequestId;
+package pl.edu.knbit.domain.membershiprequest;
 
 /**
  * Created by mypood on 15/01/15.

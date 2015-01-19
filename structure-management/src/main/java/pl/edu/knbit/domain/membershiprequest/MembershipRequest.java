@@ -1,10 +1,10 @@
-package agh.ddd.memebershiprequest.domain;
+package pl.edu.knbit.domain.membershiprequest;
 
-import agh.ddd.memebershiprequest.domain.commands.AcceptMembershipRequestCommand;
-import agh.ddd.memebershiprequest.domain.commands.DenyMembershipRequestCommand;
-import agh.ddd.memebershiprequest.domain.events.MembershipRequestAcceptedEvent;
-import agh.ddd.memebershiprequest.domain.events.MembershipRequestDeniedEvent;
-import agh.ddd.memebershiprequest.domain.valueobjects.MembershipRequestId;
+import pl.edu.knbit.domain.membershiprequest.commands.AcceptMembershipRequestCommand;
+import pl.edu.knbit.domain.membershiprequest.commands.DenyMembershipRequestCommand;
+import pl.edu.knbit.domain.membershiprequest.events.MembershipRequestAcceptedEvent;
+import pl.edu.knbit.domain.membershiprequest.events.MembershipRequestDeniedEvent;
+import pl.edu.knbit.domain.membershiprequest.valueobjects.MembershipRequestId;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;

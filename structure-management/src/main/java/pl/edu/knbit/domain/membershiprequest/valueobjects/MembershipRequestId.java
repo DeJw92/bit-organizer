@@ -1,6 +1,6 @@
-package agh.ddd.memebershiprequest.domain.valueobjects;
+package pl.edu.knbit.domain.membershiprequest.valueobjects;
 
-import agh.ddd.memebershiprequest.domain.MembershipRequest;
+import java.util.UUID;
 
 /**
  * Created by mypood on 15/01/15.
@@ -10,20 +10,20 @@ public class MembershipRequestId {
 
 
 
-    private final String id; //final, zeby bylo immutable
+    private final UUID id;
 
-    public  static MembershipRequestId of (String id) {
+    public  static MembershipRequestId of (UUID id) {
         return new MembershipRequestId(id);
     }
 
-    private MembershipRequestId(String id){
+    private MembershipRequestId(UUID id){
         this.id = id;
     }
 
 
     @Override
     public String toString() {
-        return id;
+        return id.toString();
     }
 
 
@@ -34,7 +34,9 @@ public class MembershipRequestId {
 
         MembershipRequestId that = (MembershipRequestId) o;
 
-        if (!id.equals(that.id)) return false;
+       // if (!id.equals(that.id)) return false;
+
+        if(id.compareTo(that.id) != 0) return false;
 
         return true;
     }

@@ -1,20 +1,17 @@
-package agh.ddd.memebershiprequest.domain.commands;
+package pl.edu.knbit.domain.membershiprequest.events;
 
-import agh.ddd.memebershiprequest.domain.valueobjects.MembershipRequestId;
-import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
+import pl.edu.knbit.domain.membershiprequest.valueobjects.MembershipRequestId;
 
 /**
  * Created by mypood on 11/01/15.
  */
-public class DenyMembershipRequestCommand {
+public class MembershipRequestAcceptedEvent {
 
-
-    @TargetAggregateIdentifier
     private final MembershipRequestId membershipRequestID;
     private final String memberID;
 
 
-    public DenyMembershipRequestCommand(MembershipRequestId membershipRequestID, String memberID) {
+    public MembershipRequestAcceptedEvent(MembershipRequestId membershipRequestID, String memberID) {
         this.membershipRequestID = membershipRequestID;
         this.memberID = memberID;
     }
