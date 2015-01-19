@@ -2,7 +2,7 @@ package pl.edu.knbit.domain.group.events;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
 import pl.edu.knbit.domain.group.valueobjects.GroupId;
-import pl.edu.knbit.domain.group.valueobjects.MemberId;
+import pl.edu.knbit.domain.member.valueobject.MemberId;
 
 /**
  * Created by mwrona.
