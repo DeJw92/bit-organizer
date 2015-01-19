@@ -6,7 +6,7 @@ import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import pl.edu.knbit.domain.group.events.*;
 import pl.edu.knbit.domain.group.valueobjects.EnrollmentId;
 import pl.edu.knbit.domain.group.valueobjects.GroupId;
-import pl.edu.knbit.domain.member.valueobject.MemberId;
+import pl.edu.knbit.domain.member.valueobjects.MemberId;
 import com.google.common.base.Preconditions;
 
 import java.util.Collections;
