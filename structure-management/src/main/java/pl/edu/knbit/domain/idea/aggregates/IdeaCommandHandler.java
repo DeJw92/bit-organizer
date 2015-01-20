@@ -1,5 +1,6 @@
 package pl.edu.knbit.domain.idea.aggregates;
 
+import pl.edu.knbit.domain.common.valueobjects.MemberId;
 import pl.edu.knbit.domain.idea.commands.*;
 import pl.edu.knbit.domain.idea.exceptions.ParentGroupNotSelectedException;
 import pl.edu.knbit.domain.idea.valueobjects.GroupId;
@@ -9,7 +10,6 @@ import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import pl.edu.knbit.domain.idea.valueobjects.MemberId;
 
 @Component
 public class IdeaCommandHandler {

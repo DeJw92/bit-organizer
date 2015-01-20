@@ -1,5 +1,6 @@
 package pl.edu.knbit.domain.idea.aggregates.bus;
 
+import pl.edu.knbit.domain.common.valueobjects.MemberId;
 import pl.edu.knbit.domain.idea.aggregates.Idea;
 import pl.edu.knbit.domain.idea.aggregates.IdeaCommandHandler;
 import pl.edu.knbit.domain.idea.commands.*;
@@ -11,7 +12,6 @@ import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Test;
-import pl.edu.knbit.domain.idea.valueobjects.MemberId;
 
 public class IdeaTest {
     private FixtureConfiguration fixtureConfiguration;

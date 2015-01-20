@@ -9,7 +9,7 @@ import pl.edu.knbit.domain.idea.valueobjects.IdeaId;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
-import pl.edu.knbit.domain.idea.valueobjects.MemberId;
+import pl.edu.knbit.domain.common.valueobjects.MemberId;
 
 public class Idea extends AbstractAnnotatedAggregateRoot {
     private static enum Status { SUBMITTED, ACCEPTED, INACTIVE }
