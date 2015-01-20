@@ -1,5 +1,7 @@
 package pl.edu.knbit.domain.idea.aggregates;
 
+import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.StringUtils;
 import pl.edu.knbit.domain.idea.events.*;
 import pl.edu.knbit.domain.idea.exceptions.ParentGroupNotSelectedException;
 import pl.edu.knbit.domain.idea.valueobjects.GroupId;
@@ -24,6 +26,8 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     }
 
     public Idea(IdeaId id, String title, String description) {
+        Preconditions.checkNotNull(id);
+        Preconditions.checkNotNull(StringUtils.trimToNull(title));
         apply(new IdeaSubmittedEvent(id, title, description));
     }
 
@@ -32,34 +36,29 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     }
 
     public void selectParentGroup(GroupId groupId) {
+        Preconditions.checkNotNull(groupId);
+        Preconditions.checkState(this.status == Status.SUBMITTED || this.status == Status.ACCEPTED);
         apply(new ParentGroupSelectedEvent(this.id, groupId));
     }
 
-    public void accept() throws IllegalStateException {
-        if(this.status != Status.SUBMITTED){
-//            IllegalStateException or rename IdeaAlreadyAcceptedException
-            throw new IllegalStateException(String.format("Cannot accept idea in state %s", this.status));
-        }
-        apply(new IdeaAcceptedEvent(this.id));
-    }
-
     public void selectGroupSupervisor(MemberId groupSupervisorId) throws ParentGroupNotSelectedException {
+        Preconditions.checkNotNull(groupSupervisorId);
+        Preconditions.checkState(this.status == Status.SUBMITTED || this.status == Status.ACCEPTED);
         apply(new GroupSupervisorSelectedEvent(this.id, this.parentGroupId, groupSupervisorId));
     }
 
+    public void accept() throws IllegalStateException {
+        Preconditions.checkState(this.status == Status.SUBMITTED, String.format("Cannot accept idea in state %s", this.status));
+        apply(new IdeaAcceptedEvent(this.id));
+    }
+
     public void reject() {
-//            IllegalStateException or create custom exception
-        if(this.status != Status.SUBMITTED){
-            throw new IllegalStateException(String.format("Cannot reject idea in state %s", this.status));
-        }
+        Preconditions.checkState(this.status == Status.SUBMITTED, String.format("Cannot reject idea in state %s", this.status));
         apply(new IdeaRejectedEvent(this.id));
     }
 
     public void abandon() {
-        if(this.status != Status.ACCEPTED){
-//            IllegalStateException or create custom exception
-            throw new IllegalStateException(String.format("Cannot abandon idea in state %s", this.status));
-        }
+        Preconditions.checkState(this.status == Status.ACCEPTED, String.format("Cannot abandon idea in state %s", this.status));
         apply(new IdeaAbandonedEvent(this.id));
     }
 
