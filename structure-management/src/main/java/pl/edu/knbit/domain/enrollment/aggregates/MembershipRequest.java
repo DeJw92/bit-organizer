@@ -2,7 +2,7 @@ package pl.edu.knbit.domain.enrollment.aggregates;
 
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
-import pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId;
+import pl.edu.knbit.domain.enrollment.valueObjects.MembershipRequestId;
 
 public class MembershipRequest extends AbstractAnnotatedAggregateRoot {
 

@@ -4,10 +4,10 @@ import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import pl.edu.knbit.domain.enrollment.events.*;
-import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentConfiguration;
-import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentId;
-import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentStatus;
-import pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId;
+import pl.edu.knbit.domain.enrollment.valueObjects.EnrollmentConfiguration;
+import pl.edu.knbit.domain.enrollment.valueObjects.EnrollmentId;
+import pl.edu.knbit.domain.enrollment.valueObjects.EnrollmentStatus;
+import pl.edu.knbit.domain.enrollment.valueObjects.MembershipRequestId;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +22,8 @@ public class Enrollment extends AbstractAnnotatedAggregateRoot {
     private EnrollmentConfiguration configuration;
     private Set<MembershipRequestId> membershipRequestIds;
 
-    private Enrollment() {}
+    private Enrollment() {
+    }
 
     Enrollment(EnrollmentId id, String title, String description, EnrollmentConfiguration configuration) {
         apply(new EnrollmentCreatedEvent(id, title, description, configuration));

@@ -6,9 +6,9 @@ import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import pl.edu.knbit.domain.group.events.EnrollmentStartedEvent;
 import pl.edu.knbit.domain.group.events.GroupCreatedEvent;
 import pl.edu.knbit.domain.group.events.MemberAddedEvent;
-import pl.edu.knbit.domain.group.valueobjects.EnrollmentId;
-import pl.edu.knbit.domain.group.valueobjects.GroupId;
-import pl.edu.knbit.domain.group.valueobjects.UserId;
+import pl.edu.knbit.domain.group.valueObjects.EnrollmentId;
+import pl.edu.knbit.domain.group.valueObjects.GroupId;
+import pl.edu.knbit.domain.group.valueObjects.UserId;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -64,16 +64,16 @@ public class Group extends AbstractAnnotatedAggregateRoot {
         return groupSupervisor;
     }
 
-    public void addMember(UserId member){
+    public void addMember(UserId member) {
         apply(new MemberAddedEvent(groupId, member));
     }
 
-    public void startEnrollment(){
+    public void startEnrollment() {
         apply(new EnrollmentStartedEvent(groupId));
     }
 
     @EventSourcingHandler
-    public void onGroupCreated(GroupCreatedEvent groupCreatedEvent){
+    public void onGroupCreated(GroupCreatedEvent groupCreatedEvent) {
         this.groupId = groupCreatedEvent.getGroupId();
         this.parentGroup = groupCreatedEvent.getParentGroup();
         this.name = groupCreatedEvent.getName();
@@ -85,7 +85,7 @@ public class Group extends AbstractAnnotatedAggregateRoot {
     }
 
     @EventSourcingHandler
-    public void onMemberAdded(MemberAddedEvent memberAddedEvent){
+    public void onMemberAdded(MemberAddedEvent memberAddedEvent) {
         members.add(memberAddedEvent.getUser());
 //        if (parentGroup != null) {
 //            apply(new MemberAddedEvent(parentGroup, memberAddedEvent.getUser()));
@@ -93,7 +93,7 @@ public class Group extends AbstractAnnotatedAggregateRoot {
     }
 
     @EventSourcingHandler
-    public void onStartEnrollment(EnrollmentStartedEvent enrollmentStartedEvent){
+    public void onStartEnrollment(EnrollmentStartedEvent enrollmentStartedEvent) {
         //TODO
     }
 

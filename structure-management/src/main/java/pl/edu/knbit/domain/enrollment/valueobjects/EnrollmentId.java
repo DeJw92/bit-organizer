@@ -1,4 +1,4 @@
-package pl.edu.knbit.domain.enrollment.valueobjects;
+package pl.edu.knbit.domain.enrollment.valueObjects;
 
 import java.util.UUID;
 

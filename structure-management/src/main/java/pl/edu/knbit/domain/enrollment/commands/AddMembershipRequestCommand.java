@@ -1,7 +1,7 @@
 package pl.edu.knbit.domain.enrollment.commands;
 
-import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentId;
-import pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId;
+import pl.edu.knbit.domain.enrollment.valueObjects.EnrollmentId;
+import pl.edu.knbit.domain.enrollment.valueObjects.MembershipRequestId;
 
 public class AddMembershipRequestCommand extends EnrollmentManagementCommand {
 

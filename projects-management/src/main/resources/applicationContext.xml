@@ -10,41 +10,41 @@
                            http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-       <context:annotation-config/>
+    <context:annotation-config/>
 
-       <context:component-scan base-package="pl.edu.knbit.organizer.aggregate_roots"/>
+    <context:component-scan base-package="pl.edu.knbit.organizer.aggregateRoots"/>
 
-       <bean class="org.axonframework.eventhandling.annotation.AnnotationEventListenerBeanPostProcessor">
-              <property name="eventBus" ref="eventBus"/>
-       </bean>
+    <bean class="org.axonframework.eventhandling.annotation.AnnotationEventListenerBeanPostProcessor">
+        <property name="eventBus" ref="eventBus"/>
+    </bean>
 
-       <bean class="org.axonframework.commandhandling.annotation.AnnotationCommandHandlerBeanPostProcessor">
-              <property name="commandBus" ref="commandBus"/>
-       </bean>
+    <bean class="org.axonframework.commandhandling.annotation.AnnotationCommandHandlerBeanPostProcessor">
+        <property name="commandBus" ref="commandBus"/>
+    </bean>
 
-       <bean id="eventBus" class="org.axonframework.eventhandling.SimpleEventBus"/>
-       <bean id="commandBus" class="org.axonframework.commandhandling.SimpleCommandBus"/>
+    <bean id="eventBus" class="org.axonframework.eventhandling.SimpleEventBus"/>
+    <bean id="commandBus" class="org.axonframework.commandhandling.SimpleCommandBus"/>
 
-       <axon:event-sourcing-repository id="projectRepository"
-                                       aggregate-type="pl.edu.knbit.organizer.aggregate_roots.project.Project"
-                                       event-bus="eventBus"
-                                       event-store="eventStore"/>
+    <axon:event-sourcing-repository id="projectRepository"
+                                    aggregate-type="pl.edu.knbit.organizer.aggregateRoots.project.Project"
+                                    event-bus="eventBus"
+                                    event-store="eventStore"/>
 
-       <axon:event-sourcing-repository id="projectIdeaRepository"
-                                       aggregate-type="pl.edu.knbit.organizer.aggregate_roots.project_idea.ProjectIdea"
-                                       event-bus="eventBus"
-                                       event-store="eventStore"/>
+    <axon:event-sourcing-repository id="projectIdeaRepository"
+                                    aggregate-type="pl.edu.knbit.organizer.aggregateRoots.projectIdea.ProjectIdea"
+                                    event-bus="eventBus"
+                                    event-store="eventStore"/>
 
-       <axon:event-sourcing-repository id="teamRecruitmentRepository"
-                                       aggregate-type="pl.edu.knbit.organizer.aggregate_roots.team_recruitment.TeamRecruitment"
-                                       event-bus="eventBus"
-                                       event-store="eventStore"/>
-       <axon:event-sourcing-repository id="teamleaderRecruitmentRepository"
-                                       aggregate-type="pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment.TeamLeaderRecruitment"
-                                       event-bus="eventBus"
-                                       event-store="eventStore"/>
+    <axon:event-sourcing-repository id="teamRecruitmentRepository"
+                                    aggregate-type="pl.edu.knbit.organizer.aggregateRoots.teamRecruitment.TeamRecruitment"
+                                    event-bus="eventBus"
+                                    event-store="eventStore"/>
+    <axon:event-sourcing-repository id="teamleaderRecruitmentRepository"
+                                    aggregate-type="pl.edu.knbit.organizer.aggregateRoots.teamleaderRecruitment.TeamLeaderRecruitment"
+                                    event-bus="eventBus"
+                                    event-store="eventStore"/>
 
 
-       <axon:filesystem-event-store id="eventStore" base-dir="./data"/>
+    <axon:filesystem-event-store id="eventStore" base-dir="./data"/>
 
 </beans>

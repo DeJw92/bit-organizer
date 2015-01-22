@@ -1,7 +1,7 @@
 package pl.edu.knbit.domain.enrollment.events;
 
-import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentId;
-import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentStatus;
+import pl.edu.knbit.domain.enrollment.valueObjects.EnrollmentId;
+import pl.edu.knbit.domain.enrollment.valueObjects.EnrollmentStatus;
 
 public class EnrollmentIsNotStartedEvent extends EnrollmentManagementEvent {
 

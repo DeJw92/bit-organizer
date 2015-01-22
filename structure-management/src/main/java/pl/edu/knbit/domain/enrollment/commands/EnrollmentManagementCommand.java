@@ -1,7 +1,7 @@
 package pl.edu.knbit.domain.enrollment.commands;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentId;
+import pl.edu.knbit.domain.enrollment.valueObjects.EnrollmentId;
 
 abstract class EnrollmentManagementCommand {
 

@@ -1,6 +1,6 @@
 package pl.edu.knbit.domain.enrollment.events;
 
-import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentId;
+import pl.edu.knbit.domain.enrollment.valueObjects.EnrollmentId;
 
 public class EnrollmentEndedEvent extends EnrollmentManagementEvent {
 

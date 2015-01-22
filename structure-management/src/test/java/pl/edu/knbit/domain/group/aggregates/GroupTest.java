@@ -1,7 +1,7 @@
 package pl.edu.knbit.domain.group.aggregates;
 
-import org.axonframework.test.Fixtures;
 import org.axonframework.test.FixtureConfiguration;
+import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Test;
 import pl.edu.knbit.domain.group.commands.AddMemberCommand;
@@ -11,9 +11,8 @@ import pl.edu.knbit.domain.group.commands.handlers.GroupCommandHandler;
 import pl.edu.knbit.domain.group.events.EnrollmentStartedEvent;
 import pl.edu.knbit.domain.group.events.GroupCreatedEvent;
 import pl.edu.knbit.domain.group.events.MemberAddedEvent;
-import pl.edu.knbit.domain.group.valueobjects.GroupId;
-import pl.edu.knbit.domain.group.valueobjects.UserId;
-
+import pl.edu.knbit.domain.group.valueObjects.GroupId;
+import pl.edu.knbit.domain.group.valueObjects.UserId;
 
 import java.util.UUID;
 
@@ -107,7 +106,7 @@ public class GroupTest {
 //    }
 
     @Test
-    public void testGroupStartEnrollment(){
+    public void testGroupStartEnrollment() {
         fixture
                 .given(
                         new GroupCreatedEvent(groupId, parentGroup, name, description, groupSupervisor)
@@ -115,8 +114,8 @@ public class GroupTest {
                 .when(
                         new StartEnrollmentCommand(groupId)
                 ).expectEvents(
-                        new EnrollmentStartedEvent(groupId)
-                );
+                new EnrollmentStartedEvent(groupId)
+        );
     }
 
 }

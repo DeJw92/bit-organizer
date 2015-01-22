@@ -8,10 +8,10 @@ import pl.edu.knbit.domain.enrollment.aggregates.Enrollment;
 import pl.edu.knbit.domain.enrollment.commands.*;
 import pl.edu.knbit.domain.enrollment.commands.handlers.EnrollmentCommandsHandler;
 import pl.edu.knbit.domain.enrollment.events.*;
-import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentConfiguration;
-import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentId;
-import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentStatus;
-import pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId;
+import pl.edu.knbit.domain.enrollment.valueObjects.EnrollmentConfiguration;
+import pl.edu.knbit.domain.enrollment.valueObjects.EnrollmentId;
+import pl.edu.knbit.domain.enrollment.valueObjects.EnrollmentStatus;
+import pl.edu.knbit.domain.enrollment.valueObjects.MembershipRequestId;
 
 import java.util.UUID;
 
@@ -35,9 +35,9 @@ public class EnrollmentTest {
         description = "Desc";
         configuration = new EnrollmentConfiguration(2);
 
-        membershipRequestId = new pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId(UUID.randomUUID());
-        membershipRequestId2 = new pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId(UUID.randomUUID());
-        membershipRequestId3 = new pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId(UUID.randomUUID());
+        membershipRequestId = new pl.edu.knbit.domain.enrollment.valueObjects.MembershipRequestId(UUID.randomUUID());
+        membershipRequestId2 = new pl.edu.knbit.domain.enrollment.valueObjects.MembershipRequestId(UUID.randomUUID());
+        membershipRequestId3 = new pl.edu.knbit.domain.enrollment.valueObjects.MembershipRequestId(UUID.randomUUID());
 
         EnrollmentCommandsHandler enrollmentCommandsHandler = new EnrollmentCommandsHandler();
         enrollmentCommandsHandler.setEnrollmentRepository(fixtureConfiguration.getRepository());

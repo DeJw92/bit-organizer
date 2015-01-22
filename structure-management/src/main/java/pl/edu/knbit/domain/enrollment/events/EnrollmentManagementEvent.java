@@ -1,7 +1,7 @@
 package pl.edu.knbit.domain.enrollment.events;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentId;
+import pl.edu.knbit.domain.enrollment.valueObjects.EnrollmentId;
 
 public abstract class EnrollmentManagementEvent {
 
