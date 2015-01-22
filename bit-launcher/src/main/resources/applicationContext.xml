@@ -1,0 +1,63 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:axon="http://www.axonframework.org/schema/core"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.axonframework.org/schema/core
+                           http://www.axonframework.org/schema/axon-core.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="pl.edu.knbit.organizer.aggregate_roots"/>
+
+    <bean class="org.axonframework.eventhandling.annotation.AnnotationEventListenerBeanPostProcessor">
+        <property name="eventBus" ref="eventBus"/>
+    </bean>
+
+    <bean class="org.axonframework.commandhandling.annotation.AnnotationCommandHandlerBeanPostProcessor">
+        <property name="commandBus" ref="commandBus"/>
+    </bean>
+
+    <bean id="eventBus" class="org.axonframework.eventhandling.SimpleEventBus"/>
+    <bean id="commandBus" class="org.axonframework.commandhandling.SimpleCommandBus"/>
+
+    <axon:event-sourcing-repository id="projectRepository"
+                                    aggregate-type="pl.edu.knbit.organizer.aggregate_roots.project.Project"
+                                    event-bus="eventBus"
+                                    event-store="eventStore"/>
+
+    <axon:event-sourcing-repository id="projectIdeaRepository"
+                                    aggregate-type="pl.edu.knbit.organizer.aggregate_roots.project_idea.ProjectIdea"
+                                    event-bus="eventBus"
+                                    event-store="eventStore"/>
+
+    <axon:event-sourcing-repository id="teamRecruitmentRepository"
+                                    aggregate-type="pl.edu.knbit.organizer.aggregate_roots.team_recruitment.TeamRecruitment"
+                                    event-bus="eventBus"
+                                    event-store="eventStore"/>
+    <axon:event-sourcing-repository id="teamleaderRecruitmentRepository"
+                                    aggregate-type="pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment.TeamLeaderRecruitment"
+                                    event-bus="eventBus"
+                                    event-store="eventStore"/>
+    <axon:event-sourcing-repository id="enrollmentRepository"
+                                    aggregate-type="pl.edu.knbit.domain.enrollment.aggregates.Enrollment"
+                                    event-bus="eventBus"
+                                    event-store="eventStore"/>
+    <axon:event-sourcing-repository id="membershipRequestRepository"
+                                    aggregate-type="pl.edu.knbit.domain.enrollment.aggregates.MembershipRequest"
+                                    event-bus="eventBus"
+                                    event-store="eventStore"/>
+
+    <axon:event-sourcing-repository id="groupRepository"
+                                    aggregate-type="pl.edu.knbit.domain.group.aggregates.Group"
+                                    event-bus="eventBus"
+                                    event-store="eventStore"/>
+
+
+    <axon:filesystem-event-store id="eventStore" base-dir="./data"/>
+
+</beans>

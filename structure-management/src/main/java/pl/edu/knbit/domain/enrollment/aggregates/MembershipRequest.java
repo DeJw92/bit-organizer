@@ -2,19 +2,21 @@ package pl.edu.knbit.domain.enrollment.aggregates;
 
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
+import pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId;
 
 public class MembershipRequest extends AbstractAnnotatedAggregateRoot {
 
     @AggregateIdentifier
-    private pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId id;
+    private MembershipRequestId id;
 
-    private MembershipRequest() {}
+    private MembershipRequest() {
+    }
 
-    public MembershipRequest(pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId id) {
+    public MembershipRequest(MembershipRequestId id) {
         this.id = id;
     }
 
-    public pl.edu.knbit.domain.enrollment.valueobjects.MembershipRequestId getId() {
+    public MembershipRequestId getId() {
         return id;
     }
 }
