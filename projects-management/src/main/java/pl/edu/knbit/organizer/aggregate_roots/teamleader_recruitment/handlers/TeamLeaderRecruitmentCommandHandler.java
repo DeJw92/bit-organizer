@@ -17,27 +17,27 @@ import pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment.commands.Se
 public class TeamLeaderRecruitmentCommandHandler {
 
     @Autowired
-    private Repository<TeamLeaderRecruitment> teamLeaderRecruitmentRepository;
+    private Repository<TeamLeaderRecruitment> teamleaderRecruitmentRepository;
 
     @CommandHandler
     public void handleOpenTeamLeaderRecruitmentCommand(OpenTeamLeaderRecruitmentCommand command) {
         TeamLeaderRecruitment teamLeaderRecruitment = new TeamLeaderRecruitment(command.getTeamLeaderRecruitmentId());
-        teamLeaderRecruitmentRepository.add(teamLeaderRecruitment);;
+        teamleaderRecruitmentRepository.add(teamLeaderRecruitment);;
     }
 
     @CommandHandler
     public void handleApplyForTeamLeaderCommand(ApplyForTeamLeaderCommand command) {
-        TeamLeaderRecruitment teamLeaderRecruitment = teamLeaderRecruitmentRepository.load(command.getTeamLeaderRecruitmentId());
+        TeamLeaderRecruitment teamLeaderRecruitment = teamleaderRecruitmentRepository.load(command.getTeamLeaderRecruitmentId());
         teamLeaderRecruitment.applyForTeamLeader(command.getCandidate());
     }
 
     @CommandHandler
     public void handleSelectTeamLeaderCommand(SelectTeamLeaderCommand command) {
-        TeamLeaderRecruitment teamLeaderRecruitment = teamLeaderRecruitmentRepository.load(command.getTeamLeaderRecruitmentId());
+        TeamLeaderRecruitment teamLeaderRecruitment = teamleaderRecruitmentRepository.load(command.getTeamLeaderRecruitmentId());
         teamLeaderRecruitment.selectTeamLeader(command.getTeamLeader());
     }
 
     public void setTeamLeaderRecruitmentRepository(Repository<TeamLeaderRecruitment> teamLeaderRecruitmentRepository) {
-        this.teamLeaderRecruitmentRepository = teamLeaderRecruitmentRepository;
+        this.teamleaderRecruitmentRepository = teamLeaderRecruitmentRepository;
     }
 }
