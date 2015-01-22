@@ -38,7 +38,7 @@ public class TeamLeaderRecruitmentTest {
     public void setUp() throws Exception {
         fixture = Fixtures.newGivenWhenThenFixture(TeamLeaderRecruitment.class);
         commandHandler = new TeamLeaderRecruitmentCommandHandler();
-        commandHandler.setRepository(fixture.getRepository());
+        commandHandler.setTeamLeaderRecruitmentRepository(fixture.getRepository());
         fixture.registerAnnotatedCommandHandler(commandHandler);
         teamLeaderRecruitmentId = new TeamLeaderRecruitmentId(1);
     }

@@ -37,7 +37,7 @@ public class ProjectTest {
         commandHandler = new ProjectCommandHandler();
         fixture = Fixtures.newGivenWhenThenFixture(Project.class);
         fixture.registerAnnotatedCommandHandler(commandHandler);
-        commandHandler.setRepository(fixture.getRepository());
+        commandHandler.setProjectRepository(fixture.getRepository());
         projectID = ProjectID.of("TEST_ID");
     }
 
