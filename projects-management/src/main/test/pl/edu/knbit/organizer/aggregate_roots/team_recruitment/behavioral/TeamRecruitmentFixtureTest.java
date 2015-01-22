@@ -24,7 +24,7 @@ public class TeamRecruitmentFixtureTest {
         fixture = Fixtures.newGivenWhenThenFixture(TeamRecruitment.class);
 
         final TeamRecruitmentCommandHandler commandHandler = new TeamRecruitmentCommandHandler();
-        commandHandler.setRepository(fixture.getRepository());
+        commandHandler.setTeamRecruitmentRepository(fixture.getRepository());
         fixture.registerAnnotatedCommandHandler(commandHandler);
     }
 

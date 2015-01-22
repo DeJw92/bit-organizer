@@ -1,6 +1,8 @@
 package pl.edu.knbit.organizer.aggregate_roots.project_idea.handlers;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pl.edu.knbit.organizer.aggregate_roots.project_idea.ProjectIdea;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
@@ -13,25 +15,27 @@ import pl.edu.knbit.organizer.aggregate_roots.project_idea.commands.SelectIdeaCo
  * Created by eric
  */
 
+@Component
 public class ProjectIdeaCommandHandler{
 
-    private Repository<ProjectIdea> repository;
+    @Autowired
+    private Repository<ProjectIdea> projectIdeaRepository;
 
     @CommandHandler
     public void handleProjectIdeaCreatedCommand(CreateProjectIdeaCommand command){
         ProjectIdea projectIdea = new ProjectIdea(command.getProjectIdeaID(),command.getDescription());
-        repository.add(projectIdea);
+        projectIdeaRepository.add(projectIdea);
     }
 
     @CommandHandler
     public void handleAcceptTeamLeaderCommand(AcceptTeamLeaderCommand command){
-        ProjectIdea projectIdea = repository.load(command.getProjectIdeaID());
+        ProjectIdea projectIdea = projectIdeaRepository.load(command.getProjectIdeaID());
         projectIdea.setProjectLeader(command.getLeader());
     }
 
     @CommandHandler
     public void handleOpenTeamLeaderRecruitmentCommand(OpenTeamLeaderRecruitmentCommand command){
-        ProjectIdea projectIdea = repository.load(command.getProjectIdeaID());
+        ProjectIdea projectIdea = projectIdeaRepository.load(command.getProjectIdeaID());
         projectIdea.openTeamLeaderRecruitment();
     }
 
@@ -41,7 +45,7 @@ public class ProjectIdeaCommandHandler{
     }
 
     public void setProjectIdeaRepository(Repository<ProjectIdea> repository) {
-        this.repository = repository;
+        this.projectIdeaRepository = repository;
     }
 
 }
