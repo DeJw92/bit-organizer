@@ -1,4 +1,4 @@
-package pl.edu.knbit.organizer.aggregate_roots.project_idea.behavioral;
+package java.pl.edu.knbit.organizer.aggregate_roots.project_idea.behavioral;
 
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;

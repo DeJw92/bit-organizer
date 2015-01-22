@@ -1,4 +1,4 @@
-package pl.edu.knbit.organizer.aggregate_roots.team_recruitment.unit;
+package java.pl.edu.knbit.organizer.aggregate_roots.team_recruitment.unit;
 
 import org.junit.Assert;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package pl.edu.knbit.organizer.aggregate_roots.team_recruitment.behavioral;
+package java.pl.edu.knbit.organizer.aggregate_roots.team_recruitment.behavioral;
 
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;

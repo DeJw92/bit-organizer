@@ -1,4 +1,4 @@
-package pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment.unit;
+package java.pl.edu.knbit.organizer.aggregate_roots.teamleader_recruitment.unit;
 
 import org.junit.Before;
 import org.junit.Test;
