@@ -1,5 +1,7 @@
 package pl.edu.knbit.domain.idea.aggregates;
 
+import pl.edu.knbit.domain.enrollment.aggregates.Enrollment;
+import pl.edu.knbit.domain.enrollment.aggregates.EnrollmentFactory;
 import pl.edu.knbit.domain.member.valueobjects.MemberId;
 import pl.edu.knbit.domain.group.aggregates.Group;
 import pl.edu.knbit.domain.idea.commands.*;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 public class IdeaCommandHandler {
     private Repository<Idea> ideaRepository;
     private Repository<Group> groupRepository;
+    private Repository<Enrollment> enrollmentRepository;
 
     @CommandHandler
     public void handleSubmitIdeaCommand(SubmitIdeaCommand submitIdeaCommand) {
@@ -68,6 +71,18 @@ public class IdeaCommandHandler {
         idea.abandon();
     }
 
+    @CommandHandler
+    public void handleCreateEnrollmentCommand(CreateEnrollmentCommand createEnrollmentCommand) {
+        IdeaId ideaId = createEnrollmentCommand.getIdeaId();
+        Idea idea = ideaRepository.load(ideaId);
+        Enrollment enrollment = EnrollmentFactory.create(createEnrollmentCommand.getEnrollmentId(),
+                createEnrollmentCommand.getTitle(),
+                createEnrollmentCommand.getDescription(),
+                createEnrollmentCommand.getEnrollmentConfiguration());
+        enrollmentRepository.add(enrollment);
+        idea.setEnrollmentId(createEnrollmentCommand.getEnrollmentId());
+    }
+
     @Autowired
     @Qualifier("ideaRepository")
     public void setIdeaRepository(Repository<Idea> ideaRepository) {
@@ -78,5 +93,11 @@ public class IdeaCommandHandler {
     @Qualifier("groupRepository")
     public void setGroupRepository(Repository<Group> groupRepository) {
         this.groupRepository = groupRepository;
+    }
+
+    @Autowired
+    @Qualifier("enrollmentRepository")
+    public void setEnrollmentRepository(Repository<Enrollment> enrollmentRepository) {
+        this.enrollmentRepository = enrollmentRepository;
     }
 }

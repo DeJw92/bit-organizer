@@ -2,6 +2,7 @@ package pl.edu.knbit.domain.idea.aggregates;
 
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
+import pl.edu.knbit.domain.enrollment.valueobjects.EnrollmentId;
 import pl.edu.knbit.domain.group.valueobjects.GroupId;
 import pl.edu.knbit.domain.idea.events.*;
 import pl.edu.knbit.domain.idea.exceptions.ParentGroupNotSelectedException;
@@ -21,6 +22,7 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     private GroupId parentGroupId;
     private Status status;
     private MemberId groupSupervisorId;
+    private EnrollmentId enrollmentId;
 
     private Idea() {
     }
@@ -62,6 +64,11 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
         apply(new IdeaAbandonedEvent(this.id));
     }
 
+    public void setEnrollmentId(EnrollmentId enrollmentId) {
+        Preconditions.checkState(this.status == Status.ACCEPTED, String.format("Cannot create enrollment for idea in state %s", this.status));
+        apply(new EnrollmentCreatedEvent(this.id, enrollmentId));
+    }
+
     @EventSourcingHandler
     public void onIdeaSubmitted(IdeaSubmittedEvent ideaSubmittedEvent) {
         this.id = ideaSubmittedEvent.getIdeaId();
@@ -87,5 +94,10 @@ public class Idea extends AbstractAnnotatedAggregateRoot {
     @EventSourcingHandler
     public void onIdeaRejected(IdeaRejectedEvent ideaRejectedEvent) {
         this.status = Status.INACTIVE;
+    }
+
+    @EventSourcingHandler
+    public void onEnrollmentCreated(EnrollmentCreatedEvent enrollmentCreatedEvent) {
+        this.enrollmentId = enrollmentCreatedEvent.getEnrollmentId();
     }
 }
