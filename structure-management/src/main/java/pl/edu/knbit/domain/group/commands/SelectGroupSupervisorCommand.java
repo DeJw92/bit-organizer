@@ -1,7 +1,7 @@
 package pl.edu.knbit.domain.group.commands;
 
-import pl.edu.knbit.domain.common.valueobjects.GroupId;
-import pl.edu.knbit.domain.common.valueobjects.MemberId;
+import pl.edu.knbit.domain.group.valueobjects.GroupId;
+import pl.edu.knbit.domain.member.valueobjects.MemberId;
 
 /**
  * Created by mwrona.

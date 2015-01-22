@@ -1,9 +1,10 @@
 package pl.edu.knbit.domain.idea.aggregates;
 
-import pl.edu.knbit.domain.common.valueobjects.MemberId;
+import pl.edu.knbit.domain.member.valueobjects.MemberId;
+import pl.edu.knbit.domain.group.aggregates.Group;
 import pl.edu.knbit.domain.idea.commands.*;
 import pl.edu.knbit.domain.idea.exceptions.ParentGroupNotSelectedException;
-import pl.edu.knbit.domain.idea.valueobjects.GroupId;
+import pl.edu.knbit.domain.group.valueobjects.GroupId;
 import pl.edu.knbit.domain.idea.valueobjects.IdeaId;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class IdeaCommandHandler {
     private Repository<Idea> ideaRepository;
+    private Repository<Group> groupRepository;
 
     @CommandHandler
     public void handleSubmitIdeaCommand(SubmitIdeaCommand submitIdeaCommand) {
@@ -23,9 +25,8 @@ public class IdeaCommandHandler {
     @CommandHandler
     public void handleSelectParentGroupCommand(SelectParentGroupCommand selectParentGroupCommand) {
         GroupId groupId = selectParentGroupCommand.getGroupId();
-        //TODO check if exists?
+        groupRepository.load(groupId);
         IdeaId ideaId = selectParentGroupCommand.getIdeaId();
-        //TODO check if exists?
         Idea idea = ideaRepository.load(ideaId);
         idea.selectParentGroup(groupId);
     }
@@ -33,9 +34,8 @@ public class IdeaCommandHandler {
     @CommandHandler
     public void handleSelectGroupSupervisorCommand(SelectGroupSupervisorCommand selectGroupSupervisorCommand) throws ParentGroupNotSelectedException {
         GroupId groupId = selectGroupSupervisorCommand.getGroupId();
-        //TODO check if exists?
+        groupRepository.load(groupId);
         IdeaId ideaId = selectGroupSupervisorCommand.getIdeaId();
-        //TODO check if exists?
         MemberId groupSupervisorId = selectGroupSupervisorCommand.getGroupSupervisorId();
         //TODO check if exists?
         Idea idea = ideaRepository.load(ideaId);
@@ -50,7 +50,6 @@ public class IdeaCommandHandler {
     @CommandHandler
     public void handleAcceptIdeaCommand(AcceptIdeaCommand acceptIdeaCommand) throws IllegalStateException {
         IdeaId ideaId = acceptIdeaCommand.getIdeaId();
-        //TODO check if exists?
         Idea idea = ideaRepository.load(ideaId);
         idea.accept();
     }
@@ -58,7 +57,6 @@ public class IdeaCommandHandler {
     @CommandHandler
     public void handleRejectIdeaCommand(RejectIdeaCommand rejectIdeaCommand) throws IllegalStateException {
         IdeaId ideaId = rejectIdeaCommand.getIdeaId();
-        //TODO check if exists?
         Idea idea = ideaRepository.load(ideaId);
         idea.reject();
     }
@@ -66,7 +64,6 @@ public class IdeaCommandHandler {
     @CommandHandler
     public void handleAbandonIdeaCommand(AbandonIdeaCommand abandonIdeaCommand) throws IllegalStateException {
         IdeaId ideaId = abandonIdeaCommand.getIdeaId();
-        //TODO check if exists?
         Idea idea = ideaRepository.load(ideaId);
         idea.abandon();
     }
@@ -75,5 +72,11 @@ public class IdeaCommandHandler {
     @Qualifier("ideaRepository")
     public void setIdeaRepository(Repository<Idea> ideaRepository) {
         this.ideaRepository = ideaRepository;
+    }
+
+    @Autowired
+    @Qualifier("groupRepository")
+    public void setGroupRepository(Repository<Group> groupRepository) {
+        this.groupRepository = groupRepository;
     }
 }

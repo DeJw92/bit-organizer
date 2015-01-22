@@ -8,8 +8,8 @@ import pl.edu.knbit.domain.group.aggregates.Group;
 import pl.edu.knbit.domain.group.commands.*;
 import pl.edu.knbit.domain.group.commands.handlers.GroupCommandHandler;
 import pl.edu.knbit.domain.group.events.*;
-import pl.edu.knbit.domain.common.valueobjects.GroupId;
-import pl.edu.knbit.domain.common.valueobjects.MemberId;
+import pl.edu.knbit.domain.group.valueobjects.GroupId;
+import pl.edu.knbit.domain.member.valueobjects.MemberId;
 
 
 import java.util.UUID;

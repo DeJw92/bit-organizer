@@ -1,9 +1,9 @@
 package pl.edu.knbit.domain.idea.events;
 
 import org.axonframework.commandhandling.annotation.TargetAggregateIdentifier;
-import pl.edu.knbit.domain.idea.valueobjects.GroupId;
+import pl.edu.knbit.domain.group.valueobjects.GroupId;
 import pl.edu.knbit.domain.idea.valueobjects.IdeaId;
-import pl.edu.knbit.domain.common.valueobjects.MemberId;
+import pl.edu.knbit.domain.member.valueobjects.MemberId;
 
 public class GroupSupervisorSelectedEvent {
     @TargetAggregateIdentifier

@@ -2,14 +2,14 @@ package pl.edu.knbit.domain.idea.aggregates;
 
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;
+import pl.edu.knbit.domain.group.valueobjects.GroupId;
 import pl.edu.knbit.domain.idea.events.*;
 import pl.edu.knbit.domain.idea.exceptions.ParentGroupNotSelectedException;
-import pl.edu.knbit.domain.idea.valueobjects.GroupId;
 import pl.edu.knbit.domain.idea.valueobjects.IdeaId;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
-import pl.edu.knbit.domain.common.valueobjects.MemberId;
+import pl.edu.knbit.domain.member.valueobjects.MemberId;
 
 public class Idea extends AbstractAnnotatedAggregateRoot {
     private static enum Status { SUBMITTED, ACCEPTED, INACTIVE }

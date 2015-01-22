@@ -1,14 +1,14 @@
-package pl.edu.knbit.domain.common.valueobjects;
+package pl.edu.knbit.domain.group.valueobjects;
 
 import java.util.UUID;
 
 /**
  * Created by mwrona.
  */
-public class MemberId {
+public class GroupId {
     private final UUID id;
 
-    public MemberId(UUID id) {
+    public GroupId(UUID id) {
         this.id = id;
     }
 
@@ -17,9 +17,9 @@ public class MemberId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MemberId memberId = (MemberId) o;
+        GroupId groupId = (GroupId) o;
 
-        if (!id.equals(memberId.id)) return false;
+        if (!id.equals(groupId.id)) return false;
 
         return true;
     }
@@ -31,12 +31,8 @@ public class MemberId {
 
     @Override
     public String toString() {
-        return "MemberId{" +
+        return "GroupId{" +
                 "id=" + id +
                 '}';
-    }
-
-    public static MemberId nextId() {
-        return new MemberId(UUID.randomUUID());
     }
 }
