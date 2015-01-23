@@ -13,7 +13,7 @@
     <modules>
         <module>projects-management</module>
         <module>structure-management</module>
-        <module>bit-launcher</module>
+        <module>bit-core</module>
     </modules>
 
     <dependencies>

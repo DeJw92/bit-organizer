@@ -12,7 +12,7 @@
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="pl.edu.knbit.domain.aggregateRoots"/>
+    <context:component-scan base-package="pl.edu.knbit.domain, pl.edu.knbit.readModel.repository"/>
 
     <bean class="org.axonframework.eventhandling.annotation.AnnotationEventListenerBeanPostProcessor">
         <property name="eventBus" ref="eventBus"/>
@@ -43,8 +43,22 @@
                                     aggregate-type="pl.edu.knbit.domain.aggregateRoots.teamleaderRecruitment.TeamLeaderRecruitment"
                                     event-bus="eventBus"
                                     event-store="eventStore"/>
+    <axon:event-sourcing-repository id="enrollmentRepository"
+                                    aggregate-type="pl.edu.knbit.domain.enrollment.aggregates.Enrollment"
+                                    event-bus="eventBus"
+                                    event-store="eventStore"/>
+    <axon:event-sourcing-repository id="membershipRequestRepository"
+                                    aggregate-type="pl.edu.knbit.domain.enrollment.aggregates.MembershipRequest"
+                                    event-bus="eventBus"
+                                    event-store="eventStore"/>
+
+    <axon:event-sourcing-repository id="groupRepository"
+                                    aggregate-type="pl.edu.knbit.domain.group.aggregates.Group"
+                                    event-bus="eventBus"
+                                    event-store="eventStore"/>
 
 
     <axon:filesystem-event-store id="eventStore" base-dir="./data"/>
 
+    <bean id="restServer" class="pl.edu.knbit.launcher.BITServer"/>
 </beans>
